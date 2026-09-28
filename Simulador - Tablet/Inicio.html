@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Simulador de Ataque de Ransomware
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="CSS/Estilos.css"
+    >
+
+</head>
+
+<body>
+
+    <audio
+        id="musicaFondo"
+        src="Audio/Musica.mp3"
+        loop
+        preload="auto"
+    ></audio>
+
+
+    <!-- =========================================
+         FONDO
+    ========================================== -->
+
+    <img
+        src="IMG/Fondo12.png"
+        class="fondo"
+        alt="Fondo del simulador"
+    >
+
+
+    <!-- =========================================
+         INTERFAZ PRINCIPAL
+    ========================================== -->
+
+    <main class="pantalla">
+
+
+        <!-- =========================================
+             BENEFICIOS INFERIORES
+        ========================================== -->
+
+        <section
+            class="beneficios"
+            aria-label="Beneficios del simulador"
+        >
+
+
+            <!-- CONCIENTIZA -->
+
+            <div class="beneficio">
+
+                <div class="beneficio-icono">
+
+                    <svg
+                        viewBox="0 0 48 48"
+                        aria-hidden="true"
+                    >
+                        <path
+                            d="M24 4 41 10v12c0 10-6.7 17.8-17 22C13.7 39.8 7 32 7 22V10L24 4Z"
+                        />
+
+                        <path
+                            d="m16 23 5 5 11-12"
+                        />
+                    </svg>
+
+                </div>
+
+                <div class="beneficio-texto">
+
+                    <span class="beneficio-titulo">
+                        CONCIENTIZA
+                    </span>
+
+                    <span class="beneficio-subtitulo">
+                        A tu equipo
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="beneficio-separador"></div>
+
+
+            <!-- ENTIENDE -->
+
+            <div class="beneficio">
+
+                <div class="beneficio-icono">
+
+                    <svg
+                        viewBox="0 0 48 48"
+                        aria-hidden="true"
+                    >
+                        <path
+                            d="M24 5a18 18 0 1 0 0 36 18 18 0 0 0 0-36Z"
+                        />
+
+                        <path
+                            d="M24 5v36"
+                        />
+
+                        <path
+                            d="M18 10c-5 5-5 23 0 28"
+                        />
+
+                        <path
+                            d="M30 10c5 5 5 23 0 28"
+                        />
+
+                        <path
+                            d="M9 19h30M9 29h30"
+                        />
+                    </svg>
+
+                </div>
+
+                <div class="beneficio-texto">
+
+                    <span class="beneficio-titulo">
+                        ENTIENDE
+                    </span>
+
+                    <span class="beneficio-subtitulo">
+                        Los riesgos reales
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="beneficio-separador"></div>
+
+
+            <!-- PROTÉGETE -->
+
+            <div class="beneficio">
+
+                <div class="beneficio-icono">
+
+                    <svg
+                        viewBox="0 0 48 48"
+                        aria-hidden="true"
+                    >
+                        <rect
+                            x="9"
+                            y="20"
+                            width="30"
+                            height="23"
+                            rx="3"
+                        />
+
+                        <path
+                            d="M15 20v-7a9 9 0 0 1 18 0v7"
+                        />
+
+                        <circle
+                            cx="24"
+                            cy="30"
+                            r="2"
+                        />
+
+                        <path
+                            d="M24 32v5"
+                        />
+                    </svg>
+
+                </div>
+
+                <div class="beneficio-texto">
+
+                    <span class="beneficio-titulo">
+                        PROTÉGETE
+                    </span>
+
+                    <span class="beneficio-subtitulo">
+                        Toma mejores decisiones
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================================
+             MENÚ
+        ========================================== -->
+
+        <section class="menu">
+
+
+            <!-- INICIAR -->
+
+            <button
+                class="menu-btn"
+                id="btnIniciar"
+            >
+
+                <div class="icono play">
+                    ▶
+                </div>
+
+                <div class="texto-btn">
+
+                    <span class="titulo-btn">
+                        INICIAR
+                    </span>
+
+                    <span class="subtitulo-btn">
+                        Comenzar simulación
+                    </span>
+
+                </div>
+
+            </button>
+
+
+            <!-- AJUSTES -->
+
+            <button
+                class="menu-btn"
+                id="btnAjustes"
+            >
+
+                <div class="icono engranaje">
+                    ⚙
+                </div>
+
+                <div class="texto-btn">
+
+                    <span class="titulo-btn">
+                        AJUSTES
+                    </span>
+
+                    <span class="subtitulo-btn">
+                        Configuración del simulador
+                    </span>
+
+                </div>
+
+            </button>
+
+
+            <!-- CRÉDITOS -->
+
+            <button
+                class="menu-btn"
+                id="btnCreditos"
+            >
+
+                <div class="icono usuario">
+                    ♙
+                </div>
+
+                <div class="texto-btn">
+
+                    <span class="titulo-btn">
+                        CRÉDITOS
+                    </span>
+
+                    <span class="subtitulo-btn">
+                        Información del proyecto
+                    </span>
+
+                </div>
+
+            </button>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================================
+         PANEL DE AJUSTES
+    ========================================== -->
+
+    <div
+        id="panelAjustes"
+        class="panel-ajustes"
+    >
+
+        <h2>
+            ⚙️ Ajustes
+        </h2>
+
+
+        <!-- AUDIO -->
+
+        <h3>
+            🔊 Audio
+        </h3>
+
+
+        <!-- MÚSICA -->
+
+        <div class="ajuste">
+
+            <label for="volumenMusica">
+                🎵 Música del juego
+            </label>
+
+            <input
+                type="range"
+                id="volumenMusica"
+                min="0"
+                max="100"
+                value="50"
+            >
+
+        </div>
+
+
+        <!-- EFECTOS -->
+
+        <div class="ajuste">
+
+            <label for="volumenEfectos">
+                🔘 Efectos de sonido
+            </label>
+
+            <input
+                type="range"
+                id="volumenEfectos"
+                min="0"
+                max="100"
+                value="50"
+            >
+
+        </div>
+
+
+        <!-- SILENCIAR -->
+
+        <div class="ajuste">
+
+            <label for="silenciar">
+                🔇 Silenciar todo
+            </label>
+
+            <input
+                type="checkbox"
+                id="silenciar"
+            >
+
+        </div>
+
+
+        <!-- EXTRAS -->
+
+        <h3>
+            🌎 Extras
+        </h3>
+
+
+        <!-- IDIOMA -->
+
+        <div class="ajuste">
+
+            <label for="idioma">
+                🌐 Idioma
+            </label>
+
+            <select id="idioma">
+
+                <option value="es">
+                    🇪🇸 Español
+                </option>
+
+                <option value="en">
+                    🇺🇸 English
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- VOLVER -->
+
+        <button id="cerrarAjustes">
+            VOLVER
+        </button>
+
+    </div>
+
+
+    <!-- =========================================
+         PANEL DE CRÉDITOS
+    ========================================== -->
+
+    <div
+        id="panelCreditos"
+        class="panel-creditos"
+    >
+
+        <div class="logo-nerium">
+            NERIUM
+        </div>
+
+        <div class="subtitulo-nerium">
+            CIBERSEGURIDAD
+        </div>
+
+
+        <div class="separador"></div>
+
+
+        <h2>
+            CRÉDITOS
+        </h2>
+
+
+        <p class="nombre-proyecto">
+            SIMULADOR DE ATAQUE<br>
+            DE RANSOMWARE
+        </p>
+
+
+        <div class="separador"></div>
+
+
+        <p class="titulo-info">
+            DESARROLLADO POR
+        </p>
+
+        <p class="dato-info">
+            BRAYAN CASTAÑEDA
+        </p>
+
+
+        <div class="separador"></div>
+
+
+        <p class="titulo-info">
+            TECNOLOGÍAS
+        </p>
+
+        <p class="dato-info">
+            HTML • CSS • JAVASCRIPT
+        </p>
+
+
+        <div class="separador"></div>
+
+
+        <p class="version">
+            v1.0.0
+        </p>
+
+
+        <p class="copyright">
+            © 2026 NERIUM
+        </p>
+
+
+        <button id="cerrarCreditos">
+            VOLVER
+        </button>
+
+    </div>
+
+
+    <!-- =========================================
+         JAVASCRIPT
+    ========================================== -->
+
+    <script src="JS/script.js"></script>
+
+    <script>
+        (() => {
+            "use strict";
+
+            const musicaInicio =
+                document.getElementById(
+                    "musicaFondo"
+                );
+
+            const botonIniciar =
+                document.getElementById(
+                    "btnIniciar"
+                );
+
+            function detenerMusicaInicio() {
+                if (!musicaInicio) {
+                    return;
+                }
+
+                musicaInicio.pause();
+                musicaInicio.muted = true;
+                musicaInicio.volume = 0;
+                musicaInicio.currentTime = 0;
+
+                musicaInicio.removeAttribute(
+                    "src"
+                );
+
+                musicaInicio.load();
+
+                sessionStorage.setItem(
+                    "nerium-musica-inicio-detenida",
+                    "true"
+                );
+            }
+
+            function limpiarPartidaAnterior() {
+                localStorage.removeItem(
+                    "nerium-fin014-v1"
+                );
+
+                const clavesSesion =
+                    Object.keys(
+                        sessionStorage
+                    );
+
+                clavesSesion.forEach(
+                    function (clave) {
+                        if (
+                            clave.startsWith(
+                                "nerium-alert-seen-"
+                            ) ||
+                            clave.startsWith(
+                                "nerium-loss-seen-"
+                            ) ||
+                            clave.startsWith(
+                                "nerium-win-seen-"
+                            ) ||
+                            clave.startsWith(
+                                "nerium-ambiente-"
+                            ) ||
+                            clave ===
+                                "nerium-open-instructions"
+                        ) {
+                            sessionStorage.removeItem(
+                                clave
+                            );
+                        }
+                    }
+                );
+            }
+
+            function prepararNuevaPartida() {
+                limpiarPartidaAnterior();
+                detenerMusicaInicio();
+            }
+
+            botonIniciar?.addEventListener(
+                "click",
+                prepararNuevaPartida,
+                true
+            );
+
+            window.addEventListener(
+                "pagehide",
+                detenerMusicaInicio
+            );
+
+            window.addEventListener(
+                "beforeunload",
+                detenerMusicaInicio
+            );
+        })();
+    </script>
+
+</body>
+
+</html>

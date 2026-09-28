@@ -1,0 +1,173 @@
+.inventory-mission-timer {
+    display: inline-block;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: #57203d;
+    color: #fff;
+    font: 700 13px system-ui;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+
+.inventory-mission {
+    margin: 14px 0;
+    padding: 18px 22px;
+    border: 1px solid #9e74d4;
+    border-left: 4px solid #8b4dda;
+    border-radius: 10px;
+    background: #211a30;
+    color: #f8f2ff;
+    font: 14px/1.5 system-ui;
+}
+
+.inventory-mission h2 {
+    font-size: 21px;
+    margin: 4px 0 8px;
+}
+
+.inventory-mission-kicker {
+    color: #d6b9ff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .1em;
+}
+
+.inventory-mission p {
+    max-width: 950px;
+}
+
+.inventory-mission-decision {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px 16px;
+    margin-top: 12px;
+}
+
+.inventory-mission-decision label {
+    align-self: end;
+    font-weight: 700;
+}
+
+.inventory-mission-decision select {
+    width: 100%;
+    min-height: 44px;
+    padding: 9px;
+    border: 1px solid #9e74d4;
+    border-radius: 7px;
+    background: #fff;
+    color: #222;
+}
+
+.inventory-mission-decision button {
+    grid-column: 1 / -1;
+    justify-self: start;
+    min-height: 44px;
+    padding: 10px 18px;
+    border: 0;
+    border-radius: 7px;
+    background: #774ab9;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.inventory-mission-decision button:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+.inventory-scan-results {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 10px;
+}
+
+.inventory-scan-results p {
+    margin: 0;
+    padding: 11px;
+    border: 1px solid #46b989;
+    border-radius: 7px;
+    background: #15523d;
+    color: #fff;
+}
+
+#inventoryMissionFeedback {
+    padding: 10px;
+    border-radius: 7px;
+    background: #403150;
+}
+
+.inventory-mission .mission-wrong {
+    border: 2px solid #d63a50;
+    background: #fff0f1;
+    color: #9e152f;
+}
+
+.inventory-mission .mission-correct {
+    border: 2px solid #239e69;
+    background: #e8fff2;
+    color: #136b45;
+}
+
+#inventoryMissionDone.inventory-next-step {
+    margin-top: 16px;
+    padding: 18px;
+    border: 2px solid #60d6a2;
+    border-radius: 10px;
+    background: #104635;
+    color: #fff;
+    box-shadow: 0 8px 24px #041d1633;
+}
+
+.inventory-next-step span {
+    display: block;
+    color: #b9ffe1;
+    font-size: 11px;
+    letter-spacing: .1em;
+    font-weight: 800;
+}
+
+.inventory-next-step strong {
+    display: block;
+    margin: 8px 0;
+    font-size: 17px;
+    line-height: 1.4;
+}
+
+.inventory-next-step p {
+    margin: 0 0 13px;
+    color: #e0f8eb;
+}
+
+.inventory-next-step a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 46px;
+    padding: 10px 16px;
+    border-radius: 7px;
+    background: #fff;
+    color: #164d39;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.inventory-next-step a:hover,
+.inventory-next-step a:focus-visible {
+    background: #d5ffea;
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+}
+
+@media (max-width: 700px) {
+    .inventory-mission-decision {
+        grid-template-columns: 1fr;
+    }
+
+    .inventory-mission-decision button {
+        grid-column: 1;
+    }
+
+    .inventory-mission-timer {
+        font-size: 11px;
+    }
+}

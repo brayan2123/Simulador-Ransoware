@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1b102b">
+    <title>Activities | Simulador de Ransomware NeriumTech</title>
+    <link rel="stylesheet" href="CSS/Simulador.css">
+    <link rel="stylesheet" href="CSS/Activities.css">
+</head>
+
+<body>
+    <svg class="icon-sprite" aria-hidden="true">
+        <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+        <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 4.8 3.2 7.7 8 9 4.8-1.3 8-4.2 8-9V6l-8-3Z"/><path d="M12 8v5m0 3v.2"/></symbol>
+        <symbol id="i-bug" viewBox="0 0 24 24"><path d="M8 8.5h8v7a4 4 0 0 1-8 0v-7Z"/><path d="M9.5 8.5V7a2.5 2.5 0 0 1 5 0v1.5M4 11h4m8 0h4M5 6l3 2m11-2-3 2M4 16h4m8 0h4M6 21l3-3m9 3-3-3"/></symbol>
+        <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3m-4 4v3"/></symbol>
+        <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+        <symbol id="i-inventory" viewBox="0 0 24 24"><path d="M4 7h16v13H4zM7 3h10v4H7z"/><path d="M9 12h6"/></symbol>
+        <symbol id="i-graph" viewBox="0 0 24 24"><circle cx="5" cy="12" r="2"/><circle cx="18" cy="5" r="2"/><circle cx="19" cy="18" r="2"/><path d="m7 11 9-5m-9 7 10 4"/></symbol>
+        <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+        <symbol id="i-terminal" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m7 9 3 3-3 3m6 0h4"/></symbol>
+        <symbol id="i-radar" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/><path d="m12 12 6-6"/></symbol>
+        <symbol id="i-device" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8m-4-4v4"/></symbol>
+        <symbol id="i-report" viewBox="0 0 24 24"><path d="M5 3h10l4 4v14H5z"/><path d="M14 3v5h5M8 13h8m-8 4h6"/></symbol>
+        <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1.2l2-1.6-2-3.4-2.5 1A7 7 0 0 0 14.2 5.5L13.8 3h-4l-.4 2.5a7 7 0 0 0-1.9 1.1l-2.4-1-2 3.4 2 1.6A7 7 0 0 0 5 12c0 .4 0 .8.1 1.2l-2 1.6 2 3.4 2.4-1a7 7 0 0 0 1.9 1.1l.4 2.5h4l.4-2.5a7 7 0 0 0 2.2-1.1l2.5 1 2-3.4-2-1.6c.1-.4.1-.8.1-1.2Z"/></symbol>
+        <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14m8-14v14"/></symbol>
+        <symbol id="i-back" viewBox="0 0 24 24"><path d="m9 7-5 5 5 5M4 12h11a5 5 0 0 1 5 5"/></symbol>
+        <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+        <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9Z"/><path d="M10 21h4"/></symbol>
+        <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m8 10 4 4 4-4"/></symbol>
+        <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-4-4 4 4 4-4"/><path d="M4 15v5h16v-5"/></symbol>
+        <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 7v5h-5"/><path d="M18 16a8 8 0 1 1 1.5-8L20 12"/></symbol>
+        <symbol id="i-laptop" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="12" rx="2"/><path d="M2 19h20"/></symbol>
+        <symbol id="i-x" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+        <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+        <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    </svg>
+
+    <audio id="musicaFondo" src="Audio/Musica.mp3" loop></audio>
+
+    <header class="topbar">
+        <div class="topbar-left">
+            <button class="top-icon mobile-menu" id="btnAbrirMenu" type="button" aria-label="Abrir menú"><svg><use href="#i-menu"></use></svg></button>
+            <a class="brand-mini" href="Simulador.Html" aria-label="NeriumTech"><span>N</span></a>
+            <span class="top-divider"></span><span class="scope-circle">›</span>
+            <nav class="scope-path" aria-label="Ubicación actual">
+                <strong>Global</strong><b>/</b><strong>NeriumTech</strong><b>/</b><strong>Simulación Ransomware</strong><b>/</b>
+                <button type="button">Activities <svg><use href="#i-chevron"></use></svg></button>
+            </nav>
+        </div>
+        <div class="topbar-right">
+            <span class="simulation-state"><i></i> Simulación activa</span>
+            <time class="live-clock" id="relojSimulacion">00:00:00</time>
+            <button class="top-text-button" id="btnAyuda" type="button">Ayuda</button>
+            <button class="top-icon" id="btnPausa" type="button" aria-label="Pausar"><svg><use href="#i-pause"></use></svg></button>
+            <button class="top-icon" id="btnConfiguracion" type="button" aria-label="Configuración"><svg><use href="#i-settings"></use></svg></button>
+            <button class="top-icon" id="btnNotificaciones" type="button" aria-label="Notificaciones"><svg><use href="#i-bell"></use></svg><i class="notification-dot"></i></button>
+            <button class="top-icon" id="btnRegresar" type="button" aria-label="Regresar"><svg><use href="#i-back"></use></svg></button>
+            <span class="user-avatar">BC</span>
+        </div>
+    </header>
+
+    <div class="application-shell">
+        <aside class="sidebar" id="sidebar">
+            <label class="page-search"><svg><use href="#i-search"></use></svg><input id="menuSearch" type="search" placeholder="Buscar una página"><kbd>Ctrl K</kbd></label>
+            <nav class="sidebar-nav" aria-label="Módulos del simulador">
+                <a class="side-link" href="Simulador.Html" data-ready="true" data-route="dashboard" data-menu-text="dashboard resumen inicio"><svg><use href="#i-grid"></use></svg><span>Dashboards</span></a>
+                <span class="menu-section">Triage</span>
+                <a class="side-link" href="Alerts.html" data-ready="true" data-route="alerts" data-menu-text="alerts alertas incidentes"><svg><use href="#i-alert"></use></svg><span>Alerts</span><b class="menu-count">1</b></a>
+                <a class="side-link" href="Vulnerabilities.html" data-ready="true" data-route="vulnerabilities" data-menu-text="vulnerabilities vulnerabilidades"><svg><use href="#i-bug"></use></svg><span>Vulnerabilities</span></a>
+                <a class="side-link" href="misconfigurations.html" data-menu-text="misconfigurations configuraciones"><svg><use href="#i-lock"></use></svg><span>Misconfigurations</span></a>
+                <span class="menu-section">Discover</span>
+                <a class="side-link" href="event-search.html" data-ready="true" data-route="event-search" data-menu-text="event search eventos"><svg><use href="#i-search"></use></svg><span>Event Search</span></a>
+                <a class="side-link" href="inventory.html" data-ready="true" data-route="inventory" data-menu-text="inventory inventario"><svg><use href="#i-inventory"></use></svg><span>Inventory</span></a>
+                <a class="side-link" href="graph-explorer.html" data-ready="true" data-route="graph-explorer" data-menu-text="graph explorer mapa"><svg><use href="#i-graph"></use></svg><span>Graph Explorer</span></a>
+                <a class="side-link active" href="activities.html" data-ready="true" data-route="activities" data-menu-text="activities actividades"><svg><use href="#i-clock"></use></svg><span>Activities</span></a>
+                <span class="menu-section">Automate</span>
+                <a class="side-link" href="remoteops.html" data-menu-text="remoteops"><svg><use href="#i-terminal"></use></svg><span>RemoteOps</span></a>
+                <span class="menu-section">Configure</span>
+                <a class="side-link" href="detections.html" data-menu-text="detections"><svg><use href="#i-radar"></use></svg><span>Detections</span></a>
+                <a class="side-link" href="agent-management.html" data-menu-text="agent management"><svg><use href="#i-device"></use></svg><span>Agent management</span></a>
+                <a class="side-link" href="reports.html" data-menu-text="reports"><svg><use href="#i-report"></use></svg><span>Reports</span></a>
+                <a class="side-link" href="policies-settings.html" data-menu-text="policies settings"><svg><use href="#i-settings"></use></svg><span>Policies and settings</span></a>
+            </nav>
+            <div class="sidebar-footer"><span class="protection-dot"></span><div><strong>Protección activa</strong><small>24 agentes conectados</small></div></div>
+        </aside>
+
+        <button class="sidebar-backdrop" id="sidebarBackdrop" type="button" aria-label="Cerrar menú"></button>
+
+        <main class="main-content activities-main">
+            <header class="activities-page-header">
+                <h1>Activities</h1>
+                <nav><button class="active" type="button">Activity logs</button></nav>
+            </header>
+
+            <section class="activity-filters" aria-label="Filtros de actividad">
+                <label><span>Activity Category</span><select id="activityCategory"><option value="all">All</option><option value="security">Security</option><option value="system">System</option><option value="user">User</option></select></label>
+                <label><span>Activity Type</span><select id="activityType"><option value="all">All</option><option value="incident">Incident status</option><option value="login">User login/logout</option><option value="updates">Live Updates</option><option value="scan">Vulnerability scan</option><option value="endpoint">Endpoint actions</option></select></label>
+                <label><span>Users</span><select id="activityUser"><option value="all">All</option><option value="analyst">Analyst</option><option value="system">The system</option><option value="carlos">Carlos Hernández</option></select></label>
+                <label><span>Endpoint</span><select id="activityEndpoint"><option value="all">All</option><option value="fin-014">FIN-014</option><option value="america">America-Nerium</option><option value="ayco">AYCO</option><option value="karla">Karla-Nerium</option></select></label>
+                <label><span>Date Range</span><select id="activityDate"><option value="12">Last 12 Hours</option><option value="6">Last 6 Hours</option><option value="3">Last 3 Hours</option><option value="1">Last Hour</option></select></label>
+            </section>
+
+            <section class="activity-panel">
+                <header>
+                    <div><h2>Activity Logs</h2><span id="activityCount">9 registros</span></div>
+                    <nav>
+                        <button id="btnRefreshActivities" type="button" aria-label="Actualizar registros"><svg><use href="#i-refresh"></use></svg></button>
+                        <button id="btnDownloadActivities" type="button"><svg><use href="#i-download"></use></svg> Download CSV <span>⌄</span></button>
+                    </nav>
+                </header>
+
+                <div class="activity-table-wrap">
+                    <table class="activity-table">
+                        <thead>
+                            <tr>
+                                <th><button type="button" data-sort="time">Time <span>↕</span></button></th>
+                                <th><button type="button" data-sort="type">Activity Type <span>↕</span></button></th>
+                                <th>Description</th>
+                                <th>Actions</th>
+                                <th><button type="button" data-sort="user">Username <span>↕</span></button></th>
+                                <th><button type="button" data-sort="endpoint">Endpoint Name <span>↕</span></button></th>
+                            </tr>
+                        </thead>
+                        <tbody id="activityRows">
+                            <tr class="critical-activity" data-time="12" data-category="security" data-type="incident" data-user="analyst" data-endpoint="fin-014" data-title="Incident status changed" data-description="El incidente #2026-001 cambió de New a Investigating después de confirmar comportamiento de ransomware." data-action="Investigate" data-username="analista@neriumtech.com" data-endpoint-name="FIN-014">
+                                <td>Aug 21, 2026 4:13 PM</td><td><button class="activity-type-button" type="button">Incident status</button></td><td><strong>Incident #2026-001</strong> cambió de New a Investigating por el analista.</td><td><span class="activity-action">Investigate</span></td><td>analista@neriumtech.com</td><td><button class="endpoint-link" type="button"><svg><use href="#i-laptop"></use></svg> FIN-014</button></td>
+                            </tr>
+                            <tr data-time="11" data-category="user" data-type="login" data-user="analyst" data-endpoint="all" data-title="User login" data-description="El usuario de administración inició sesión correctamente desde la consola NeriumTech." data-action="—" data-username="analista@neriumtech.com" data-endpoint-name="—">
+                                <td>Aug 21, 2026 3:59 PM</td><td><button class="activity-type-button" type="button">User login/logout</button></td><td>El usuario de administración inició sesión. <small>IP address: 201.170.143.96</small></td><td>—</td><td>analista@neriumtech.com</td><td>—</td>
+                            </tr>
+                            <tr data-time="10" data-category="system" data-type="updates" data-user="system" data-endpoint="ayco" data-title="Live Updates installed" data-description="Las reglas de Memory Scanner se combinaron correctamente por el endpoint." data-action="Merged" data-username="The system" data-endpoint-name="AYCO">
+                                <td>Aug 21, 2026 3:40 PM</td><td><button class="activity-type-button" type="button">Live Updates</button></td><td><strong>Live Updates for Memory Scanner</strong> fueron instaladas. <small>IP address: 201.170.143.96</small></td><td><span class="activity-action success">Merged</span></td><td>—</td><td><button class="endpoint-link" type="button"><svg><use href="#i-laptop"></use></svg> AYCO</button></td>
+                            </tr>
+                            <tr data-time="8" data-category="system" data-type="updates" data-user="system" data-endpoint="america" data-title="Live Updates installed" data-description="Actualización de seguridad distribuida al endpoint America-Nerium." data-action="Merged" data-username="The system" data-endpoint-name="America-Nerium">
+                                <td>Aug 21, 2026 1:45 PM</td><td><button class="activity-type-button" type="button">Live Updates</button></td><td><strong>Live Updates for Memory Scanner</strong> fueron distribuidas por la consola.</td><td><span class="activity-action success">Merged</span></td><td>—</td><td><button class="endpoint-link" type="button"><svg><use href="#i-laptop"></use></svg> America-Nerium</button></td>
+                            </tr>
+                            <tr data-time="5" data-category="system" data-type="updates" data-user="system" data-endpoint="karla" data-title="Live Updates installed" data-description="El endpoint recibió las reglas de detección más recientes." data-action="Merged" data-username="The system" data-endpoint-name="Karla-Nerium">
+                                <td>Aug 21, 2026 10:15 AM</td><td><button class="activity-type-button" type="button">Live Updates</button></td><td><strong>Live Updates for Memory Scanner</strong> fueron instaladas en Karla-Nerium.</td><td><span class="activity-action success">Merged</span></td><td>—</td><td><button class="endpoint-link" type="button"><svg><use href="#i-laptop"></use></svg> Karla-Nerium</button></td>
+                            </tr>
+                            <tr data-time="4" data-category="security" data-type="scan" data-user="system" data-endpoint="all" data-title="Vulnerability scan started" data-description="El sistema inició un análisis de vulnerabilidades para 6 agentes conectados y 9 desconectados." data-action="Scanning" data-username="The system" data-endpoint-name="15 endpoints">
+                                <td>Aug 21, 2026 9:04 AM</td><td><button class="activity-type-button" type="button">Vulnerability scan</button></td><td>El comando de análisis fue enviado a <strong>6 agentes online y 9 offline</strong>.</td><td><span class="activity-action warning">Scanning</span></td><td>The system</td><td>15 endpoints</td>
+                            </tr>
+                            <tr data-time="3" data-category="security" data-type="endpoint" data-user="carlos" data-endpoint="fin-014" data-title="Endpoint isolated" data-description="FIN-014 fue aislado de la red para detener la propagación del ransomware." data-action="Isolated" data-username="Carlos Hernández" data-endpoint-name="FIN-014">
+                                <td>Aug 21, 2026 8:57 AM</td><td><button class="activity-type-button" type="button">Endpoint action</button></td><td><strong>FIN-014 fue aislado</strong> de la red, conservando comunicación con SentinelOne.</td><td><span class="activity-action isolated">Isolated</span></td><td>Carlos Hernández</td><td><button class="endpoint-link" type="button"><svg><use href="#i-laptop"></use></svg> FIN-014</button></td>
+                            </tr>
+                            <tr data-time="2" data-category="system" data-type="updates" data-user="system" data-endpoint="all" data-title="Policy synchronized" data-description="La política Ransomware Protection fue sincronizada con todos los endpoints disponibles." data-action="Applied" data-username="The system" data-endpoint-name="Global">
+                                <td>Aug 21, 2026 8:18 AM</td><td><button class="activity-type-button" type="button">Policy update</button></td><td>La política <strong>Ransomware Protection</strong> fue sincronizada.</td><td><span class="activity-action success">Applied</span></td><td>The system</td><td>Global</td>
+                            </tr>
+                            <tr data-time="1" data-category="system" data-type="updates" data-user="system" data-endpoint="all" data-title="Live Updates installed" data-description="Actualización diaria de motores de detección completada correctamente." data-action="Merged" data-username="The system" data-endpoint-name="Leslie-Nerium">
+                                <td>Aug 21, 2026 7:53 AM</td><td><button class="activity-type-button" type="button">Live Updates</button></td><td><strong>Live Updates for Memory Scanner</strong> fueron instaladas.</td><td><span class="activity-action success">Merged</span></td><td>—</td><td><button class="endpoint-link" type="button"><svg><use href="#i-laptop"></use></svg> Leslie-Nerium</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="activity-empty" id="activityEmpty" hidden><svg><use href="#i-search"></use></svg><strong>No se encontraron actividades</strong><span>Cambia los filtros para mostrar otros registros.</span></div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div class="activity-drawer-layer" id="activityDrawer" aria-hidden="true">
+        <button class="activity-drawer-backdrop" id="closeActivityBackdrop" type="button" aria-label="Cerrar detalle"></button>
+        <aside class="activity-drawer" role="dialog" aria-modal="true" aria-labelledby="activityDetailTitle">
+            <header><div><span>ACTIVITY DETAILS</span><h2 id="activityDetailTitle">Incident status changed</h2></div><button id="closeActivityDrawer" type="button" aria-label="Cerrar"><svg><use href="#i-x"></use></svg></button></header>
+            <div class="activity-detail-status"><span><svg><use href="#i-check"></use></svg></span><div><strong id="activityDetailAction">Investigate</strong><small>Acción registrada correctamente</small></div></div>
+            <p id="activityDetailDescription">El incidente cambió a Investigating.</p>
+            <dl><div><dt>Usuario</dt><dd id="activityDetailUser">analista@neriumtech.com</dd></div><div><dt>Endpoint</dt><dd id="activityDetailEndpoint">FIN-014</dd></div><div><dt>Fecha y hora</dt><dd id="activityDetailTime">Aug 21, 2026 4:13 PM</dd></div><div><dt>Resultado</dt><dd id="activityDetailResult">Completed</dd></div></dl>
+            <div class="activity-detail-buttons"><button id="btnCopyActivity" type="button">Copiar detalles</button><button class="primary" id="btnOpenActivityTarget" type="button">Abrir endpoint</button></div>
+        </aside>
+    </div>
+
+    <div class="overlay" id="overlayPausa"><div class="modal pause-modal"><div class="modal-icon"><svg><use href="#i-pause"></use></svg></div><span class="modal-label">SIMULADOR</span><h2>Simulación en pausa</h2><p>El registro de actividades está detenido temporalmente.</p><button class="modal-button primary" id="btnContinuar" type="button">Continuar</button><button class="modal-button" id="btnConfigPausa" type="button">Configuración</button><button class="modal-button ghost" id="btnInicioPausa" type="button">Regresar al inicio</button></div></div>
+    <div class="overlay" id="overlayConfig"><div class="modal config-modal"><header class="modal-header"><div><span class="modal-label">SYSTEM</span><h2>Configuración</h2></div><button id="cerrarConfig" type="button">×</button></header><div class="config-row"><div><strong>Música</strong><small>Volumen de música</small></div><div class="range-wrap"><input id="volumenMusica" type="range" min="0" max="100" value="25"><output id="valorMusica">25%</output></div></div><div class="config-row"><div><strong>Efectos</strong><small>Sonidos de botones</small></div><div class="range-wrap"><input id="volumenEfectos" type="range" min="0" max="100" value="50"><output id="valorEfectos">50%</output></div></div><label class="config-row toggle-row"><div><strong>Silenciar todo</strong></div><input id="silenciar" type="checkbox"><span class="toggle"></span></label><button class="modal-button primary" id="guardarConfig" type="button">Guardar y volver</button></div></div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"><span>✓</span><p id="toastTexto">Acción completada</p></div>
+
+    <script src="JS/Navegacion.js"></script>
+    <script src="JS/Activities.js"></script>
+</body>
+
+</html>

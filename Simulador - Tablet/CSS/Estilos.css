@@ -1,0 +1,1240 @@
+/* =========================================
+   CONFIGURACIÓN GENERAL
+========================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+html,
+body {
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+
+    background: #000;
+
+}
+
+
+body {
+
+    font-family: Arial, Helvetica, sans-serif;
+
+}
+
+
+
+/* =========================================
+   FONDO
+========================================= */
+
+.fondo {
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    object-fit: fill;
+
+    object-position: center;
+
+    display: block;
+
+    z-index: 0;
+
+}
+
+
+
+/* =========================================
+   CAPA DE INTERFAZ
+========================================= */
+
+.pantalla {
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    z-index: 2;
+
+    pointer-events: none;
+
+}
+
+
+
+/* =========================================
+   MENÚ PRINCIPAL
+========================================= */
+
+.menu {
+
+    position: absolute;
+
+    left: 50%;
+    top: 67%;
+
+    transform: translate(-50%, -50%);
+
+    width: 345px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 14px;
+
+    pointer-events: auto;
+
+}
+
+
+
+/* =========================================
+   BOTONES
+========================================= */
+
+.menu-btn {
+
+    width: 345px;
+    height: 82px;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 0 25px;
+
+    background: linear-gradient(
+        135deg,
+        rgba(25, 10, 40, 0.94),
+        rgba(8, 4, 13, 0.94)
+    );
+
+    border: 1px solid rgba(153, 52, 255, 0.70);
+
+    border-radius: 7px;
+
+    color: #fff;
+
+    cursor: pointer;
+
+    box-shadow:
+
+        0 5px 18px rgba(0, 0, 0, 0.50),
+
+        inset 0 0 20px rgba(130, 0, 255, 0.07);
+
+    transition:
+
+        transform 0.2s ease,
+
+        border-color 0.2s ease,
+
+        box-shadow 0.2s ease,
+
+        background 0.2s ease;
+
+}
+
+
+
+.menu-btn:hover {
+
+    transform: translateX(4px);
+
+    border-color: #a933ff;
+
+    background: linear-gradient(
+        135deg,
+        rgba(48, 16, 70, 0.96),
+        rgba(10, 5, 16, 0.96)
+    );
+
+    box-shadow:
+
+        0 0 20px rgba(145, 35, 255, 0.30),
+
+        inset 0 0 20px rgba(145, 35, 255, 0.10);
+
+}
+
+
+
+.menu-btn:active {
+
+    transform: translateX(2px) scale(0.98);
+
+}
+
+
+
+/* =========================================
+   ICONOS
+========================================= */
+
+.icono {
+
+    width: 62px;
+
+    min-width: 62px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: #922cff;
+
+    filter:
+
+        drop-shadow(
+            0 0 6px rgba(145, 40, 255, 0.60)
+        );
+
+}
+
+
+.play {
+
+    font-size: 40px;
+
+    line-height: 1;
+
+}
+
+
+.engranaje {
+
+    font-size: 41px;
+
+    line-height: 1;
+
+}
+
+
+.usuario {
+
+    font-size: 46px;
+
+    line-height: 1;
+
+}
+
+
+
+/* =========================================
+   TEXTO
+========================================= */
+
+.texto-btn {
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    text-align: left;
+
+    margin-left: 13px;
+
+}
+
+
+.titulo-btn {
+
+    color: #ffffff;
+
+    font-size: 21px;
+
+    font-weight: 500;
+
+    line-height: 1.2;
+
+    letter-spacing: 0.3px;
+
+}
+
+
+.subtitulo-btn {
+
+    color: #e5e0e8;
+
+    font-size: 13px;
+
+    font-weight: 400;
+
+    margin-top: 6px;
+
+    line-height: 1.2;
+
+}
+
+
+
+/* =========================================
+   PANEL DE AJUSTES
+========================================= */
+
+.panel-ajustes {
+
+    display: none;
+
+    position: fixed;
+
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    width: 380px;
+
+    padding: 30px;
+
+    background: rgba(15, 10, 25, 0.97);
+
+    border: 2px solid #8b5cf6;
+
+    border-radius: 20px;
+
+    color: white;
+
+    box-shadow:
+
+        0 0 35px rgba(139, 92, 246, 0.7),
+
+        0 20px 50px rgba(0, 0, 0, 0.7);
+
+    z-index: 100;
+
+}
+
+
+
+/* =========================================
+   TÍTULO DEL PANEL
+========================================= */
+
+.panel-ajustes h2 {
+
+    text-align: center;
+
+    font-size: 30px;
+
+    margin-bottom: 25px;
+
+}
+
+
+
+/* =========================================
+   SUBTÍTULOS
+========================================= */
+
+.panel-ajustes h3 {
+
+    margin-top: 22px;
+
+    margin-bottom: 15px;
+
+    padding-bottom: 8px;
+
+    color: #c084fc;
+
+    border-bottom: 1px solid #8b5cf6;
+
+}
+
+
+
+/* =========================================
+   AJUSTES
+========================================= */
+
+.ajuste {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin: 20px 0;
+
+    font-size: 16px;
+
+}
+
+
+
+/* =========================================
+   BARRAS DE VOLUMEN
+========================================= */
+
+input[type="range"] {
+
+    width: 140px;
+
+    cursor: pointer;
+
+    accent-color: #8b5cf6;
+
+}
+
+
+
+/* =========================================
+   CHECKBOX
+========================================= */
+
+input[type="checkbox"] {
+
+    width: 21px;
+
+    height: 21px;
+
+    cursor: pointer;
+
+    accent-color: #8b5cf6;
+
+}
+
+
+
+/* =========================================
+   SELECT IDIOMA
+========================================= */
+
+select {
+
+    padding: 8px 12px;
+
+    border-radius: 8px;
+
+    background: #252525;
+
+    color: white;
+
+    border: 1px solid #8b5cf6;
+
+    cursor: pointer;
+
+    font-size: 15px;
+
+}
+
+
+
+/* =========================================
+   BOTÓN VOLVER
+========================================= */
+
+#cerrarAjustes {
+
+    width: 100%;
+
+    margin-top: 20px;
+
+    padding: 13px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #8b5cf6;
+
+    color: white;
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+
+}
+
+
+#cerrarAjustes:hover {
+
+    background: #a855f7;
+
+    transform: scale(1.03);
+
+}
+
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 1000px) {
+
+    .fondo {
+
+        object-fit: cover;
+
+    }
+
+
+    .menu {
+
+        width: 310px;
+
+        top: 67%;
+
+        gap: 12px;
+
+    }
+
+
+    .menu-btn {
+
+        width: 310px;
+
+        height: 74px;
+
+        padding: 0 20px;
+
+    }
+
+
+    .icono {
+
+        width: 55px;
+
+        min-width: 55px;
+
+    }
+
+
+    .play {
+
+        font-size: 36px;
+
+    }
+
+
+    .engranaje {
+
+        font-size: 37px;
+
+    }
+
+
+    .usuario {
+
+        font-size: 41px;
+
+    }
+
+
+    .texto-btn {
+
+        margin-left: 10px;
+
+    }
+
+
+    .titulo-btn {
+
+        font-size: 19px;
+
+    }
+
+
+    .subtitulo-btn {
+
+        font-size: 12px;
+
+    }
+
+}
+
+
+
+/* =========================================
+   TELÉFONO
+========================================= */
+
+@media (max-width: 600px) {
+
+    .fondo {
+
+        object-fit: cover;
+
+    }
+
+
+    .menu {
+
+        width: 82vw;
+
+        max-width: 320px;
+
+        top: 70%;
+
+        gap: 10px;
+
+    }
+
+
+    .menu-btn {
+
+        width: 100%;
+
+        height: 68px;
+
+        padding: 0 15px;
+
+    }
+
+
+    .icono {
+
+        width: 48px;
+
+        min-width: 48px;
+
+    }
+
+
+    .play {
+
+        font-size: 31px;
+
+    }
+
+
+    .engranaje {
+
+        font-size: 33px;
+
+    }
+
+
+    .usuario {
+
+        font-size: 36px;
+
+    }
+
+
+    .texto-btn {
+
+        margin-left: 8px;
+
+    }
+
+
+    .titulo-btn {
+
+        font-size: 17px;
+
+    }
+
+
+    .subtitulo-btn {
+
+        font-size: 10px;
+
+        margin-top: 4px;
+
+    }
+
+
+    .panel-ajustes {
+
+        width: 90vw;
+
+        max-width: 380px;
+
+        padding: 22px;
+
+    }
+
+
+    .panel-ajustes h2 {
+
+        font-size: 26px;
+
+    }
+
+
+    .ajuste {
+
+        font-size: 14px;
+
+    }
+
+
+    input[type="range"] {
+
+        width: 110px;
+
+    }
+
+}
+
+/* =========================================
+   PANEL DE CRÉDITOS
+========================================= */
+
+.panel-creditos {
+
+    display: none;
+
+    position: fixed;
+
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    width: 380px;
+
+    padding: 30px;
+
+    background: rgba(15, 10, 25, 0.97);
+
+    border: 2px solid #8b5cf6;
+
+    border-radius: 20px;
+
+    color: white;
+
+    text-align: center;
+
+    box-shadow:
+        0 0 35px rgba(139, 92, 246, 0.7),
+        0 20px 50px rgba(0, 0, 0, 0.7);
+
+    z-index: 100;
+
+    animation: entradaCreditos 0.3s ease;
+
+}
+
+
+/* =========================================
+   NERIUM
+========================================= */
+
+.logo-nerium {
+
+    font-size: 34px;
+
+    font-weight: bold;
+
+    letter-spacing: 5px;
+
+    color: #ffffff;
+
+    text-shadow:
+        0 0 10px rgba(139, 92, 246, 0.8);
+
+}
+
+
+.subtitulo-nerium {
+
+    margin-top: 5px;
+
+    font-size: 11px;
+
+    letter-spacing: 4px;
+
+    color: #c084fc;
+
+}
+
+
+
+/* =========================================
+   TÍTULO
+========================================= */
+
+.panel-creditos h2 {
+
+    margin: 20px 0;
+
+    font-size: 27px;
+
+    color: #ffffff;
+
+    letter-spacing: 2px;
+
+}
+
+
+.nombre-proyecto {
+
+    font-size: 15px;
+
+    line-height: 1.6;
+
+    color: #e5e0e8;
+
+}
+
+
+
+/* =========================================
+   SEPARADORES
+========================================= */
+
+.separador {
+
+    width: 100%;
+
+    height: 1px;
+
+    margin: 20px 0;
+
+    background: #8b5cf6;
+
+    opacity: 0.7;
+
+}
+
+
+
+/* =========================================
+   INFORMACIÓN
+========================================= */
+
+.titulo-info {
+
+    font-size: 11px;
+
+    letter-spacing: 2px;
+
+    color: #c084fc;
+
+    margin-bottom: 7px;
+
+}
+
+
+.dato-info {
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    color: #ffffff;
+
+}
+
+
+
+/* =========================================
+   VERSIÓN
+========================================= */
+
+.version {
+
+    margin-top: 15px;
+
+    font-size: 13px;
+
+    color: #c084fc;
+
+}
+
+
+.copyright {
+
+    margin-top: 5px;
+
+    font-size: 11px;
+
+    color: #888;
+
+}
+
+
+
+/* =========================================
+   BOTÓN VOLVER
+========================================= */
+
+#cerrarCreditos {
+
+    width: 100%;
+
+    margin-top: 20px;
+
+    padding: 13px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #8b5cf6;
+
+    color: white;
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+
+}
+
+
+#cerrarCreditos:hover {
+
+    background: #a855f7;
+
+    transform: scale(1.03);
+
+}
+
+
+
+/* =========================================
+   ANIMACIÓN
+========================================= */
+
+@keyframes entradaCreditos {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translate(-50%, -45%);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translate(-50%, -50%);
+
+    }
+
+}
+
+
+
+/* =========================================
+   MÓVIL
+========================================= */
+
+@media (max-width: 600px) {
+
+    .panel-creditos {
+
+        width: 90vw;
+
+        max-width: 380px;
+
+        padding: 22px;
+
+    }
+
+
+    .logo-nerium {
+
+        font-size: 28px;
+
+    }
+
+
+    .panel-creditos h2 {
+
+        font-size: 24px;
+
+    }
+
+
+    .nombre-proyecto {
+
+        font-size: 13px;
+
+    }
+
+}
+
+
+/* =========================================
+   BENEFICIOS INFERIORES
+========================================= */
+
+.beneficios {
+
+    position: fixed;
+
+    left: 50%;
+    bottom: 6.5%;
+
+    transform: translateX(-50%);
+
+    width: min(680px, 90vw);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 25px;
+
+    color: #ffffff;
+
+    z-index: 3;
+
+    pointer-events: none;
+
+    text-shadow:
+        0 2px 5px rgba(0, 0, 0, 0.95);
+
+}
+
+
+.beneficio {
+
+    display: flex;
+    align-items: center;
+
+    min-width: max-content;
+
+    gap: 13px;
+
+}
+
+
+.beneficio-icono {
+
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #ffffff;
+
+    filter:
+        drop-shadow(0 2px 4px rgba(0, 0, 0, 0.9));
+
+}
+
+
+.beneficio-icono svg {
+
+    width: 100%;
+    height: 100%;
+
+    fill: none;
+
+    stroke: currentColor;
+
+    stroke-width: 2.4;
+
+    stroke-linecap: round;
+    stroke-linejoin: round;
+
+}
+
+
+.beneficio-texto {
+
+    display: flex;
+    flex-direction: column;
+
+    text-align: left;
+
+}
+
+
+.beneficio-titulo {
+
+    color: #ffffff;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    line-height: 1.1;
+
+    letter-spacing: 0.2px;
+
+}
+
+
+.beneficio-subtitulo {
+
+    margin-top: 5px;
+
+    color: #d7d3da;
+
+    font-size: 12px;
+    font-weight: 400;
+
+    line-height: 1.1;
+
+}
+
+
+.beneficio-separador {
+
+    width: 3px;
+    height: 39px;
+
+    flex-shrink: 0;
+
+    border-radius: 4px;
+
+    background: #922cff;
+
+    box-shadow:
+        0 0 8px rgba(146, 44, 255, 0.8);
+
+}
+
+
+/* =========================================
+   BENEFICIOS EN TABLET
+========================================= */
+
+@media (max-width: 1000px) {
+
+    .beneficios {
+
+        bottom: 4.5%;
+
+        width: 92vw;
+
+        gap: 15px;
+
+    }
+
+
+    .beneficio {
+
+        gap: 9px;
+
+    }
+
+
+    .beneficio-icono {
+
+        width: 34px;
+        height: 34px;
+
+    }
+
+
+    .beneficio-titulo {
+
+        font-size: 12px;
+
+    }
+
+
+    .beneficio-subtitulo {
+
+        font-size: 10px;
+
+    }
+
+
+    .beneficio-separador {
+
+        height: 32px;
+
+    }
+
+}
+
+
+/* =========================================
+   BENEFICIOS EN TELÉFONO
+========================================= */
+
+@media (max-width: 600px) {
+
+    .beneficios {
+
+        bottom: 2%;
+
+        width: 95vw;
+
+        gap: 7px;
+
+    }
+
+
+    .beneficio {
+
+        flex: 1;
+
+        min-width: 0;
+
+        justify-content: center;
+
+        gap: 5px;
+
+    }
+
+
+    .beneficio-icono {
+
+        width: 25px;
+        height: 25px;
+
+        min-width: 25px;
+
+    }
+
+
+    .beneficio-titulo {
+
+        font-size: 8px;
+
+    }
+
+
+    .beneficio-subtitulo {
+
+        margin-top: 3px;
+
+        font-size: 7px;
+
+    }
+
+
+    .beneficio-separador {
+
+        width: 2px;
+        height: 26px;
+
+    }
+
+}

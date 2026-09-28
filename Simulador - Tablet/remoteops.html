@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1b102b">
+    <title>RemoteOps | Simulador de Ransomware NeriumTech</title>
+    <link rel="stylesheet" href="CSS/Simulador.css">
+    <link rel="stylesheet" href="CSS/RemoteMission.css">
+    <link rel="stylesheet" href="CSS/RemoteOps.css">
+
+
+<style>
+    /* Ajustes de compatibilidad del rediseño. El estilo principal vive en CSS/RemoteOps.css */
+    @media (max-width: 650px) {
+        .stage-objective { align-items: flex-start; }
+    }
+
+    /* =========================================
+       INSTRUCCIONES · ESTILO UNIFICADO
+    ========================================= */
+    .instructions-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        min-width: 170px;
+        min-height: 44px;
+        padding: 0 18px;
+        border: 1px solid #7b2ff7;
+        border-radius: 9px;
+        background: #7b2ff7;
+        color: #ffffff;
+        font-size: 12px;
+        font-weight: 800;
+        cursor: pointer;
+        box-shadow: 0 7px 18px rgba(53, 16, 94, 0.16);
+        transition:
+            transform 140ms ease,
+            background 140ms ease,
+            border-color 140ms ease,
+            box-shadow 140ms ease;
+    }
+
+    .instructions-button:hover {
+        background: #6524d9;
+        border-color: #6524d9;
+        color: #ffffff;
+        transform: translateY(-1px);
+        box-shadow: 0 9px 22px rgba(53, 16, 94, 0.20);
+    }
+
+    .instructions-button:focus,
+    .instructions-button:focus-visible,
+    .instructions-button:active {
+        background: #35105e;
+        border-color: #35105e;
+        color: #ffffff;
+        outline: 3px solid rgba(123, 47, 247, 0.20);
+        outline-offset: 2px;
+    }
+
+    .instructions-button.attention {
+        animation: instructionPulse 1.15s ease-in-out 4;
+    }
+
+    .instructions-button.instructions-seen {
+        background: #35105e;
+        border-color: #35105e;
+        color: #ffffff;
+    }
+
+    .instructions-button.instructions-seen::after {
+        content: " ✓";
+        font-weight: 900;
+    }
+
+    @keyframes instructionPulse {
+        0%, 100% {
+            box-shadow: 0 7px 18px rgba(53, 16, 94, 0.16);
+        }
+        50% {
+            box-shadow:
+                0 0 0 5px rgba(123, 47, 247, 0.16),
+                0 10px 24px rgba(53, 16, 94, 0.22);
+        }
+    }
+
+    .remote-instructions-card {
+        display: grid;
+        grid-template-columns: 42px minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 12px;
+        margin-top: 12px;
+        padding: 12px 14px;
+        border: 1px solid rgba(123, 47, 247, 0.18);
+        border-radius: 12px;
+        background: #ffffff;
+        box-shadow: 0 7px 20px rgba(14, 8, 23, 0.08);
+    }
+
+    .remote-instructions-icon {
+        display: grid;
+        width: 38px;
+        height: 38px;
+        place-items: center;
+        border-radius: 9px;
+        background: #f1e9ff;
+        color: #7b2ff7;
+        font-size: 18px;
+    }
+
+    .remote-instructions-copy {
+        min-width: 0;
+    }
+
+    .remote-instructions-copy strong {
+        display: block;
+        margin-bottom: 2px;
+        color: #2a173f;
+        font-size: 12px;
+    }
+
+    .remote-instructions-copy small {
+        display: block;
+        color: #71667c;
+        font-size: 10px;
+        line-height: 1.35;
+    }
+
+    .remote-instructions-card .instructions-button {
+        min-width: 156px;
+        min-height: 40px;
+        padding: 0 14px;
+    }
+
+    /* =========================================
+       MODAL DE INSTRUCCIONES
+    ========================================= */
+    .instructions-layer {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 22px;
+        background: rgba(17, 9, 28, 0.62);
+        backdrop-filter: blur(3px);
+    }
+
+    .instructions-layer.active {
+        display: flex;
+    }
+
+    .instructions-modal {
+        width: min(620px, 96vw);
+        max-height: 88vh;
+        overflow-y: auto;
+        border: 1px solid rgba(123, 47, 247, 0.30);
+        border-radius: 16px;
+        background: #ffffff;
+        box-shadow: 0 24px 70px rgba(18, 8, 30, 0.28);
+        animation: instructionsEnter 170ms ease-out;
+    }
+
+    @keyframes instructionsEnter {
+        from {
+            opacity: 0;
+            transform: translateY(10px) scale(0.985);
+        }
+    }
+
+    .instructions-modal-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 20px 22px 15px;
+        border-bottom: 1px solid #ece7f2;
+    }
+
+    .instructions-modal-header span {
+        display: block;
+        margin-bottom: 4px;
+        color: #7b2ff7;
+        font-size: 10px;
+        font-weight: 900;
+        letter-spacing: 1.2px;
+    }
+
+    .instructions-modal-header h2 {
+        margin: 0;
+        color: #261535;
+        font-size: 21px;
+    }
+
+    .instructions-close {
+        width: 34px;
+        height: 34px;
+        flex: 0 0 34px;
+        border: 0;
+        border-radius: 8px;
+        background: #f4effa;
+        color: #35105e;
+        font-size: 21px;
+        cursor: pointer;
+    }
+
+    .instructions-close:hover {
+        background: #ece2f8;
+    }
+
+    .instructions-modal-body {
+        padding: 18px 22px 10px;
+    }
+
+    .instruction-step {
+        display: grid;
+        grid-template-columns: 34px 1fr;
+        gap: 12px;
+        align-items: start;
+        padding: 12px 0;
+        border-bottom: 1px solid #f0ecf4;
+    }
+
+    .instruction-step:last-of-type {
+        border-bottom: 0;
+    }
+
+    .instruction-step b.step-number {
+        display: grid;
+        width: 32px;
+        height: 32px;
+        place-items: center;
+        border-radius: 50%;
+        background: #35105e;
+        color: #ffffff;
+        font-size: 13px;
+    }
+
+    .instruction-step strong {
+        display: block;
+        margin-bottom: 4px;
+        color: #2b183d;
+        font-size: 13px;
+    }
+
+    .instruction-step p {
+        margin: 0;
+        color: #665d6d;
+        font-size: 12px;
+        line-height: 1.55;
+    }
+
+    .instructions-tip {
+        margin: 12px 0 0;
+        padding: 12px 14px;
+        border-left: 4px solid #7b2ff7;
+        border-radius: 8px;
+        background: #f7f2ff;
+        color: #51465a;
+        font-size: 12px;
+        line-height: 1.5;
+    }
+
+    .instructions-modal-footer {
+        display: flex;
+        justify-content: flex-end;
+        padding: 14px 22px 20px;
+    }
+
+    .instructions-understood {
+        min-height: 38px;
+        padding: 0 18px;
+        border: 0;
+        border-radius: 8px;
+        background: #35105e;
+        color: #ffffff;
+        font-size: 12px;
+        font-weight: 800;
+        cursor: pointer;
+    }
+
+    .instructions-understood:hover {
+        background: #4b187f;
+    }
+
+    @media (max-width: 780px) {
+        .remote-instructions-card {
+            grid-template-columns: 38px 1fr;
+        }
+
+        .remote-instructions-card .instructions-button {
+            grid-column: 1 / -1;
+            width: 100%;
+        }
+    }
+
+
+    .remote-instructions-only {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 12px;
+    }
+
+    .remote-instructions-only .instructions-button {
+        min-width: 180px;
+    }
+
+    @media (max-width: 780px) {
+        .remote-instructions-only .instructions-button {
+            width: 100%;
+        }
+    }
+
+</style>
+</head>
+
+<body>
+    <svg class="icon-sprite" aria-hidden="true">
+        <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+        <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 4.8 3.2 7.7 8 9 4.8-1.3 8-4.2 8-9V6l-8-3Z"/><path d="M12 8v5m0 3v.2"/></symbol>
+        <symbol id="i-bug" viewBox="0 0 24 24"><path d="M8 8.5h8v7a4 4 0 0 1-8 0v-7Z"/><path d="M9.5 8.5V7a2.5 2.5 0 0 1 5 0v1.5M4 11h4m8 0h4M5 6l3 2m11-2-3 2M4 16h4m8 0h4M6 21l3-3m9 3-3-3"/></symbol>
+        <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3m-4 4v3"/></symbol>
+        <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+        <symbol id="i-inventory" viewBox="0 0 24 24"><path d="M4 7h16v13H4zM7 3h10v4H7z"/><path d="M9 12h6"/></symbol>
+        <symbol id="i-graph" viewBox="0 0 24 24"><circle cx="5" cy="12" r="2"/><circle cx="18" cy="5" r="2"/><circle cx="19" cy="18" r="2"/><path d="m7 11 9-5m-9 7 10 4"/></symbol>
+        <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+        <symbol id="i-terminal" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m7 9 3 3-3 3m6 0h4"/></symbol>
+        <symbol id="i-radar" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/><path d="m12 12 6-6"/></symbol>
+        <symbol id="i-device" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8m-4-4v4"/></symbol>
+        <symbol id="i-report" viewBox="0 0 24 24"><path d="M5 3h10l4 4v14H5z"/><path d="M14 3v5h5M8 13h8m-8 4h6"/></symbol>
+        <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1.2l2-1.6-2-3.4-2.5 1A7 7 0 0 0 14.2 5.5L13.8 3h-4l-.4 2.5a7 7 0 0 0-1.9 1.1l-2.4-1-2 3.4 2 1.6A7 7 0 0 0 5 12c0 .4 0 .8.1 1.2l-2 1.6 2 3.4 2.4-1a7 7 0 0 0 1.9 1.1l.4 2.5h4l.4-2.5a7 7 0 0 0 2.2-1.1l2.5 1 2-3.4-2-1.6c.1-.4.1-.8.1-1.2Z"/></symbol>
+        <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14m8-14v14"/></symbol>
+        <symbol id="i-back" viewBox="0 0 24 24"><path d="m9 7-5 5 5 5M4 12h11a5 5 0 0 1 5 5"/></symbol>
+        <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+        <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9Z"/><path d="M10 21h4"/></symbol>
+        <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m8 10 4 4 4-4"/></symbol>
+        <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4m-4 4 4-4 4 4"/><path d="M4 15v5h16v-5"/></symbol>
+        <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3m3 0-1 14H7L6 7m4 4v6m4-6v6"/></symbol>
+        <symbol id="i-play" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7Z"/></symbol>
+        <symbol id="i-edit" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16v4Z"/><path d="m13 7 4 4"/></symbol>
+        <symbol id="i-x" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+        <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+        <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v.2"/></symbol>
+        <symbol id="i-file" viewBox="0 0 24 24"><path d="M5 3h10l4 4v14H5z"/><path d="M14 3v5h5"/></symbol>
+        <symbol id="i-windows" viewBox="0 0 24 24"><path d="M3 5.5 10.5 4v7H3zM12 3.7 21 2v9h-9zM3 12.5h7.5v7L3 18zM12 12.5h9V22l-9-1.7z"/></symbol>
+        <symbol id="i-apple" viewBox="0 0 24 24"><path d="M16.8 12.5c0-2.4 2-3.6 2.1-3.7a4.6 4.6 0 0 0-3.6-1.9c-1.5-.2-3 1-3.8 1s-2.1-1-3.4-1C6.4 7 4.8 8 3.9 9.5c-1.9 3.2-.5 8 1.3 10.6.9 1.3 2 2.7 3.4 2.6 1.3-.1 1.9-.9 3.5-.9s2.1.9 3.5.9c1.5 0 2.4-1.3 3.3-2.6 1-1.5 1.5-3 1.5-3.1-.1 0-3.6-1.4-3.6-4.5ZM14.3 5.3A4.2 4.2 0 0 0 15.3 2a4.5 4.5 0 0 0-3 1.6 4 4 0 0 0-1.1 3.1 3.7 3.7 0 0 0 3.1-1.4Z"/></symbol>
+    </svg>
+
+    <audio id="musicaFondo" src="Audio/Musica.mp3" loop></audio>
+
+    <header class="topbar">
+        <div class="topbar-left">
+            <button class="top-icon mobile-menu" id="btnAbrirMenu" type="button" aria-label="Abrir menú"><svg><use href="#i-menu"></use></svg></button>
+            <a class="brand-mini" href="Simulador.html" aria-label="NeriumTech"><span>N</span></a>
+            <span class="top-divider"></span><span class="scope-circle">›</span>
+            <nav class="scope-path" aria-label="Ubicación actual">
+                <strong>Global</strong><b>/</b><strong>NeriumTech</strong><b>/</b><strong>Simulación Ransomware</strong><b>/</b>
+                <button type="button">RemoteOps <svg><use href="#i-chevron"></use></svg></button>
+            </nav>
+        </div>
+        <div class="topbar-right">
+            <span class="simulation-state"><i></i> Simulación activa</span>
+            <time class="live-clock" id="relojSimulacion">00:00:00</time>
+
+            <button
+                class="instructions-button attention topbar-instructions-button"
+                id="btnStageInstructions"
+                type="button"
+                aria-haspopup="dialog"
+                aria-controls="stageInstructionsModal">
+                📘 Ver instrucciones
+            </button>
+
+            <strong id="scenarioTimer" class="remote-mission-timer">Sin iniciar</strong>
+            <button class="top-text-button" id="btnAyuda" type="button">Ayuda</button>
+            <button class="top-icon" id="btnPausa" type="button" aria-label="Pausar"><svg><use href="#i-pause"></use></svg></button>
+            <button class="top-icon" id="btnConfiguracion" type="button" aria-label="Configuración"><svg><use href="#i-settings"></use></svg></button>
+            <button class="top-icon" id="btnNotificaciones" type="button" aria-label="Notificaciones"><svg><use href="#i-bell"></use></svg><i class="notification-dot"></i></button>
+            <button class="top-icon" id="btnRegresar" type="button" aria-label="Regresar"><svg><use href="#i-back"></use></svg></button>
+            <span class="user-avatar">BC</span>
+        </div>
+    </header>
+
+    <div class="application-shell">
+        <aside class="sidebar" id="sidebar">
+            <label class="page-search"><svg><use href="#i-search"></use></svg><input id="menuSearch" type="search" placeholder="Buscar una página"><kbd>Ctrl K</kbd></label>
+            <nav class="sidebar-nav" aria-label="Módulos del simulador">
+                <a class="side-link" href="Simulador.html" data-ready="true" data-route="dashboard" data-menu-text="dashboard resumen inicio"><svg><use href="#i-grid"></use></svg><span>Dashboards</span></a>
+                <span class="menu-section">Triage</span>
+                <a class="side-link" href="Alerts.html" data-ready="true" data-route="alerts" data-menu-text="alerts alertas incidentes"><svg><use href="#i-alert"></use></svg><span>Alerts</span><b class="menu-count">1</b></a>
+                <a class="side-link" href="vulnerabilities.html" data-ready="true" data-route="vulnerabilities" data-menu-text="vulnerabilities vulnerabilidades"><svg><use href="#i-bug"></use></svg><span>Vulnerabilities</span></a>
+                <a class="side-link" href="misconfigurations.html" data-menu-text="misconfigurations configuraciones"><svg><use href="#i-lock"></use></svg><span>Misconfigurations</span></a>
+                <span class="menu-section">Discover</span>
+                <a class="side-link" href="event-search.html" data-ready="true" data-route="event-search" data-menu-text="event search eventos"><svg><use href="#i-search"></use></svg><span>Event Search</span></a>
+                <a class="side-link" href="Inventory.html" data-ready="true" data-route="inventory" data-menu-text="inventory inventario"><svg><use href="#i-inventory"></use></svg><span>Inventory</span></a>
+                <a class="side-link" href="graph-explorer.html" data-ready="true" data-route="graph-explorer" data-menu-text="graph explorer mapa"><svg><use href="#i-graph"></use></svg><span>Graph Explorer</span></a>
+                <a class="side-link" href="activities.html" data-ready="true" data-route="activities" data-menu-text="activities actividades"><svg><use href="#i-clock"></use></svg><span>Activities</span></a>
+                <span class="menu-section">Automate</span>
+                <a class="side-link active" href="remoteops.html" data-ready="true" data-route="remoteops" data-menu-text="remoteops automatización scripts"><svg><use href="#i-terminal"></use></svg><span>RemoteOps</span></a>
+                <span class="menu-section">Configure</span>
+                <a class="side-link" href="detections.html" data-menu-text="detections"><svg><use href="#i-radar"></use></svg><span>Detections</span></a>
+                <a class="side-link" href="agent-management.html" data-menu-text="agent management"><svg><use href="#i-device"></use></svg><span>Agent management</span></a>
+                <a class="side-link" href="reports.html" data-menu-text="reports"><svg><use href="#i-report"></use></svg><span>Reports</span></a>
+                <a class="side-link" href="policies-settings.html" data-menu-text="policies settings"><svg><use href="#i-settings"></use></svg><span>Policies and settings</span></a>
+            </nav>
+            <div class="sidebar-footer"><span class="protection-dot"></span><div><strong>Protección activa</strong><small>24 agentes conectados</small></div></div>
+        </aside>
+
+        <button class="sidebar-backdrop" id="sidebarBackdrop" type="button" aria-label="Cerrar menú"></button>
+
+        <main class="main-content remoteops-main">
+            <header class="remoteops-page-header">
+                <div class="remoteops-header-row">
+                    <div class="remoteops-title-block">
+                        <h1>RemoteOps</h1>
+                        <p>Gestiona y ejecuta scripts para la respuesta y contención del incidente.</p>
+                    </div>
+                    <div class="remoteops-header-actions">
+                        <button class="upload-script-button" id="btnUploadScript" type="button"><svg><use href="#i-upload"></use></svg> Upload New Script</button>
+                        <button class="remote-header-button" id="btnNewFolder" type="button" disabled title="No disponible en esta simulación"><svg><use href="#i-file"></use></svg> New Folder</button>
+                        <button class="remote-header-button danger" id="btnDeleteSelected" type="button" disabled><svg><use href="#i-trash"></use></svg> Delete</button>
+                        <button class="remote-header-icon" id="btnRemoteSettings" type="button" aria-label="Configuración"><svg><use href="#i-settings"></use></svg></button>
+                    </div>
+                </div>
+                <nav aria-label="Vistas de RemoteOps">
+                    <button class="active" type="button" data-remote-tab="library">Library</button>
+                    <button type="button" data-remote-tab="scheduled">Scheduled tasks</button>
+                    <button type="button" data-remote-tab="pending">Pending executions <span id="pendingBadge">1</span></button>
+                </nav>
+            </header>
+<section class="remote-mission" aria-labelledby="remoteMissionTitle">
+                <div class="remote-mission-main">
+                    <span class="remote-mission-kicker">PASO 5 DE 5 · RESPUESTA FINAL</span>
+                    <h2 id="remoteMissionTitle">Detén el proceso y comprueba la contención</h2>
+                    <p>FIN-014 permanece aislado. Desde <strong>Library</strong>, primero ejecuta <strong>Collect Ransomware Indicators</strong> y revisa su resultado. Después elige la acción que detiene el proceso responsable. Los scripts destinados a otro fin pueden perder tiempo.</p>
+                    <div class="remote-progress-summary">
+                        <div class="remote-progress-label"><span class="remote-progress-check">✓</span><strong id="remoteProgressCount">0 de 3 acciones completadas</strong></div>
+                        <div class="remote-progress-track"><i id="remoteProgressBar"></i></div>
+                    </div>
+                    <p id="remoteMissionFeedback" role="status" aria-live="polite" hidden></p>
+                </div>
+
+                <div class="remote-mission-side">
+                    <ol class="remote-mission-status">
+                        <li id="remoteCollectStatus"><span class="remote-status-icon"><svg><use href="#i-file"></use></svg></span><b>Pendiente · recopilar indicadores</b><i></i></li>
+                        <li id="remoteStopStatus"><span class="remote-status-icon"><svg><use href="#i-terminal"></use></svg></span><b>Pendiente · detener proceso</b><i></i></li>
+                        <li id="remoteVerifyStatus"><span class="remote-status-icon"><svg><use href="#i-check"></use></svg></span><b>Pendiente · verificar contención</b><i></i></li>
+                    </ol>
+<div class="remote-mission-decision" id="remoteFinalDecision" hidden>
+                        <label for="remoteTarget">¿En qué equipo confirmarías el resultado?</label>
+                        <select id="remoteTarget"><option value="">Selecciona equipo</option><option value="fin014">FIN-014 · origen del cifrado</option><option value="fin021">FIN-021 · recibió conexión</option><option value="backup">SRV-BACKUP · servicio de respaldo</option></select>
+                        <label for="remoteEvidence">¿Qué resultado demuestra que la amenaza está contenida?</label>
+                        <select id="remoteEvidence"><option value="">Selecciona evidencia</option><option value="correct">PowerShell detenido, sin nuevas escrituras .locked y FIN-014 sigue aislado</option><option value="offline">FIN-021 está conectado a la consola</option><option value="backup">El respaldo programado terminó correctamente</option></select>
+                        <button id="remoteFinish" type="button">Confirmar contención</button>
+                    </div>
+                </div>
+
+            </section>
+
+            <section class="remoteops-stats" aria-label="Resumen de RemoteOps">
+                <article><span class="stat-icon purple"><svg><use href="#i-file"></use></svg></span><div><small>Scripts disponibles</small><strong id="remoteStatScripts">45</strong><p>Herramientas de respuesta</p></div></article>
+                <article><span class="stat-icon purple-soft"><svg><use href="#i-clock"></use></svg></span><div><small>Ejecuciones hoy</small><strong>12</strong><p class="positive">+3 vs. ayer</p></div></article>
+                <article><span class="stat-icon green"><svg><use href="#i-check"></use></svg></span><div><small>Ejecuciones exitosas</small><strong>10</strong><p>83% de éxito</p></div></article>
+                <article><span class="stat-icon red"><svg><use href="#i-alert"></use></svg></span><div><small>Ejecuciones fallidas</small><strong>2</strong><p class="negative">17% de fallos</p></div></article>
+            </section>
+
+            <section class="remoteops-notice">
+                <span><svg><use href="#i-info"></use></svg></span>
+                <p>The navigation path to the Automation Tasks page is now Agent Management &gt; Agent Tasks.</p>
+                <button id="btnAgentTasks" type="button">Go To Agent Tasks</button>
+            </section>
+
+            <section class="remoteops-panel">
+                <header class="remoteops-toolbar">
+                    <div class="toolbar-primary">
+                        <span class="toolbar-label">Biblioteca de scripts</span>
+                        <span id="remoteItemCount">45 Items</span>
+                    </div>
+                    <div class="toolbar-filters">
+                        <label class="script-search"><svg><use href="#i-search"></use></svg><input id="scriptSearch" type="search" placeholder="Buscar script por nombre..."></label>
+                        <select id="typeFilter" aria-label="Filtrar por tipo"><option value="all">All types</option><option value="Action">Action</option><option value="Data Collection">Data Collection</option></select>
+                        <select id="osFilter" aria-label="Filtrar por sistema operativo"><option value="all">All OS</option><option value="Windows">Windows</option><option value="macOS">macOS</option><option value="All">All OS</option></select>
+                        <select id="rowsPerPage" aria-label="Filas por página"><option value="8">8 rows</option><option value="12" selected>12 rows</option><option value="20">20 rows</option></select>
+                    </div>
+                </header>
+
+                <div class="remoteops-table-wrap">
+                    <table class="remoteops-table">
+                        <thead>
+                            <tr>
+                                <th class="select-column"><input id="selectAllScripts" type="checkbox" aria-label="Seleccionar todos"></th>
+                                <th class="actions-column">Actions</th>
+                                <th><button type="button" data-sort="name">Name <span>↕</span></button></th>
+                                <th><button type="button" data-sort="type">Type <span>↕</span></button></th>
+                                <th><button type="button" data-sort="os">OS type <span>↕</span></button></th>
+                                <th>Version</th>
+                                <th>Author</th>
+                                <th>ID</th>
+                                <th>Upload time</th>
+                                <th>Updated at</th>
+                                <th>Updated by</th>
+                            </tr>
+                        </thead>
+                        <tbody id="remoteRows"></tbody>
+                    </table>
+                    <div class="remoteops-empty" id="remoteEmpty" hidden><svg><use href="#i-search"></use></svg><strong>No items found</strong><span>Try another search or filter.</span></div>
+                </div>
+
+                <footer class="remoteops-pagination">
+                    <button id="previousPage" type="button" aria-label="Página anterior">‹</button>
+                    <div id="pageButtons"></div>
+                    <button id="nextPage" type="button" aria-label="Página siguiente">›</button>
+                </footer>
+            </section>
+        </main>
+    </div>
+
+    <div class="script-drawer-layer" id="scriptDrawer" aria-hidden="true">
+        <button class="script-drawer-backdrop" id="closeScriptBackdrop" type="button" aria-label="Cerrar detalle"></button>
+        <aside class="script-drawer" role="dialog" aria-modal="true" aria-labelledby="scriptDetailName">
+            <header><div><span>REMOTEOPS SCRIPT</span><h2 id="scriptDetailName">Script</h2></div><button id="closeScriptDrawer" type="button" aria-label="Cerrar"><svg><use href="#i-x"></use></svg></button></header>
+            <div class="script-status"><span><svg><use href="#i-terminal"></use></svg></span><div><strong id="scriptDetailType">Action</strong><small id="scriptDetailStatus">Ready to execute</small></div></div>
+            <p id="scriptDetailDescription">Automation script available in the RemoteOps library.</p>
+            <dl>
+                <div><dt>Operating system</dt><dd id="scriptDetailOS">Windows</dd></div>
+                <div><dt>Version</dt><dd id="scriptDetailVersion">1.0.0</dd></div>
+                <div><dt>Author</dt><dd id="scriptDetailAuthor">SentinelOne</dd></div>
+                <div><dt>Script ID</dt><dd id="scriptDetailId">—</dd></div>
+                <div><dt>Updated</dt><dd id="scriptDetailUpdated">—</dd></div>
+            </dl>
+            <div class="script-detail-buttons"><button id="btnEditDrawer" type="button"><svg><use href="#i-edit"></use></svg> Edit</button><button class="primary" id="btnRunDrawer" type="button"><svg><use href="#i-play"></use></svg> Run script</button></div>
+        </aside>
+    </div>
+
+    <div class="overlay" id="scriptModal">
+        <form class="modal script-form" id="scriptForm">
+            <header class="modal-header"><div><span class="modal-label">REMOTEOPS</span><h2 id="scriptFormTitle">Upload New Script</h2></div><button id="closeScriptModal" type="button">×</button></header>
+            <label><span>Script name</span><input id="scriptName" type="text" maxlength="70" placeholder="Example: Collect ransomware indicators" required></label>
+            <div class="script-form-grid">
+                <label><span>Type</span><select id="scriptType"><option>Action</option><option>Data Collection</option></select></label>
+                <label><span>Operating system</span><select id="scriptOS"><option>Windows</option><option>macOS</option><option>All</option></select></label>
+            </div>
+            <label><span>Version</span><input id="scriptVersion" type="text" value="1.0.0" required></label>
+            <label><span>Description</span><textarea id="scriptDescription" rows="3" placeholder="Describe what this script will do"></textarea></label>
+            <div class="script-form-actions"><button id="cancelScriptModal" type="button">Cancel</button><button class="primary" type="submit">Save script</button></div>
+        </form>
+    </div>
+
+
+    <!-- MODAL DE INSTRUCCIONES · REMOTEOPS -->
+    <div
+        class="instructions-layer"
+        id="stageInstructionsModal"
+        aria-hidden="true">
+
+        <section
+            class="instructions-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="stageInstructionsTitle">
+
+            <header class="instructions-modal-header">
+                <div>
+                    <span>INSTRUCCIONES · REMOTEOPS</span>
+                    <h2 id="stageInstructionsTitle">Completa la respuesta final</h2>
+                </div>
+
+                <button
+                    class="instructions-close"
+                    id="btnCloseStageInstructions"
+                    type="button"
+                    aria-label="Cerrar instrucciones">
+                    ×
+                </button>
+            </header>
+
+            <div class="instructions-modal-body">
+
+                <div class="instruction-step">
+                    <b class="step-number">1</b>
+                    <div>
+                        <strong>Recopila los indicadores</strong>
+                        <p>
+                            En <strong>Library</strong>, busca el script
+                            <strong>Collect Ransomware Indicators</strong>, ejecútalo
+                            y revisa su resultado.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="instruction-step">
+                    <b class="step-number">2</b>
+                    <div>
+                        <strong>Detén el proceso responsable</strong>
+                        <p>
+                            Después de revisar los indicadores, ejecuta la acción que
+                            detenga el proceso relacionado con el cifrado.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="instruction-step">
+                    <b class="step-number">3</b>
+                    <div>
+                        <strong>Comprueba la contención</strong>
+                        <p>
+                            Verifica que no aparezcan nuevas escrituras
+                            <strong>.locked</strong> y que <strong>FIN-014</strong>
+                            permanezca aislado.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="instruction-step">
+                    <b class="step-number">4</b>
+                    <div>
+                        <strong>Confirma el resultado final</strong>
+                        <p>
+                            Cuando se habilite la decisión final, selecciona el equipo
+                            correcto y la evidencia que demuestra que la amenaza está contenida.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="instructions-tip">
+                    💡 <strong>Importante:</strong>
+                    ejecuta primero la recopilación de indicadores. Los scripts que no
+                    corresponden al incidente pueden descontar tiempo.
+                </div>
+
+            </div>
+
+            <footer class="instructions-modal-footer">
+                <button
+                    class="instructions-understood"
+                    id="btnUnderstoodInstructions"
+                    type="button">
+                    Entendido
+                </button>
+            </footer>
+        </section>
+    </div>
+
+    <div class="overlay" id="overlayPausa"><div class="modal pause-modal"><div class="modal-icon"><svg><use href="#i-pause"></use></svg></div><span class="modal-label">SIMULADOR</span><h2>Simulación en pausa</h2><p>Las ejecuciones de RemoteOps están detenidas temporalmente.</p><button class="modal-button primary" id="btnContinuar" type="button">Continuar</button><button class="modal-button" id="btnConfigPausa" type="button">Configuración</button><button class="modal-button ghost" id="btnInicioPausa" type="button">Regresar al inicio</button></div></div>
+    <div class="overlay" id="overlayConfig"><div class="modal config-modal"><header class="modal-header"><div><span class="modal-label">SYSTEM</span><h2>Configuración</h2></div><button id="cerrarConfig" type="button">×</button></header><div class="config-row"><div><strong>Música</strong><small>Volumen de música</small></div><div class="range-wrap"><input id="volumenMusica" type="range" min="0" max="100" value="25"><output id="valorMusica">25%</output></div></div><div class="config-row"><div><strong>Efectos</strong><small>Sonidos de botones</small></div><div class="range-wrap"><input id="volumenEfectos" type="range" min="0" max="100" value="50"><output id="valorEfectos">50%</output></div></div><label class="config-row toggle-row"><div><strong>Silenciar todo</strong></div><input id="silenciar" type="checkbox"><span class="toggle"></span></label><button class="modal-button primary" id="guardarConfig" type="button">Guardar y volver</button></div></div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"><span>✓</span><p id="toastTexto">Acción completada</p></div>
+
+
+    <script>
+        (function () {
+            const ids = ['remoteCollectStatus', 'remoteStopStatus', 'remoteVerifyStatus'];
+            const progressBar = document.getElementById('remoteProgressBar');
+            const progressCount = document.getElementById('remoteProgressCount');
+            const itemCount = document.getElementById('remoteItemCount');
+            const statScripts = document.getElementById('remoteStatScripts');
+            const remoteSettings = document.getElementById('btnRemoteSettings');
+
+            function isComplete(el) {
+                if (!el) return false;
+                const text = (el.textContent || '').toLowerCase();
+                return el.classList.contains('done') ||
+                       el.classList.contains('completed') ||
+                       el.classList.contains('success') ||
+                       /complet|listo|verific|detenid|recopilad|contenido|✓|correct/.test(text) && !/pendiente/.test(text);
+            }
+
+            let refreshing = false;
+            function updateMissionVisuals() {
+                if (refreshing) return;
+                refreshing = true;
+                const nodes = ids.map(id => document.getElementById(id)).filter(Boolean);
+                let complete = 0;
+                nodes.forEach(node => {
+                    let currentText = (node.textContent || '').trim();
+                    const done = isComplete(node);
+                    node.classList.toggle('is-complete', done);
+                    if (done) complete += 1;
+
+                    // RemoteMission.js puede sustituir el textContent completo del <li>.
+                    // Si sucede, reconstruimos solo la capa visual sin alterar el ID ni el texto generado por la lógica.
+                    if (!node.querySelector('b')) {
+                        const icon = node.id === 'remoteCollectStatus' ? 'i-file' : node.id === 'remoteStopStatus' ? 'i-terminal' : 'i-check';
+                        node.innerHTML = '<span class="remote-status-icon"><svg><use href="#' + icon + '"></use></svg></span><b></b><i></i>';
+                        node.querySelector('b').textContent = currentText;
+                    } else {
+                        const b = node.querySelector('b');
+                        const directText = Array.from(node.childNodes).filter(n => n.nodeType === 3).map(n => n.textContent.trim()).filter(Boolean).join(' ');
+                        if (directText) {
+                            b.textContent = directText;
+                            Array.from(node.childNodes).filter(n => n.nodeType === 3).forEach(n => n.remove());
+                        }
+                    }
+                });
+                if (progressCount) progressCount.textContent = complete + ' de ' + Math.max(nodes.length, 3) + ' acciones completadas';
+                if (progressBar) progressBar.style.width = Math.round((complete / Math.max(nodes.length, 3)) * 100) + '%';
+                refreshing = false;
+            }
+
+            function syncScriptCount() {
+                if (!itemCount || !statScripts) return;
+                const match = (itemCount.textContent || '').match(/\d+/);
+                if (match) statScripts.textContent = match[0];
+            }
+
+            ids.forEach(id => {
+                const node = document.getElementById(id);
+                if (node) new MutationObserver(updateMissionVisuals).observe(node, { childList: true, subtree: true, characterData: true, attributes: true });
+            });
+            if (itemCount) new MutationObserver(syncScriptCount).observe(itemCount, { childList: true, subtree: true, characterData: true });
+            remoteSettings?.addEventListener('click', () => document.getElementById('btnConfiguracion')?.click());
+
+            document.addEventListener('DOMContentLoaded', function () {
+                updateMissionVisuals();
+                syncScriptCount();
+            });
+            updateMissionVisuals();
+            syncScriptCount();
+        })();
+    </script>
+
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const btnOpenInstructions =
+                document.getElementById("btnStageInstructions");
+
+            const instructionsModal =
+                document.getElementById("stageInstructionsModal");
+
+            const btnCloseInstructions =
+                document.getElementById("btnCloseStageInstructions");
+
+            const btnUnderstoodInstructions =
+                document.getElementById("btnUnderstoodInstructions");
+
+            function openStageInstructions() {
+                if (!instructionsModal) return;
+
+                instructionsModal.classList.add("active");
+                instructionsModal.setAttribute("aria-hidden", "false");
+                document.body.style.overflow = "hidden";
+
+                btnOpenInstructions?.classList.remove("attention");
+                btnOpenInstructions?.classList.add("instructions-seen");
+            }
+
+            function closeStageInstructions() {
+                if (!instructionsModal) return;
+
+                instructionsModal.classList.remove("active");
+                instructionsModal.setAttribute("aria-hidden", "true");
+                document.body.style.overflow = "";
+            }
+
+            btnOpenInstructions?.addEventListener("click", openStageInstructions);
+            btnCloseInstructions?.addEventListener("click", closeStageInstructions);
+            btnUnderstoodInstructions?.addEventListener("click", closeStageInstructions);
+
+            instructionsModal?.addEventListener("click", function (event) {
+                if (event.target === instructionsModal) {
+                    closeStageInstructions();
+                }
+            });
+
+            document.addEventListener("keydown", function (event) {
+                if (
+                    event.key === "Escape" &&
+                    instructionsModal?.classList.contains("active")
+                ) {
+                    closeStageInstructions();
+                }
+            });
+
+            setTimeout(function () {
+                btnOpenInstructions?.classList.remove("attention");
+            }, 5000);
+        });
+    </script>
+
+<script src="JS/Navegacion.js"></script>
+    <script src="JS/RemoteOps.js"></script>
+    <script src="JS/RemoteMission.js"></script>
+    <script src="JS/escenario.js"></script>
+</body>
+
+</html>

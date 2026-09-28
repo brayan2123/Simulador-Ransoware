@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1b102b">
+
+    <title>Policies and Settings | Simulador NeriumTech</title>
+
+    <link rel="stylesheet" href="CSS/Simulador.css">
+    <link rel="stylesheet" href="CSS/PoliciesSettings.css">
+</head>
+
+<body>
+
+    <!-- =========================================
+         ICONOS
+    ========================================== -->
+
+    <svg class="icon-sprite" aria-hidden="true">
+
+        <symbol id="i-grid" viewBox="0 0 24 24">
+            <rect x="3" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/>
+            <rect x="14" y="14" width="7" height="7" rx="1"/>
+        </symbol>
+
+        <symbol id="i-alert" viewBox="0 0 24 24">
+            <path d="M12 3 4 6v6c0 4.8 3.2 7.7 8 9 4.8-1.3 8-4.2 8-9V6l-8-3Z"/>
+            <path d="M12 8v5m0 3v.2"/>
+        </symbol>
+
+        <symbol id="i-bug" viewBox="0 0 24 24">
+            <path d="M8 8.5h8v7a4 4 0 0 1-8 0v-7Z"/>
+            <path d="M9.5 8.5V7a2.5 2.5 0 0 1 5 0v1.5M4 11h4m8 0h4"/>
+        </symbol>
+
+        <symbol id="i-lock" viewBox="0 0 24 24">
+            <rect x="5" y="10" width="14" height="11" rx="2"/>
+            <path d="M8 10V7a4 4 0 0 1 8 0v3"/>
+        </symbol>
+
+        <symbol id="i-search" viewBox="0 0 24 24">
+            <circle cx="10.5" cy="10.5" r="6.5"/>
+            <path d="m16 16 5 5"/>
+        </symbol>
+
+        <symbol id="i-inventory" viewBox="0 0 24 24">
+            <path d="M4 7h16v13H4zM7 3h10v4H7z"/>
+            <path d="M9 12h6"/>
+        </symbol>
+
+        <symbol id="i-graph" viewBox="0 0 24 24">
+            <circle cx="5" cy="12" r="2"/>
+            <circle cx="18" cy="5" r="2"/>
+            <circle cx="19" cy="18" r="2"/>
+            <path d="m7 11 9-5m-9 7 10 4"/>
+        </symbol>
+
+        <symbol id="i-clock" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M12 7v5l3 2"/>
+        </symbol>
+
+        <symbol id="i-terminal" viewBox="0 0 24 24">
+            <rect x="3" y="4" width="18" height="16" rx="2"/>
+            <path d="m7 9 3 3-3 3m6 0h4"/>
+        </symbol>
+
+        <symbol id="i-radar" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="9"/>
+            <circle cx="12" cy="12" r="5"/>
+            <circle cx="12" cy="12" r="1.5"/>
+            <path d="m12 12 6-6"/>
+        </symbol>
+
+        <symbol id="i-device" viewBox="0 0 24 24">
+            <rect x="3" y="4" width="18" height="13" rx="2"/>
+            <path d="M8 21h8m-4-4v4"/>
+        </symbol>
+
+        <symbol id="i-report" viewBox="0 0 24 24">
+            <path d="M5 3h10l4 4v14H5z"/>
+            <path d="M14 3v5h5M8 13h8m-8 4h6"/>
+        </symbol>
+
+        <symbol id="i-settings" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19 12a7 7 0 0 0-.1-1.2l2-1.6-2-3.4-2.5 1A7 7 0 0 0 14.2 5.5L13.8 3h-4l-.4 2.5a7 7 0 0 0-1.9 1.1l-2.4-1-2 3.4 2 1.6A7 7 0 0 0 5 12c0 .4 0 .8.1 1.2l-2 1.6 2 3.4 2.4-1a7 7 0 0 0 1.9 1.1l.4 2.5h4l.4-2.5a7 7 0 0 0 2.2-1.1l2.5 1 2-3.4-2-1.6c.1-.4.1-.8.1-1.2Z"/>
+        </symbol>
+
+        <symbol id="i-menu" viewBox="0 0 24 24">
+            <path d="M4 7h16M4 12h16M4 17h16"/>
+        </symbol>
+
+        <symbol id="i-bell" viewBox="0 0 24 24">
+            <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9Z"/>
+            <path d="M10 21h4"/>
+        </symbol>
+
+        <symbol id="i-pause" viewBox="0 0 24 24">
+            <path d="M8 5v14m8-14v14"/>
+        </symbol>
+
+        <symbol id="i-back" viewBox="0 0 24 24">
+            <path d="m9 7-5 5 5 5M4 12h11a5 5 0 0 1 5 5"/>
+        </symbol>
+
+        <symbol id="i-shield" viewBox="0 0 24 24">
+            <path d="M12 3 4 6v6c0 4.8 3.2 7.7 8 9 4.8-1.3 8-4.2 8-9V6l-8-3Z"/>
+        </symbol>
+
+        <symbol id="i-user" viewBox="0 0 24 24">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M4 21a8 8 0 0 1 16 0"/>
+        </symbol>
+
+        <symbol id="i-key" viewBox="0 0 24 24">
+            <circle cx="8" cy="12" r="4"/>
+            <path d="M12 12h9m-3 0v3m-3-3v2"/>
+        </symbol>
+
+        <symbol id="i-plug" viewBox="0 0 24 24">
+            <path d="M8 3v6m8-6v6M6 9h12v2a6 6 0 0 1-12 0V9Zm6 8v4"/>
+        </symbol>
+
+        <symbol id="i-network" viewBox="0 0 24 24">
+            <circle cx="12" cy="5" r="2"/>
+            <circle cx="5" cy="18" r="2"/>
+            <circle cx="19" cy="18" r="2"/>
+            <path d="M12 7v4M6 16l5-4m7 4-5-4"/>
+        </symbol>
+
+        <symbol id="i-cloud" viewBox="0 0 24 24">
+            <path d="M6 18h12a4 4 0 0 0 .5-8A6 6 0 0 0 7 8.5 4.5 4.5 0 0 0 6 18Z"/>
+        </symbol>
+
+        <symbol id="i-eye" viewBox="0 0 24 24">
+            <path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z"/>
+            <circle cx="12" cy="12" r="3"/>
+        </symbol>
+
+    </svg>
+
+
+    <audio id="musicaFondo" src="Audio/Musica.mp3" loop></audio>
+
+
+    <!-- =========================================
+         TOPBAR
+    ========================================== -->
+
+    <header class="topbar">
+
+        <div class="topbar-left">
+
+            <button class="top-icon mobile-menu" id="btnAbrirMenu">
+                <svg><use href="#i-menu"></use></svg>
+            </button>
+
+            <a class="brand-mini" href="Simulador.Html">
+                <span>N</span>
+            </a>
+
+            <span class="top-divider"></span>
+            <span class="scope-circle">›</span>
+
+            <nav class="scope-path">
+                <strong>Global</strong>
+                <b>/</b>
+                <strong>NeriumTech</strong>
+                <b>/</b>
+                <strong>Simulación Ransomware</strong>
+                <b>/</b>
+                <strong>Policies and settings</strong>
+            </nav>
+
+        </div>
+
+
+        <div class="topbar-right">
+
+            <span class="simulation-state">
+                <i></i>
+                Simulación activa
+            </span>
+
+            <time class="live-clock" id="relojSimulacion">
+                00:00:00
+            </time>
+
+            <button class="top-text-button" id="btnAyuda">
+                Ayuda
+            </button>
+
+            <button class="top-icon" id="btnPausa">
+                <svg><use href="#i-pause"></use></svg>
+            </button>
+
+            <button class="top-icon" id="btnConfiguracion">
+                <svg><use href="#i-settings"></use></svg>
+            </button>
+
+            <button class="top-icon" id="btnNotificaciones">
+                <svg><use href="#i-bell"></use></svg>
+                <i class="notification-dot"></i>
+            </button>
+
+            <button class="top-icon" id="btnRegresar">
+                <svg><use href="#i-back"></use></svg>
+            </button>
+
+            <span class="user-avatar">BC</span>
+
+        </div>
+
+    </header>
+
+
+    <div class="application-shell">
+
+
+        <!-- =========================================
+             SIDEBAR
+        ========================================== -->
+
+        <aside class="sidebar" id="sidebar">
+
+            <label class="page-search">
+
+                <svg><use href="#i-search"></use></svg>
+
+                <input
+                    id="menuSearch"
+                    type="search"
+                    placeholder="Buscar una página"
+                >
+
+                <kbd>Ctrl K</kbd>
+
+            </label>
+
+
+            <nav class="sidebar-nav">
+
+                <a class="side-link" href="Simulador.Html" data-ready="true" data-menu-text="dashboard">
+                    <svg><use href="#i-grid"></use></svg>
+                    <span>Dashboards</span>
+                </a>
+
+                <span class="menu-section">Triage</span>
+
+                <a class="side-link" href="Alerts.html" data-ready="true" data-menu-text="alerts">
+                    <svg><use href="#i-alert"></use></svg>
+                    <span>Alerts</span>
+                    <b class="menu-count">1</b>
+                </a>
+
+                <a class="side-link" href="vulnerabilities.html" data-ready="true" data-menu-text="vulnerabilities">
+                    <svg><use href="#i-bug"></use></svg>
+                    <span>Vulnerabilities</span>
+                </a>
+
+                <a class="side-link" href="misconfigurations.html" data-ready="true" data-menu-text="misconfigurations">
+                    <svg><use href="#i-lock"></use></svg>
+                    <span>Misconfigurations</span>
+                </a>
+
+
+                <span class="menu-section">Discover</span>
+
+                <a class="side-link" href="event-search.html" data-ready="true" data-menu-text="event search">
+                    <svg><use href="#i-search"></use></svg>
+                    <span>Event Search</span>
+                </a>
+
+                <a class="side-link" href="inventory.html" data-ready="true" data-menu-text="inventory">
+                    <svg><use href="#i-inventory"></use></svg>
+                    <span>Inventory</span>
+                </a>
+
+                <a class="side-link" href="graph-explorer.html" data-ready="true" data-menu-text="graph explorer">
+                    <svg><use href="#i-graph"></use></svg>
+                    <span>Graph Explorer</span>
+                </a>
+
+                <a class="side-link" href="activities.html" data-ready="true" data-menu-text="activities">
+                    <svg><use href="#i-clock"></use></svg>
+                    <span>Activities</span>
+                </a>
+
+
+                <span class="menu-section">Automate</span>
+
+                <a class="side-link" href="remoteops.html" data-ready="true" data-menu-text="remoteops">
+                    <svg><use href="#i-terminal"></use></svg>
+                    <span>RemoteOps</span>
+                </a>
+
+
+                <span class="menu-section">Configure</span>
+
+                <a class="side-link" href="detections.html" data-ready="true" data-menu-text="detections">
+                    <svg><use href="#i-radar"></use></svg>
+                    <span>Detections</span>
+                </a>
+
+                <a class="side-link" href="agent-management.html" data-ready="true" data-menu-text="agent management">
+                    <svg><use href="#i-device"></use></svg>
+                    <span>Agent management</span>
+                </a>
+
+                <a class="side-link" href="reports.html" data-ready="true" data-menu-text="reports">
+                    <svg><use href="#i-report"></use></svg>
+                    <span>Reports</span>
+                </a>
+
+                <a class="side-link active" href="policies-settings.html" data-ready="true" data-menu-text="policies settings">
+                    <svg><use href="#i-settings"></use></svg>
+                    <span>Policies and settings</span>
+                </a>
+
+            </nav>
+
+
+            <div class="sidebar-footer">
+
+                <span class="protection-dot"></span>
+
+                <div>
+                    <strong>Protección activa</strong>
+                    <small>24 agentes conectados</small>
+                </div>
+
+            </div>
+
+        </aside>
+
+
+        <button
+            class="sidebar-backdrop"
+            id="sidebarBackdrop">
+        </button>
+
+
+        <!-- =========================================
+             CONTENIDO
+        ========================================== -->
+
+        <main class="main-content policies-main">
+
+            <header class="policies-header">
+
+                <div>
+                    <h1>Policies and settings</h1>
+                    <p>
+                        Configure console behavior, security policies and protection settings.
+                    </p>
+                </div>
+
+                <label class="settings-search">
+
+                    <svg><use href="#i-search"></use></svg>
+
+                    <input
+                        id="settingsSearch"
+                        type="search"
+                        placeholder="Search settings"
+                    >
+
+                </label>
+
+            </header>
+
+
+            <!-- =========================================
+                 GRID
+            ========================================== -->
+
+            <section class="settings-grid" id="settingsGrid">
+
+
+                <!-- CONSOLE -->
+
+                <article
+                    class="settings-card"
+                    data-search="console general settings interface language notifications"
+                    data-setting="console">
+
+                    <div class="settings-icon">
+                        <svg><use href="#i-settings"></use></svg>
+                    </div>
+
+                    <div>
+                        <h2>Console settings</h2>
+                        <p>
+                            Configure general behavior of the Nerium XDR console.
+                        </p>
+                    </div>
+
+                    <span>›</span>
+
+                </article>
+
+
+                <!-- USERS -->
+
+                <article
+                    class="settings-card"
+                    data-search="users user management permissions roles accounts"
+                    data-setting="users">
+
+                    <div class="settings-icon">
+                        <svg><use href="#i-user"></use></svg>
+                    </div>
+
+                    <div>
+                        <h2>User management</h2>
+                        <p>
+                            Manage users, roles and access permissions.
+                        </p>
+                    </div>
+
+                    <span>›</span>
+
+                </article>
+
+
+                <!-- POLICY -->
+
+                <article
+                    class="settings-card important"
+                    data-search="policy ransomware protection detect prevent quarantine isolation mitigation"
+                    data-setting="policy">
+
+                    <div class="settings-icon">
+                        <svg><use href="#i-shield"></use></svg>
+                    </div>
+
+                    <div>
+                        <h2>Policy</h2>
+                        <p>
+                            Configure endpoint protection and automated response.
+                        </p>
+                    </div>
+
+                    <span>›</span>
+
+                </article>
+
+
+                <!-- SCOPE -->
+
+                <article
+                    class="settings-card"
+                    data-search="scope sites groups account endpoints"
+                    data-setting="scope">
+
+                    <div class="settings-icon">
+                        <svg><use href="#i-network"></use></svg>
+                    </div>
+
+                    <div>
+                        <h2>Scopes</h2>
+                        <p>
+                            Define sites, endpoint groups and simulation scope.
+                        </p>
+                    </div>
+
+                    <span>›</span>
+
+                </article>
+
+
+                <!-- INTEGRATIONS -->
+
+                <article
+                    class="settings-card"
+                    data-search="integrations api third party services"
+                    data-setting="integrations">
+
+                    <div class="settings-icon">
+                        <svg><use href="#i-plug"></use></svg>
+                    </div>
+
+                    <div>
+                        <h2>Integrations</h2>
+                        <p>
+                            Connect external security and productivity services.
+                        </p>
+                    </div>
+
+                    <span>›</span>
+
+                </article>
+
+
+                <!-- API -->
+
+                <article
+                    class="settings-card"
+                    data-search="api tokens keys authentication"
+                    data-setting="api">
+
+                    <div class="settings-icon">
+                        <svg><use href="#i-key"></use></svg>
+                    </div>
+
+                    <div>
+                        <h2>API Tokens</h2>
+                        <p>
+                            Manage API credentials and access tokens.
+                        </p>
+                    </div>
+
+                    <span>›</span>
+
+                </article>
+
+
+                <!-- CLOUD -->
+
+                <article
+                    class="settings-card"
+                    data-search="cloud detection response security protection"
+                    data-setting="cloud">
+
+                    <div class="settings-icon">
+                        <svg><use href="#i-cloud"></use></svg>
+                    </div>
+
+                    <div>
+                        <h2>Cloud Security</h2>
+                        <p>
+                            Configure cloud workload and SaaS security.
+                        </p>
+                    </div>
+
+                    <span>›</span>
+
+                </article>
+
+
+                <!-- VISIBILITY -->
+
+                <article
+                    class="settings-card"
+                    data-search="visibility telemetry monitoring logs endpoint"
+                    data-setting="visibility">
+
+                    <div class="settings-icon">
+                        <svg><use href="#i-eye"></use></svg>
+                    </div>
+
+                    <div>
+                        <h2>Visibility</h2>
+                        <p>
+                            Configure endpoint telemetry and security visibility.
+                        </p>
+                    </div>
+
+                    <span>›</span>
+
+                </article>
+
+            </section>
+
+
+            <div
+                class="settings-empty"
+                id="settingsEmpty"
+                hidden>
+
+                No settings found.
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <!-- =========================================
+         POLICY DRAWER
+    ========================================== -->
+
+    <aside
+        class="policy-drawer"
+        id="policyDrawer"
+        aria-hidden="true">
+
+        <header>
+
+            <div>
+
+                <small>ENDPOINT SECURITY</small>
+
+                <h2>
+                    Ransomware Protection Policy
+                </h2>
+
+            </div>
+
+            <button id="closePolicyDrawer">
+                ×
+            </button>
+
+        </header>
+
+
+        <div class="policy-content">
+
+
+            <section class="policy-summary">
+
+                <span class="policy-state">
+                    <i></i>
+                    Policy active
+                </span>
+
+                <p>
+                    These controls determine how the simulated EDR responds when ransomware behavior is detected.
+                </p>
+
+            </section>
+
+
+            <!-- DETECT -->
+
+            <article class="policy-option">
+
+                <div>
+
+                    <strong>
+                        Detect ransomware behavior
+                    </strong>
+
+                    <small>
+                        Generate an alert when suspicious encryption activity is detected.
+                    </small>
+
+                </div>
+
+                <label class="switch">
+
+                    <input
+                        id="policyDetect"
+                        type="checkbox"
+                        checked>
+
+                    <span></span>
+
+                </label>
+
+            </article>
+
+
+            <!-- KILL -->
+
+            <article class="policy-option">
+
+                <div>
+
+                    <strong>
+                        Kill malicious process
+                    </strong>
+
+                    <small>
+                        Automatically terminate the detected ransomware process.
+                    </small>
+
+                </div>
+
+                <label class="switch">
+
+                    <input
+                        id="policyKill"
+                        type="checkbox"
+                        checked>
+
+                    <span></span>
+
+                </label>
+
+            </article>
+
+
+            <!-- QUARANTINE -->
+
+            <article class="policy-option">
+
+                <div>
+
+                    <strong>
+                        Quarantine malicious file
+                    </strong>
+
+                    <small>
+                        Automatically quarantine the malicious executable.
+                    </small>
+
+                </div>
+
+                <label class="switch">
+
+                    <input
+                        id="policyQuarantine"
+                        type="checkbox"
+                        checked>
+
+                    <span></span>
+
+                </label>
+
+            </article>
+
+
+            <!-- ISOLATE -->
+
+            <article class="policy-option">
+
+                <div>
+
+                    <strong>
+                        Automatic network isolation
+                    </strong>
+
+                    <small>
+                        Isolate the affected endpoint when ransomware is confirmed.
+                    </small>
+
+                </div>
+
+                <label class="switch">
+
+                    <input
+                        id="policyIsolation"
+                        type="checkbox">
+
+                    <span></span>
+
+                </label>
+
+            </article>
+
+
+            <!-- ROLLBACK -->
+
+            <article class="policy-option">
+
+                <div>
+
+                    <strong>
+                        Automatic rollback
+                    </strong>
+
+                    <small>
+                        Restore modified files after the threat is contained.
+                    </small>
+
+                </div>
+
+                <label class="switch">
+
+                    <input
+                        id="policyRollback"
+                        type="checkbox">
+
+                    <span></span>
+
+                </label>
+
+            </article>
+
+
+            <!-- MODE -->
+
+            <article class="policy-select-option">
+
+                <div>
+
+                    <strong>
+                        Response mode
+                    </strong>
+
+                    <small>
+                        Defines how much control remains with the analyst.
+                    </small>
+
+                </div>
+
+                <select id="responseMode">
+
+                    <option value="detect">
+                        Detect only
+                    </option>
+
+                    <option value="protect" selected>
+                        Protect
+                    </option>
+
+                    <option value="automatic">
+                        Full automatic
+                    </option>
+
+                </select>
+
+            </article>
+
+
+            <div class="policy-warning" id="policyWarning">
+
+                Automatic network isolation is disabled.
+                During an attack, analyst intervention may be required.
+
+            </div>
+
+        </div>
+
+
+        <footer>
+
+            <button
+                class="policy-reset"
+                id="resetPolicy">
+                Reset
+            </button>
+
+            <button
+                class="policy-save"
+                id="savePolicy">
+                Save policy
+            </button>
+
+        </footer>
+
+    </aside>
+
+
+    <div
+        class="drawer-backdrop"
+        id="drawerBackdrop">
+    </div>
+
+
+    <!-- TOAST -->
+
+    <div class="sim-toast" id="toast">
+        <span id="toastTexto"></span>
+    </div>
+
+
+    <script src="JS/PoliciesSettings.js"></script>
+
+</body>
+
+</html>

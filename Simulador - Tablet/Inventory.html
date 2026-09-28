@@ -1,0 +1,2137 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1b102b">
+
+    <title>Inventory | Simulador de Ransomware NeriumTech</title>
+
+    <link rel="stylesheet" href="CSS/Simulador.css">
+    <link rel="stylesheet" href="CSS/Inventory.css">
+    <link rel="stylesheet" href="CSS/InventoryMission.css">
+</head>
+
+<body>
+
+    <!-- ICONOS -->
+
+    <svg class="icon-sprite" aria-hidden="true">
+
+        <symbol id="i-grid" viewBox="0 0 24 24">
+            <rect x="3" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/>
+            <rect x="14" y="14" width="7" height="7" rx="1"/>
+        </symbol>
+
+        <symbol id="i-alert" viewBox="0 0 24 24">
+            <path d="M12 3 4 6v6c0 4.8 3.2 7.7 8 9 4.8-1.3 8-4.2 8-9V6l-8-3Z"/>
+            <path d="M12 8v5m0 3v.2"/>
+        </symbol>
+
+        <symbol id="i-bug" viewBox="0 0 24 24">
+            <path d="M8 8.5h8v7a4 4 0 0 1-8 0v-7Z"/>
+            <path d="M9.5 8.5V7a2.5 2.5 0 0 1 5 0v1.5M4 11h4m8 0h4M5 6l3 2m11-2-3 2M4 16h4m8 0h4M6 21l3-3m9 3-3-3"/>
+        </symbol>
+
+        <symbol id="i-lock" viewBox="0 0 24 24">
+            <rect x="5" y="10" width="14" height="11" rx="2"/>
+            <path d="M8 10V7a4 4 0 0 1 8 0v3m-4 4v3"/>
+        </symbol>
+
+        <symbol id="i-search" viewBox="0 0 24 24">
+            <circle cx="10.5" cy="10.5" r="6.5"/>
+            <path d="m16 16 5 5"/>
+        </symbol>
+
+        <symbol id="i-inventory" viewBox="0 0 24 24">
+            <path d="M4 7h16v13H4zM7 3h10v4H7z"/>
+            <path d="M9 12h6"/>
+        </symbol>
+
+        <symbol id="i-graph" viewBox="0 0 24 24">
+            <circle cx="5" cy="12" r="2"/>
+            <circle cx="18" cy="5" r="2"/>
+            <circle cx="19" cy="18" r="2"/>
+            <path d="m7 11 9-5m-9 7 10 4"/>
+        </symbol>
+
+        <symbol id="i-clock" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M12 7v5l3 2"/>
+        </symbol>
+
+        <symbol id="i-terminal" viewBox="0 0 24 24">
+            <rect x="3" y="4" width="18" height="16" rx="2"/>
+            <path d="m7 9 3 3-3 3m6 0h4"/>
+        </symbol>
+
+        <symbol id="i-radar" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="9"/>
+            <circle cx="12" cy="12" r="5"/>
+            <circle cx="12" cy="12" r="1.5"/>
+            <path d="m12 12 6-6"/>
+        </symbol>
+
+        <symbol id="i-device" viewBox="0 0 24 24">
+            <rect x="3" y="4" width="18" height="13" rx="2"/>
+            <path d="M8 21h8m-4-4v4"/>
+        </symbol>
+
+        <symbol id="i-report" viewBox="0 0 24 24">
+            <path d="M5 3h10l4 4v14H5z"/>
+            <path d="M14 3v5h5M8 13h8m-8 4h6"/>
+        </symbol>
+
+        <symbol id="i-settings" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19 12a7 7 0 0 0-.1-1.2l2-1.6-2-3.4-2.5 1A7 7 0 0 0 14.2 5.5L13.8 3h-4l-.4 2.5a7 7 0 0 0-1.9 1.1l-2.4-1-2 3.4 2 1.6A7 7 0 0 0 5 12c0 .4 0 .8.1 1.2l-2 1.6 2 3.4 2.4-1a7 7 0 0 0 1.9 1.1l.4 2.5h4l.4-2.5a7 7 0 0 0 2.2-1.1l2.5 1 2-3.4-2-1.6c.1-.4.1-.8.1-1.2Z"/>
+        </symbol>
+
+        <symbol id="i-pause" viewBox="0 0 24 24">
+            <path d="M8 5v14m8-14v14"/>
+        </symbol>
+
+        <symbol id="i-back" viewBox="0 0 24 24">
+            <path d="m9 7-5 5 5 5M4 12h11a5 5 0 0 1 5 5"/>
+        </symbol>
+
+        <symbol id="i-menu" viewBox="0 0 24 24">
+            <path d="M4 7h16M4 12h16M4 17h16"/>
+        </symbol>
+
+        <symbol id="i-bell" viewBox="0 0 24 24">
+            <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9Z"/>
+            <path d="M10 21h4"/>
+        </symbol>
+
+        <symbol id="i-chevron" viewBox="0 0 24 24">
+            <path d="m8 10 4 4 4-4"/>
+        </symbol>
+
+        <symbol id="i-download" viewBox="0 0 24 24">
+            <path d="M12 3v12m-4-4 4 4 4-4"/>
+            <path d="M4 15v5h16v-5"/>
+        </symbol>
+
+        <symbol id="i-laptop" viewBox="0 0 24 24">
+            <rect x="4" y="4" width="16" height="12" rx="2"/>
+            <path d="M2 19h20M9 16v3m6-3v3"/>
+        </symbol>
+
+        <symbol id="i-apple" viewBox="0 0 24 24">
+            <path d="M15.5 3.5c-.8.1-1.8.6-2.3 1.3-.5.6-.9 1.5-.7 2.4.9.1 1.8-.4 2.4-1 .6-.7 1-1.6.6-2.7ZM18.6 13c0-2.5 2.1-3.7 2.2-3.8-1.2-1.8-3.1-2-3.8-2-1.6-.2-3.1.9-3.9.9-.8 0-2-.9-3.4-.8-1.7 0-3.4 1-4.3 2.6-1.9 3.3-.5 8.1 1.3 10.7.9 1.3 2 2.8 3.4 2.7 1.3-.1 1.9-.9 3.5-.9s2.1.9 3.5.8c1.5 0 2.4-1.3 3.3-2.6 1-1.5 1.5-3 1.5-3.1-.1 0-3.3-1.3-3.3-4.5Z"/>
+        </symbol>
+
+        <symbol id="i-windows" viewBox="0 0 24 24">
+            <path d="M3 5.2 11 4v7H3V5.2ZM13 3.7l8-1.2V11h-8V3.7ZM3 13h8v7l-8-1.2V13Zm10 0h8v8.5l-8-1.2V13Z"/>
+        </symbol>
+
+        <symbol id="i-shield" viewBox="0 0 24 24">
+            <path d="M12 3 4 6v6c0 5 3 8 8 9 5-1 8-4 8-9V6l-8-3Z"/>
+            <path d="m8.5 12 2.2 2.2 4.8-5"/>
+        </symbol>
+
+        <symbol id="i-x" viewBox="0 0 24 24">
+            <path d="m6 6 12 12M18 6 6 18"/>
+        </symbol>
+
+    </svg>
+
+    <audio
+        id="musicaFondo"
+        src="Audio/Musica.mp3"
+        loop
+    ></audio>
+
+
+    <!-- BARRA SUPERIOR -->
+
+    <header class="topbar">
+
+        <div class="topbar-left">
+
+            <button
+                class="top-icon mobile-menu"
+                id="btnAbrirMenu"
+                type="button"
+                aria-label="Abrir menú"
+            >
+                <svg><use href="#i-menu"></use></svg>
+            </button>
+
+            <a
+                class="brand-mini"
+                href="Simulador.html"
+                aria-label="NeriumTech"
+            >
+                <span>N</span>
+            </a>
+
+            <span class="top-divider"></span>
+            <span class="scope-circle">›</span>
+
+            <nav class="scope-path" aria-label="Ubicación actual">
+                <strong>Global</strong>
+                <b>/</b>
+                <strong>NeriumTech</strong>
+                <b>/</b>
+                <strong>Simulación Ransomware</strong>
+                <b>/</b>
+
+                <button type="button">
+                    Inventory
+                    <svg><use href="#i-chevron"></use></svg>
+                </button>
+            </nav>
+
+        </div>
+
+        <div class="topbar-right">
+
+            <span class="simulation-state">
+                <i></i>
+                Simulación activa
+            </span>
+
+            <time
+                class="live-clock"
+                id="relojSimulacion"
+            >
+                00:00:00
+            </time>
+
+            <button
+                class="instructions-button topbar-instructions-button"
+                id="btnStageInstructions"
+                type="button"
+            >
+                📘 Ver instrucciones
+            </button>
+
+            <strong
+                id="scenarioTimer"
+                class="inventory-mission-timer"
+            >
+                Sin iniciar
+            </strong>
+
+            <button
+                class="top-text-button"
+                id="btnAyuda"
+                type="button"
+            >
+                Ayuda
+            </button>
+
+            <button
+                class="top-icon"
+                id="btnPausa"
+                type="button"
+                aria-label="Pausar"
+            >
+                <svg><use href="#i-pause"></use></svg>
+            </button>
+
+            <button
+                class="top-icon"
+                id="btnConfiguracion"
+                type="button"
+                aria-label="Configuración"
+            >
+                <svg><use href="#i-settings"></use></svg>
+            </button>
+
+            <button
+                class="top-icon"
+                id="btnNotificaciones"
+                type="button"
+                aria-label="Notificaciones"
+            >
+                <svg><use href="#i-bell"></use></svg>
+                <i class="notification-dot"></i>
+            </button>
+
+            <button
+                class="top-icon"
+                id="btnRegresar"
+                type="button"
+                aria-label="Regresar"
+            >
+                <svg><use href="#i-back"></use></svg>
+            </button>
+
+            <span class="user-avatar">BC</span>
+
+        </div>
+
+    </header>
+
+
+    <!-- CONTENEDOR PRINCIPAL -->
+
+    <div class="application-shell">
+
+        <!-- MENÚ LATERAL -->
+
+        <aside class="sidebar" id="sidebar">
+
+            <label class="page-search">
+
+                <svg><use href="#i-search"></use></svg>
+
+                <input
+                    id="menuSearch"
+                    type="search"
+                    placeholder="Buscar una página"
+                >
+
+                <kbd>Ctrl K</kbd>
+
+            </label>
+
+            <nav
+                class="sidebar-nav"
+                aria-label="Módulos del simulador"
+            >
+
+                <a
+                    class="side-link"
+                    href="Simulador.html"
+                    data-ready="true"
+                    data-route="dashboard"
+                    data-menu-text="dashboard resumen inicio"
+                >
+                    <svg><use href="#i-grid"></use></svg>
+                    <span>Dashboards</span>
+                </a>
+
+                <span class="menu-section">Triage</span>
+
+                <a
+                    class="side-link"
+                    href="Alerts.html"
+                    data-ready="true"
+                    data-route="alerts"
+                    data-menu-text="alerts alertas incidentes"
+                >
+                    <svg><use href="#i-alert"></use></svg>
+                    <span>Alerts</span>
+                    <b class="menu-count">1</b>
+                </a>
+
+                <a
+                    class="side-link"
+                    href="vulnerabilities.html"
+                    data-ready="true"
+                    data-route="vulnerabilities"
+                    data-menu-text="vulnerabilities vulnerabilidades"
+                >
+                    <svg><use href="#i-bug"></use></svg>
+                    <span>Vulnerabilities</span>
+                </a>
+
+                <a
+                    class="side-link"
+                    href="misconfigurations.html"
+                    data-menu-text="misconfigurations configuraciones"
+                >
+                    <svg><use href="#i-lock"></use></svg>
+                    <span>Misconfigurations</span>
+                </a>
+
+                <span class="menu-section">Discover</span>
+
+                <a
+                    class="side-link"
+                    href="event-search.html"
+                    data-ready="true"
+                    data-route="event-search"
+                    data-menu-text="event search eventos"
+                >
+                    <svg><use href="#i-search"></use></svg>
+                    <span>Event Search</span>
+                </a>
+
+                <a
+                    class="side-link active"
+                    href="Inventory.html"
+                    data-ready="true"
+                    data-route="inventory"
+                    data-menu-text="inventory inventario"
+                >
+                    <svg><use href="#i-inventory"></use></svg>
+                    <span>Inventory</span>
+                </a>
+
+                <a
+                    class="side-link"
+                    href="graph-explorer.html"
+                    data-ready="true"
+                    data-route="graph-explorer"
+                    data-menu-text="graph explorer mapa"
+                >
+                    <svg><use href="#i-graph"></use></svg>
+                    <span>Graph Explorer</span>
+                </a>
+
+                <a
+                    class="side-link"
+                    href="activities.html"
+                    data-menu-text="activities actividades"
+                >
+                    <svg><use href="#i-clock"></use></svg>
+                    <span>Activities</span>
+                </a>
+
+                <span class="menu-section">Automate</span>
+
+                <a
+                    class="side-link"
+                    href="remoteops.html"
+                    data-menu-text="remoteops"
+                >
+                    <svg><use href="#i-terminal"></use></svg>
+                    <span>RemoteOps</span>
+                </a>
+
+                <span class="menu-section">Configure</span>
+
+                <a
+                    class="side-link"
+                    href="detections.html"
+                    data-menu-text="detections"
+                >
+                    <svg><use href="#i-radar"></use></svg>
+                    <span>Detections</span>
+                </a>
+
+                <a
+                    class="side-link"
+                    href="agent-management.html"
+                    data-menu-text="agent management"
+                >
+                    <svg><use href="#i-device"></use></svg>
+                    <span>Agent management</span>
+                </a>
+
+                <a
+                    class="side-link"
+                    href="reports.html"
+                    data-menu-text="reports"
+                >
+                    <svg><use href="#i-report"></use></svg>
+                    <span>Reports</span>
+                </a>
+
+                <a
+                    class="side-link"
+                    href="policies-settings.html"
+                    data-menu-text="policies settings"
+                >
+                    <svg><use href="#i-settings"></use></svg>
+                    <span>Policies and settings</span>
+                </a>
+
+            </nav>
+
+            <div class="sidebar-footer">
+
+                <span class="protection-dot"></span>
+
+                <div>
+                    <strong>Protección activa</strong>
+                    <small>24 agentes conectados</small>
+                </div>
+
+            </div>
+
+        </aside>
+
+        <button
+            class="sidebar-backdrop"
+            id="sidebarBackdrop"
+            type="button"
+            aria-label="Cerrar menú"
+        ></button>
+
+
+        <!-- CONTENIDO -->
+
+        <main class="main-content inventory-main">
+
+            <!-- ENCABEZADO -->
+
+            <header class="inventory-header">
+
+                <div class="inventory-header-main">
+
+                    <div>
+                        <h1>Inventory</h1>
+
+                        <p class="inventory-subtitle">
+                            Gestiona y analiza los endpoints de la plataforma.
+                        </p>
+                    </div>
+
+                    <nav class="inventory-tabs">
+
+                        <button type="button" data-tab="all">
+                            All assets
+                        </button>
+
+                        <button
+                            class="active"
+                            type="button"
+                            data-tab="endpoint"
+                        >
+                            Endpoint
+                        </button>
+
+                        <button type="button" data-tab="applications">
+                            Applications
+                        </button>
+
+                    </nav>
+
+                </div>
+
+                <div class="inventory-header-right">
+
+                    <label class="summary-switch">
+
+                        <input
+                            id="toggleInventorySummary"
+                            type="checkbox"
+                            checked
+                        >
+
+                        <span></span>
+
+                        Summary dashboard
+
+                    </label>
+
+                    <div class="inventory-header-actions">
+
+                        <nav>
+                            <button type="button">Exclusions</button>
+                            <button type="button">Policy</button>
+                            <button type="button">Blocklist</button>
+                            <button type="button">Policy override</button>
+                            <button type="button">Upgrade policy</button>
+                        </nav>
+
+                        <button
+                            id="btnInventorySettings"
+                            type="button"
+                            aria-label="Opciones"
+                        >
+                            <svg><use href="#i-settings"></use></svg>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- MISIÓN DE INVENTORY -->
+
+            <section
+                class="inventory-mission"
+                id="inventoryMission"
+                aria-labelledby="inventoryMissionTitle"
+            >
+
+                <div class="inventory-mission-main">
+
+                    <span class="inventory-mission-kicker">
+                        INCIDENTE FIN-014 · ALCANCE
+                    </span>
+
+
+                    <!-- PRIMERA VISTA: INSTRUCCIONES -->
+
+                    <div
+                        id="inventoryInstructionsView"
+                        class="inventory-mission-view"
+                    >
+
+                        <h2 id="inventoryMissionTitle">
+                            Determina el alcance del ataque
+                        </h2>
+
+                        <p>
+                            Antes de comenzar, sigue estos pasos para comprobar
+                            si el cifrado se propagó a otro equipo.
+                        </p>
+
+                        <ol class="inventory-inline-steps">
+
+                            <li>
+                                <b>1</b>
+
+                                <span>
+                                    <strong>Busca FIN-014 y FIN-021</strong>
+                                    Localiza ambos equipos en la tabla de Inventory.
+                                </span>
+                            </li>
+
+                            <li>
+                                <b>2</b>
+
+                                <span>
+                                    <strong>Abre cada endpoint</strong>
+                                    Haz clic en su fila para mostrar el panel de detalles.
+                                </span>
+                            </li>
+
+                            <li>
+                                <b>3</b>
+
+                                <span>
+                                    <strong>Presiona Analizar endpoint</strong>
+                                    Repite el análisis en los dos equipos.
+                                </span>
+                            </li>
+
+                            <li>
+                                <b>4</b>
+
+                                <span>
+                                    <strong>Completa 2 de 2</strong>
+                                    Entonces aparecerá la pregunta para determinar el alcance.
+                                </span>
+                            </li>
+
+                        </ol>
+
+                        <button
+                            id="btnStartInventoryAnalysis"
+                            class="inventory-primary-button"
+                            type="button"
+                        >
+                            Comenzar análisis
+                        </button>
+
+                    </div>
+
+
+                    <!-- SEGUNDA VISTA: ANÁLISIS -->
+
+                    <div
+                        id="inventoryAnalysisView"
+                        class="inventory-mission-view"
+                        hidden
+                    >
+
+                        <h2>Analiza los 2 endpoints</h2>
+
+                        <p>
+                            Busca <strong>FIN-014</strong> y
+                            <strong>FIN-021</strong> en la tabla.
+                            Abre cada fila y pulsa
+                            <strong>Analizar endpoint</strong>
+                            en el panel de detalles.
+                        </p>
+
+                        <div
+                            id="inventoryScanResults"
+                            class="inventory-scan-results"
+                            aria-live="polite"
+                        ></div>
+
+                    </div>
+
+
+                    <!-- TERCERA VISTA: PREGUNTA -->
+
+                    <div
+                        id="inventoryDecisionView"
+                        class="inventory-mission-view inventory-mission-decision"
+                        hidden
+                    >
+
+                        <span class="inventory-question-ready">
+                            ✓ 2 de 2 endpoints analizados
+                        </span>
+
+                        <h2>Determina el alcance</h2>
+
+                        <label for="inventoryScope">
+                            ¿Qué conclusión respaldan los análisis?
+                        </label>
+
+                        <select id="inventoryScope">
+
+                            <option value="">
+                                Selecciona una conclusión
+                            </option>
+
+                            <option value="both">
+                                FIN-014 y FIN-021 presentan cifrado confirmado
+                            </option>
+
+                            <option value="origin">
+                                FIN-014 originó el cifrado; FIN-021 recibió una conexión,
+                                sin cifrado confirmado
+                            </option>
+
+                            <option value="target">
+                                FIN-021 inició el ataque; FIN-014 solo recibió la conexión
+                            </option>
+
+                        </select>
+
+                        <label for="inventoryBasis">
+                            ¿Qué evidencia sostiene tu conclusión?
+                        </label>
+
+                        <select id="inventoryBasis">
+
+                            <option value="">
+                                Selecciona la evidencia
+                            </option>
+
+                            <option value="status">
+                                Ambos equipos pertenecen a Finanzas
+                            </option>
+
+                            <option value="sequence">
+                                FIN-014 registra escrituras cifradas antes de la conexión
+                                SMB; FIN-021 no registra escrituras cifradas
+                            </option>
+
+                            <option value="offline">
+                                FIN-014 aparece desconectado en Inventory
+                            </option>
+
+                        </select>
+
+                        <button
+                            id="inventoryVerify"
+                            type="button"
+                            disabled
+                        >
+                            Confirmar alcance
+                        </button>
+
+                    </div>
+
+                    <p
+                        id="inventoryMissionFeedback"
+                        role="status"
+                        aria-live="polite"
+                        hidden
+                    ></p>
+
+                </div>
+
+
+                <!-- ESTADO DEL ANÁLISIS -->
+
+                <div class="inventory-mission-side">
+
+                    <strong class="inventory-status-title">
+                        Estado del análisis
+                    </strong>
+
+                    <div class="inventory-mission-progress-wrap">
+
+                        <div class="inventory-mission-progress-head">
+
+                            <p id="inventoryMissionProgress">
+                                0 de 2 equipos analizados
+                            </p>
+
+                            <strong>0%</strong>
+
+                        </div>
+
+                        <div class="inventory-mission-progress-bar">
+                            <i id="inventoryMissionBar"></i>
+                        </div>
+
+                    </div>
+
+                    <div
+                        class="inventory-mission-steps"
+                        aria-hidden="true"
+                    >
+
+                        <article class="mission-step active">
+
+                            <span>1</span>
+
+                            <div>
+                                <strong>Analiza los endpoints</strong>
+                                <small>Abre FIN-014 y FIN-021</small>
+                            </div>
+
+                        </article>
+
+                        <article class="mission-step">
+
+                            <span>2</span>
+
+                            <div>
+                                <strong>Compara resultados</strong>
+                                <small>Revisa la evidencia obtenida</small>
+                            </div>
+
+                        </article>
+
+                        <article class="mission-step">
+
+                            <span>3</span>
+
+                            <div>
+                                <strong>Determina el alcance</strong>
+                                <small>Registra tu conclusión</small>
+                            </div>
+
+                        </article>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SIGUIENTE ETAPA -->
+
+                <div
+                    id="inventoryMissionDone"
+                    class="inventory-next-step"
+                    hidden
+                >
+
+                    <span>
+                        PASO 4 DE 5 · GRAPH EXPLORER
+                    </span>
+
+                    <strong>
+                        Alcance verificado. Ahora reconstruye la relación entre
+                        PowerShell, el cifrado y la conexión hacia FIN-021.
+                    </strong>
+
+                    <p>
+                        FIN-021 recibió una conexión, pero todavía no hay
+                        cifrado confirmado en ese equipo.
+                    </p>
+
+                    <a href="graph-explorer.html">
+                        Continuar a Graph Explorer →
+                    </a>
+
+                </div>
+
+            </section>
+
+
+            <!-- FILTROS -->
+
+            <section class="inventory-filters">
+
+                <button
+                    id="btnInventoryFilter"
+                    type="button"
+                >
+                    Load filter⌄
+                </button>
+
+                <label class="asset-search">
+
+                    <select id="assetSearchField">
+                        <option value="asset">Asset Name</option>
+                        <option value="ip">IP Address</option>
+                        <option value="os">OS Version</option>
+                    </select>
+
+                    <b>contains</b>
+
+                    <input
+                        id="assetSearch"
+                        type="search"
+                        placeholder="Search"
+                    >
+
+                </label>
+
+                <select id="inventoryTime">
+                    <option>All time</option>
+                    <option>Last 24 hours</option>
+                    <option>Last 7 days</option>
+                </select>
+
+                <select id="filterOSVersion">
+                    <option value="all">OS Version</option>
+                    <option value="windows">Windows 11</option>
+                    <option value="macos">macOS</option>
+                </select>
+
+                <select id="filterAgentVersion">
+                    <option value="all">Agent Version</option>
+                    <option value="current">Current</option>
+                    <option value="outdated">Outdated</option>
+                </select>
+
+                <select id="filterOperational">
+                    <option value="all">Agent Operational State</option>
+                    <option value="connected">Connected</option>
+                    <option value="disconnected">Disconnected</option>
+                </select>
+
+                <select id="filterInfection">
+                    <option value="all">Infection Status</option>
+                    <option value="infected">Infected</option>
+                    <option value="clean">Clean</option>
+                    <option value="isolated">Isolated</option>
+                </select>
+
+                <select id="filterTag">
+                    <option value="all">Search by tag</option>
+                    <option value="critical">Criticality: high</option>
+                    <option value="finance">Finance</option>
+                </select>
+
+                <button
+                    id="btnAddInventoryFilter"
+                    type="button"
+                >
+                    ＋ Add/remove filters
+                </button>
+
+            </section>
+
+
+            <!-- FILTROS RÁPIDOS -->
+
+            <section
+                class="inventory-extra-filters"
+                id="inventoryExtraFilters"
+                hidden
+            >
+
+                <button type="button" data-fast-filter="infected">
+                    <i class="critical"></i>
+                    Infected
+                    <b>1</b>
+                </button>
+
+                <button type="button" data-fast-filter="disconnected">
+                    <i class="disconnected"></i>
+                    Disconnected
+                    <b>8</b>
+                </button>
+
+                <button type="button" data-fast-filter="windows">
+                    <i class="windows"></i>
+                    Windows
+                    <b>13</b>
+                </button>
+
+                <button type="button" data-fast-filter="all">
+                    Clear filters
+                </button>
+
+            </section>
+
+
+            <!-- TARJETAS DE RESUMEN -->
+
+            <section
+                class="inventory-summary"
+                id="inventorySummary"
+            >
+
+                <article
+                    class="inventory-card interactive-inventory-card"
+                    data-card-filter="infected"
+                    tabindex="0"
+                >
+
+                    <header>
+                        <h2>Unresolved Alerts</h2>
+                        <button type="button">⋮</button>
+                    </header>
+
+                    <div class="inventory-card-content">
+
+                        <div class="inventory-donut alerts-donut">
+                            <span>10</span>
+                        </div>
+
+                        <ul>
+
+                            <li>
+                                <span>
+                                    <i class="critical"></i>
+                                    Critical
+                                </span>
+                                <b>2 (20.00%)</b>
+                            </li>
+
+                            <li>
+                                <span>
+                                    <i class="high"></i>
+                                    High
+                                </span>
+                                <b>6 (60.00%)</b>
+                            </li>
+
+                            <li>
+                                <span>
+                                    <i class="medium"></i>
+                                    Medium
+                                </span>
+                                <b>2 (20.00%)</b>
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                    <div class="inventory-hover">
+                        <strong>FIN-014 concentra las alertas críticas</strong>
+                        <span>Se detectó cifrado y ejecución sospechosa.</span>
+                        <b>Haz clic para ver el equipo afectado.</b>
+                    </div>
+
+                </article>
+
+
+                <article
+                    class="inventory-card interactive-inventory-card"
+                    data-card-filter="disconnected"
+                    tabindex="0"
+                >
+
+                    <header>
+                        <h2>Console Connectivity</h2>
+                        <button type="button">⋮</button>
+                    </header>
+
+                    <div class="connectivity-content">
+
+                        <div>
+                            <span class="status-symbol disconnected">◆</span>
+                            <small>Disconnected</small>
+                            <strong>8</strong>
+                        </div>
+
+                        <div>
+                            <span class="status-symbol connected">●</span>
+                            <small>Connected</small>
+                            <strong>7</strong>
+                        </div>
+
+                    </div>
+
+                    <div class="inventory-hover">
+                        <strong>8 equipos sin conexión</strong>
+                        <span>FIN-014 permanece aislado de la red.</span>
+                        <b>El agente de seguridad continúa activo.</b>
+                    </div>
+
+                </article>
+
+
+                <article
+                    class="inventory-card interactive-inventory-card"
+                    data-card-filter="windows"
+                    tabindex="0"
+                >
+
+                    <header>
+                        <h2>OS Family</h2>
+                        <button type="button">⋮</button>
+                    </header>
+
+                    <div class="inventory-card-content os-family-content">
+
+                        <div class="inventory-pie os-pie"></div>
+
+                        <ul>
+
+                            <li>
+                                <span>
+                                    <svg><use href="#i-windows"></use></svg>
+                                    Windows
+                                </span>
+                                <b>13</b>
+                            </li>
+
+                            <li>
+                                <span>
+                                    <svg><use href="#i-apple"></use></svg>
+                                    macOS
+                                </span>
+                                <b>2</b>
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                    <div class="inventory-hover">
+                        <strong>Windows es el sistema predominante</strong>
+                        <span>13 de los 15 endpoints usan Windows.</span>
+                        <b>FIN-014 utiliza Windows 11 Home.</b>
+                    </div>
+
+                </article>
+
+
+                <article
+                    class="inventory-card interactive-inventory-card"
+                    data-card-filter="pending"
+                    tabindex="0"
+                >
+
+                    <header>
+                        <h2>Pending Actions</h2>
+                        <button type="button">⋮</button>
+                    </header>
+
+                    <div class="inventory-card-content pending-content">
+
+                        <div class="inventory-donut pending-donut">
+                            <span>1</span>
+                        </div>
+
+                        <ul>
+
+                            <li>
+                                <span>
+                                    <i class="purple"></i>
+                                    Remote shell
+                                </span>
+                                <b>1 (100.00%)</b>
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                    <div class="inventory-hover">
+                        <strong>1 acción requiere atención</strong>
+                        <span>El análisis remoto de FIN-014 está pendiente.</span>
+                        <b>Abre el endpoint para continuar.</b>
+                    </div>
+
+                </article>
+
+            </section>
+
+
+            <!-- TABLA DE EQUIPOS -->
+
+            <section class="inventory-table-panel">
+
+                <header class="inventory-toolbar">
+
+                    <button
+                        id="btnInventoryActions"
+                        type="button"
+                        disabled
+                    >
+                        Actions⌄
+                    </button>
+
+                    <button
+                        id="btnScopeActions"
+                        type="button"
+                    >
+                        Scope actions⌄
+                    </button>
+
+                    <label class="inventory-toggle">
+
+                        <input
+                            id="groupInventory"
+                            type="checkbox"
+                        >
+
+                        <span></span>
+
+                        Group by
+
+                        <b>Select⌄</b>
+
+                    </label>
+
+                    <span>
+                        <strong id="inventoryVisibleCount">10</strong>
+                        of 16 items
+                    </span>
+
+                    <button
+                        class="inventory-export"
+                        id="btnInventoryExport"
+                        type="button"
+                    >
+                        <svg><use href="#i-download"></use></svg>
+                        Export⌄
+                    </button>
+
+                </header>
+
+                <div class="inventory-table-wrap">
+
+                    <table class="inventory-table">
+
+                        <thead>
+
+                            <tr>
+                                <th>
+                                    <input
+                                        id="selectAllInventory"
+                                        type="checkbox"
+                                        aria-label="Seleccionar todos"
+                                    >
+                                </th>
+
+                                <th>Asset Name</th>
+                                <th>OS Version</th>
+                                <th>Tags</th>
+                                <th>Agent Version</th>
+                                <th>Disk Usage</th>
+                                <th>Last Active</th>
+                                <th>IP Address</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="inventoryRows">
+
+                            <tr
+                                data-asset="America-Nerium"
+                                data-os="windows"
+                                data-agent="outdated"
+                                data-state="disconnected"
+                                data-infection="clean"
+                                data-tag="critical"
+                                data-user="areye"
+                            >
+
+                                <td>
+                                    <input class="inventory-check" type="checkbox">
+                                </td>
+
+                                <td>
+                                    <button class="asset-name" type="button">
+                                        <svg><use href="#i-laptop"></use></svg>
+                                        <span>America-Nerium</span>
+                                    </button>
+                                </td>
+
+                                <td>Windows 11 Home (26200)</td>
+
+                                <td>
+                                    <span class="asset-tag">
+                                        S1_Asset_criticality: low
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <button class="agent-version" type="button">
+                                        24.1.6.313 ↗
+                                    </button>
+                                </td>
+
+                                <td>
+                                    200.73 GB/475.91 GB (42%)
+                                    <small>+1</small>
+                                </td>
+
+                                <td>Aug 21, 2026 3:02 PM</td>
+
+                                <td>
+                                    <span class="ip-pill">192.168.12.1</span>
+                                    <span class="ip-pill">192.168.64.1</span>
+                                </td>
+
+                            </tr>
+
+
+                            <tr
+                                data-asset="AYCO"
+                                data-os="windows"
+                                data-agent="outdated"
+                                data-state="connected"
+                                data-infection="clean"
+                                data-tag="all"
+                                data-user="adona"
+                            >
+
+                                <td>
+                                    <input class="inventory-check" type="checkbox">
+                                </td>
+
+                                <td>
+                                    <button class="asset-name" type="button">
+                                        <svg><use href="#i-laptop"></use></svg>
+                                        <span>AYCO</span>
+                                    </button>
+                                </td>
+
+                                <td>Windows 11 Home (26200)</td>
+
+                                <td>—</td>
+
+                                <td>
+                                    <button class="agent-version" type="button">
+                                        25.2.3.407 ↗
+                                    </button>
+                                </td>
+
+                                <td>
+                                    368.89 GB/474.72 GB (78%)
+                                    <small>+1</small>
+                                </td>
+
+                                <td>
+                                    <span class="online">✓ Online</span>
+                                </td>
+
+                                <td>
+                                    <span class="ip-pill">192.168.1.108</span>
+                                    <span class="ip-pill">192.168.171.4</span>
+                                </td>
+
+                            </tr>
+
+
+                            <tr
+                                data-asset="BryanNerium"
+                                data-os="windows"
+                                data-agent="current"
+                                data-state="connected"
+                                data-infection="clean"
+                                data-tag="all"
+                                data-user="bcastaneda"
+                            >
+
+                                <td>
+                                    <input class="inventory-check" type="checkbox">
+                                </td>
+
+                                <td>
+                                    <button class="asset-name" type="button">
+                                        <svg><use href="#i-laptop"></use></svg>
+                                        <span>BryanNerium</span>
+                                    </button>
+                                </td>
+
+                                <td>Windows 11 Home (26200)</td>
+
+                                <td>—</td>
+
+                                <td>
+                                    <button class="agent-version" type="button">
+                                        26.1.1.163 ↗
+                                    </button>
+                                </td>
+
+                                <td>—</td>
+
+                                <td>
+                                    <span class="online">✓ Online</span>
+                                </td>
+
+                                <td>
+                                    <span class="ip-pill">192.168.1.87</span>
+                                </td>
+
+                            </tr>
+
+
+                            <tr
+                                class="incident-endpoint"
+                                data-asset="FIN-014"
+                                data-os="windows"
+                                data-agent="current"
+                                data-state="disconnected"
+                                data-infection="infected"
+                                data-tag="finance critical"
+                                data-user="Carlos Hernández"
+                            >
+
+                                <td>
+                                    <input class="inventory-check" type="checkbox">
+                                </td>
+
+                                <td>
+                                    <button class="asset-name" type="button">
+                                        <svg><use href="#i-laptop"></use></svg>
+
+                                        <span>FIN-014</span>
+
+                                        <small>
+                                            Ransomware detected
+                                        </small>
+                                    </button>
+                                </td>
+
+                                <td>Windows 11 Home (26200)</td>
+
+                                <td>
+                                    <span class="asset-tag danger">
+                                        Finance · Critical
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <button class="agent-version" type="button">
+                                        26.1.1.163 ↗
+                                    </button>
+                                </td>
+
+                                <td>
+                                    566.03 GB/952.50 GB (59%)
+                                    <small>+1</small>
+                                </td>
+
+                                <td>Aug 21, 2026 4:09 PM</td>
+
+                                <td>
+                                    <span class="ip-pill">192.168.0.14</span>
+                                </td>
+
+                            </tr>
+
+
+                            <tr
+                                data-asset="FIN-021"
+                                data-os="windows"
+                                data-agent="current"
+                                data-state="connected"
+                                data-infection="clean"
+                                data-tag="finance critical"
+                                data-user="Lucía Morales"
+                            >
+
+                                <td>
+                                    <input class="inventory-check" type="checkbox">
+                                </td>
+
+                                <td>
+                                    <button class="asset-name" type="button">
+                                        <svg><use href="#i-laptop"></use></svg>
+
+                                        <span>FIN-021</span>
+
+                                        <small>
+                                            Conexión SMB recibida · 09:42:22
+                                        </small>
+                                    </button>
+                                </td>
+
+                                <td>Windows 11 Home (26200)</td>
+
+                                <td>
+                                    <span class="asset-tag">
+                                        Finance · Critical
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <button class="agent-version" type="button">
+                                        26.1.1.163 ↗
+                                    </button>
+                                </td>
+
+                                <td>
+                                    193.10 GB/474.72 GB (41%)
+                                </td>
+
+                                <td>
+                                    <span class="online">✓ Online</span>
+                                </td>
+
+                                <td>
+                                    <span class="ip-pill">192.168.0.21</span>
+                                </td>
+
+                            </tr>
+
+
+                            <tr
+                                class="isolated-endpoint"
+                                data-asset="CarlosROG"
+                                data-os="windows"
+                                data-agent="current"
+                                data-state="disconnected"
+                                data-infection="isolated"
+                                data-tag="all"
+                                data-user="carlos"
+                            >
+
+                                <td>
+                                    <input class="inventory-check" type="checkbox">
+                                </td>
+
+                                <td>
+                                    <button class="asset-name" type="button">
+                                        <svg><use href="#i-laptop"></use></svg>
+
+                                        <span>CarlosROG</span>
+
+                                        <small>
+                                            Isolated endpoint
+                                        </small>
+                                    </button>
+                                </td>
+
+                                <td>Windows 11 Home (26200)</td>
+
+                                <td>—</td>
+
+                                <td>
+                                    <button class="agent-version" type="button">
+                                        26.1.1.163 ↗
+                                    </button>
+                                </td>
+
+                                <td>
+                                    566.03 GB/952.50 GB (59%)
+                                    <small>+1</small>
+                                </td>
+
+                                <td>Aug 3, 2026 10:40 PM</td>
+
+                                <td>
+                                    <span class="ip-pill">192.168.0.23</span>
+                                </td>
+
+                            </tr>
+
+
+                            <tr
+                                data-asset="Carlos MacBook Pro M5"
+                                data-os="macos"
+                                data-agent="outdated"
+                                data-state="connected"
+                                data-infection="clean"
+                                data-tag="all"
+                                data-user="carlosmarin"
+                            >
+
+                                <td>
+                                    <input class="inventory-check" type="checkbox">
+                                </td>
+
+                                <td>
+                                    <button class="asset-name" type="button">
+                                        <svg><use href="#i-apple"></use></svg>
+
+                                        <span>
+                                            Carlos's MacBook Pro M5
+                                        </span>
+
+                                        <small>
+                                            Pending actions
+                                        </small>
+                                    </button>
+                                </td>
+
+                                <td>OS X (26.5.2)</td>
+
+                                <td>—</td>
+
+                                <td>
+                                    <button class="agent-version" type="button">
+                                        22.3.3.6466 ↗
+                                    </button>
+                                </td>
+
+                                <td>—</td>
+
+                                <td>
+                                    <span class="online">✓ Online</span>
+                                </td>
+
+                                <td>
+                                    <span class="ip-pill">192.168.1.127</span>
+                                    <span class="ip-pill">10.211.55.2</span>
+                                </td>
+
+                            </tr>
+
+
+                            <tr
+                                data-asset="Claudia-Nerium"
+                                data-os="windows"
+                                data-agent="current"
+                                data-state="connected"
+                                data-infection="clean"
+                                data-tag="all"
+                                data-user="claudia"
+                            >
+
+                                <td>
+                                    <input class="inventory-check" type="checkbox">
+                                </td>
+
+                                <td>
+                                    <button class="asset-name" type="button">
+                                        <svg><use href="#i-laptop"></use></svg>
+                                        <span>Claudia-Nerium</span>
+                                    </button>
+                                </td>
+
+                                <td>Windows 11 Home (26200)</td>
+
+                                <td>—</td>
+
+                                <td>
+                                    <button class="agent-version" type="button">
+                                        26.1.1.163 ↗
+                                    </button>
+                                </td>
+
+                                <td>
+                                    98.27 GB/474.72 GB (21%)
+                                    <small>+1</small>
+                                </td>
+
+                                <td>
+                                    <span class="online">✓ Online</span>
+                                </td>
+
+                                <td>
+                                    <span class="ip-pill">192.168.1.9</span>
+                                </td>
+
+                            </tr>
+
+
+                            <tr
+                                data-asset="CompuClaus"
+                                data-os="windows"
+                                data-agent="outdated"
+                                data-state="disconnected"
+                                data-infection="clean"
+                                data-tag="all"
+                                data-user="claud"
+                            >
+
+                                <td>
+                                    <input class="inventory-check" type="checkbox">
+                                </td>
+
+                                <td>
+                                    <button class="asset-name" type="button">
+                                        <svg><use href="#i-laptop"></use></svg>
+                                        <span>CompuClaus</span>
+                                    </button>
+                                </td>
+
+                                <td>
+                                    Windows 11 Home Single Language
+                                </td>
+
+                                <td>—</td>
+
+                                <td>
+                                    <button class="agent-version" type="button">
+                                        25.2.5.437 ↗
+                                    </button>
+                                </td>
+
+                                <td>
+                                    154.31 GB/475.83 GB (32%)
+                                    <small>+1</small>
+                                </td>
+
+                                <td>
+                                    Aug 21, 2026 12:54 PM
+                                </td>
+
+                                <td>
+                                    <span class="ip-pill">192.168.1.11</span>
+                                </td>
+
+                            </tr>
+
+
+                            <tr
+                                data-asset="Fernanda Sanchez"
+                                data-os="macos"
+                                data-agent="outdated"
+                                data-state="connected"
+                                data-infection="clean"
+                                data-tag="all"
+                                data-user="fernanda"
+                            >
+
+                                <td>
+                                    <input class="inventory-check" type="checkbox">
+                                </td>
+
+                                <td>
+                                    <button class="asset-name" type="button">
+                                        <svg><use href="#i-apple"></use></svg>
+                                        <span>Fernanda Sanchez</span>
+                                    </button>
+                                </td>
+
+                                <td>macOS (26.5.2)</td>
+
+                                <td>—</td>
+
+                                <td>
+                                    <button class="agent-version" type="button">
+                                        25.4.2.8594 ↗
+                                    </button>
+                                </td>
+
+                                <td>
+                                    68.65 GB/460.38 GB (15%)
+                                </td>
+
+                                <td>
+                                    <span class="online">✓ Online</span>
+                                </td>
+
+                                <td>
+                                    <span class="ip-pill">192.168.1.216</span>
+                                </td>
+
+                            </tr>
+
+
+                            <tr
+                                data-asset="jhernandez"
+                                data-os="windows"
+                                data-agent="outdated"
+                                data-state="connected"
+                                data-infection="clean"
+                                data-tag="all"
+                                data-user="jhern"
+                            >
+
+                                <td>
+                                    <input class="inventory-check" type="checkbox">
+                                </td>
+
+                                <td>
+                                    <button class="asset-name" type="button">
+                                        <svg><use href="#i-laptop"></use></svg>
+                                        <span>jhernandez</span>
+                                    </button>
+                                </td>
+
+                                <td>Windows 11 Home (26200)</td>
+
+                                <td>—</td>
+
+                                <td>
+                                    <button class="agent-version" type="button">
+                                        25.2.3.407 ↗
+                                    </button>
+                                </td>
+
+                                <td>
+                                    199.55 GB/475.84 GB (42%)
+                                    <small>+1</small>
+                                </td>
+
+                                <td>
+                                    <span class="online">✓ Online</span>
+                                </td>
+
+                                <td>
+                                    <span class="ip-pill">192.168.1.172</span>
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <!-- PANEL DE DETALLES DEL ENDPOINT -->
+
+    <div
+        class="endpoint-drawer-layer"
+        id="endpointDrawer"
+        aria-hidden="true"
+    >
+
+        <button
+            class="endpoint-drawer-backdrop"
+            id="closeEndpointBackdrop"
+            type="button"
+            aria-label="Cerrar detalle"
+        ></button>
+
+        <aside
+            class="endpoint-drawer"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="drawerEndpointName"
+        >
+
+            <header>
+
+                <div>
+                    <span>ENDPOINT DETAILS</span>
+                    <h2 id="drawerEndpointName">FIN-014</h2>
+                </div>
+
+                <button
+                    id="closeEndpointDrawer"
+                    type="button"
+                    aria-label="Cerrar"
+                >
+                    <svg><use href="#i-x"></use></svg>
+                </button>
+
+            </header>
+
+            <div class="endpoint-state">
+
+                <span id="drawerEndpointState">
+                    INFECTED
+                </span>
+
+                <strong id="drawerEndpointConnection">
+                    Disconnected
+                </strong>
+
+            </div>
+
+            <dl>
+
+                <div>
+                    <dt>Usuario</dt>
+                    <dd id="drawerEndpointUser">Carlos Hernández</dd>
+                </div>
+
+                <div>
+                    <dt>Sistema operativo</dt>
+                    <dd id="drawerEndpointOS">Windows 11 Home</dd>
+                </div>
+
+                <div>
+                    <dt>Agent version</dt>
+                    <dd id="drawerEndpointAgent">26.1.1.163</dd>
+                </div>
+
+                <div>
+                    <dt>IP address</dt>
+                    <dd id="drawerEndpointIP">192.168.0.14</dd>
+                </div>
+
+            </dl>
+
+            <section
+                class="endpoint-warning"
+                id="endpointWarning"
+            >
+
+                <svg><use href="#i-alert"></use></svg>
+
+                <div>
+                    <strong>Ransomware detectado</strong>
+
+                    <p>
+                        El equipo presenta actividad de cifrado y debe aislarse
+                        para detener la propagación.
+                    </p>
+                </div>
+
+            </section>
+
+            <div class="endpoint-drawer-actions">
+
+                <button
+                    id="btnScanEndpoint"
+                    type="button"
+                >
+                    Analizar endpoint
+                </button>
+
+                <button
+                    class="primary"
+                    id="btnIsolateInventoryEndpoint"
+                    type="button"
+                >
+                    Aislar endpoint
+                </button>
+
+            </div>
+
+        </aside>
+
+    </div>
+
+
+    <!-- ACCIONES DE INVENTORY -->
+
+    <div
+        class="inventory-actions-layer"
+        id="inventoryActionsLayer"
+        aria-hidden="true"
+    >
+
+        <button
+            class="inventory-actions-backdrop"
+            id="closeActionsBackdrop"
+            type="button"
+            aria-label="Cerrar acciones"
+        ></button>
+
+        <section
+            class="inventory-actions-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="inventoryActionsTitle"
+        >
+
+            <header>
+
+                <div>
+                    <span>ENDPOINT ACTIONS</span>
+
+                    <h2 id="inventoryActionsTitle">
+                        Acciones para equipos seleccionados
+                    </h2>
+                </div>
+
+                <button
+                    id="closeInventoryActions"
+                    type="button"
+                >
+                    <svg><use href="#i-x"></use></svg>
+                </button>
+
+            </header>
+
+            <p id="inventoryActionsCount">
+                1 endpoint seleccionado
+            </p>
+
+            <button
+                type="button"
+                data-bulk-action="scan"
+            >
+                <strong>Ejecutar análisis</strong>
+                <span>Buscar amenazas y archivos sospechosos.</span>
+            </button>
+
+            <button
+                type="button"
+                data-bulk-action="isolate"
+            >
+                <strong>Aislar de la red</strong>
+                <span>Bloquear comunicaciones excepto con SentinelOne.</span>
+            </button>
+
+            <button
+                type="button"
+                data-bulk-action="tag"
+            >
+                <strong>Asignar etiqueta</strong>
+                <span>Marcar como parte del incidente #2026-001.</span>
+            </button>
+
+        </section>
+
+    </div>
+
+
+    <!-- PAUSA -->
+
+    <div class="overlay" id="overlayPausa">
+
+        <div class="modal pause-modal">
+
+            <div class="modal-icon">
+                <svg><use href="#i-pause"></use></svg>
+            </div>
+
+            <span class="modal-label">
+                SIMULADOR
+            </span>
+
+            <h2>Simulación en pausa</h2>
+
+            <p>
+                El inventario de endpoints está detenido temporalmente.
+            </p>
+
+            <button
+                class="modal-button primary"
+                id="btnContinuar"
+                type="button"
+            >
+                Continuar
+            </button>
+
+            <button
+                class="modal-button"
+                id="btnConfigPausa"
+                type="button"
+            >
+                Configuración
+            </button>
+
+            <button
+                class="modal-button ghost"
+                id="btnInicioPausa"
+                type="button"
+            >
+                Regresar al inicio
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- CONFIGURACIÓN -->
+
+    <div class="overlay" id="overlayConfig">
+
+        <div class="modal config-modal">
+
+            <header class="modal-header">
+
+                <div>
+                    <span class="modal-label">
+                        SYSTEM
+                    </span>
+
+                    <h2>Configuración</h2>
+                </div>
+
+                <button
+                    id="cerrarConfig"
+                    type="button"
+                >
+                    ×
+                </button>
+
+            </header>
+
+            <div class="config-row">
+
+                <div>
+                    <strong>Música</strong>
+                    <small>Volumen de música</small>
+                </div>
+
+                <div class="range-wrap">
+
+                    <input
+                        id="volumenMusica"
+                        type="range"
+                        min="0"
+                        max="100"
+                        value="25"
+                    >
+
+                    <output id="valorMusica">
+                        25%
+                    </output>
+
+                </div>
+
+            </div>
+
+            <div class="config-row">
+
+                <div>
+                    <strong>Efectos</strong>
+                    <small>Sonidos de botones</small>
+                </div>
+
+                <div class="range-wrap">
+
+                    <input
+                        id="volumenEfectos"
+                        type="range"
+                        min="0"
+                        max="100"
+                        value="50"
+                    >
+
+                    <output id="valorEfectos">
+                        50%
+                    </output>
+
+                </div>
+
+            </div>
+
+            <label class="config-row toggle-row">
+
+                <div>
+                    <strong>Silenciar todo</strong>
+                </div>
+
+                <input
+                    id="silenciar"
+                    type="checkbox"
+                >
+
+                <span class="toggle"></span>
+
+            </label>
+
+            <button
+                class="modal-button primary"
+                id="guardarConfig"
+                type="button"
+            >
+                Guardar y volver
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- MENSAJE TEMPORAL -->
+
+    <div
+        class="toast"
+        id="toast"
+        role="status"
+        aria-live="polite"
+    >
+
+        <span>✓</span>
+
+        <p id="toastTexto">
+            Acción completada
+        </p>
+
+    </div>
+
+
+    <!-- JAVASCRIPT -->
+
+    <script src="JS/Navegacion.js"></script>
+    <script src="JS/Inventory.js"></script>
+    <script src="JS/InventoryMission.js"></script>
+    <script src="JS/escenario.js"></script>
+
+</body>
+
+</html>

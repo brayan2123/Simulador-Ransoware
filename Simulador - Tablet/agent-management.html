@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1b102b">
+    <title>Agent management | Simulador NeriumTech</title>
+    <link rel="stylesheet" href="CSS/Simulador.css">
+    <link rel="stylesheet" href="CSS/AgentManagement.css">
+</head>
+
+<body>
+    <svg class="icon-sprite" aria-hidden="true">
+        <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+        <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 4.8 3.2 7.7 8 9 4.8-1.3 8-4.2 8-9V6l-8-3Z"/><path d="M12 8v5m0 3v.2"/></symbol>
+        <symbol id="i-bug" viewBox="0 0 24 24"><path d="M8 8.5h8v7a4 4 0 0 1-8 0v-7Z"/><path d="M9.5 8.5V7a2.5 2.5 0 0 1 5 0v1.5M4 11h4m8 0h4M5 6l3 2m11-2-3 2M4 16h4m8 0h4M6 21l3-3m9 3-3-3"/></symbol>
+        <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3m-4 4v3"/></symbol>
+        <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+        <symbol id="i-inventory" viewBox="0 0 24 24"><path d="M4 7h16v13H4zM7 3h10v4H7z"/><path d="M9 12h6"/></symbol>
+        <symbol id="i-graph" viewBox="0 0 24 24"><circle cx="5" cy="12" r="2"/><circle cx="18" cy="5" r="2"/><circle cx="19" cy="18" r="2"/><path d="m7 11 9-5m-9 7 10 4"/></symbol>
+        <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+        <symbol id="i-terminal" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m7 9 3 3-3 3m6 0h4"/></symbol>
+        <symbol id="i-radar" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/><path d="m12 12 6-6"/></symbol>
+        <symbol id="i-device" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8m-4-4v4"/></symbol>
+        <symbol id="i-laptop" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="12" rx="2"/><path d="m2 20 2-4h16l2 4H2Z"/></symbol>
+        <symbol id="i-report" viewBox="0 0 24 24"><path d="M5 3h10l4 4v14H5z"/><path d="M14 3v5h5M8 13h8m-8 4h6"/></symbol>
+        <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1.2l2-1.6-2-3.4-2.5 1A7 7 0 0 0 14.2 5.5L13.8 3h-4l-.4 2.5a7 7 0 0 0-1.9 1.1l-2.4-1-2 3.4 2 1.6A7 7 0 0 0 5 12c0 .4 0 .8.1 1.2l-2 1.6 2 3.4 2.4-1a7 7 0 0 0 1.9 1.1l.4 2.5h4l.4-2.5a7 7 0 0 0 2.2-1.1l2.5 1 2-3.4-2-1.6c.1-.4.1-.8.1-1.2Z"/></symbol>
+        <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14m8-14v14"/></symbol>
+        <symbol id="i-back" viewBox="0 0 24 24"><path d="m9 7-5 5 5 5M4 12h11a5 5 0 0 1 5 5"/></symbol>
+        <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+        <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9Z"/><path d="M10 21h4"/></symbol>
+        <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m8 10 4 4 4-4"/></symbol>
+        <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+        <symbol id="i-filter" viewBox="0 0 24 24"><path d="M4 5h16l-6 7v6l-4 2v-8Z"/></symbol>
+        <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5"/><path d="M5 19h14"/></symbol>
+        <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 7v5h-5M4 17v-5h5"/><path d="M6 8a7 7 0 0 1 12-1l2 5M18 16a7 7 0 0 1-12 1l-2-5"/></symbol>
+        <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 4.8 3.2 7.7 8 9 4.8-1.3 8-4.2 8-9V6l-8-3Z"/><path d="m8.5 12 2.2 2.2 4.8-5"/></symbol>
+        <symbol id="i-x" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+        <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v.2"/></symbol>
+    </svg>
+
+    <audio id="musicaFondo" src="Audio/Musica.mp3" loop></audio>
+
+    <header class="topbar">
+        <div class="topbar-left">
+            <button class="top-icon mobile-menu" id="btnAbrirMenu" type="button" aria-label="Abrir menú"><svg><use href="#i-menu"></use></svg></button>
+            <a class="brand-mini" href="Simulador.Html" aria-label="NeriumTech"><span>N</span></a>
+            <span class="top-divider"></span><span class="scope-circle">›</span>
+            <nav class="scope-path" aria-label="Ubicación actual"><strong>Global</strong><b>/</b><strong>NeriumTech</strong><b>/</b><strong>Simulación Ransomware</strong><b>/</b><button type="button">Agent management <svg><use href="#i-chevron"></use></svg></button></nav>
+        </div>
+        <div class="topbar-right">
+            <span class="simulation-state"><i></i> Simulación activa</span>
+            <time class="live-clock" id="relojSimulacion">00:00:00</time>
+            <button class="top-text-button" id="btnAyuda" type="button">Ayuda</button>
+            <button class="top-icon" id="btnPausa" type="button" aria-label="Pausar"><svg><use href="#i-pause"></use></svg></button>
+            <button class="top-icon" id="btnConfiguracion" type="button" aria-label="Configuración"><svg><use href="#i-settings"></use></svg></button>
+            <button class="top-icon" id="btnNotificaciones" type="button" aria-label="Notificaciones"><svg><use href="#i-bell"></use></svg><i class="notification-dot"></i></button>
+            <button class="top-icon" id="btnRegresar" type="button" aria-label="Regresar"><svg><use href="#i-back"></use></svg></button>
+            <span class="user-avatar">BC</span>
+        </div>
+    </header>
+
+    <div class="application-shell">
+        <aside class="sidebar" id="sidebar">
+            <label class="page-search"><svg><use href="#i-search"></use></svg><input id="menuSearch" type="search" placeholder="Buscar una página"><kbd>Ctrl K</kbd></label>
+            <nav class="sidebar-nav" aria-label="Módulos del simulador">
+                <a class="side-link" href="Simulador.Html" data-ready="true" data-route="dashboard" data-menu-text="dashboard resumen inicio"><svg><use href="#i-grid"></use></svg><span>Dashboards</span></a>
+                <span class="menu-section">Triage</span>
+                <a class="side-link" href="Alerts.html" data-ready="true" data-route="alerts" data-menu-text="alerts alertas incidentes"><svg><use href="#i-alert"></use></svg><span>Alerts</span><b class="menu-count">1</b></a>
+                <a class="side-link" href="vulnerabilities.html" data-ready="true" data-route="vulnerabilities" data-menu-text="vulnerabilities vulnerabilidades"><svg><use href="#i-bug"></use></svg><span>Vulnerabilities</span></a>
+                <a class="side-link" href="misconfigurations.html" data-menu-text="misconfigurations configuraciones"><svg><use href="#i-lock"></use></svg><span>Misconfigurations</span></a>
+                <span class="menu-section">Discover</span>
+                <a class="side-link" href="event-search.html" data-ready="true" data-route="event-search" data-menu-text="event search eventos"><svg><use href="#i-search"></use></svg><span>Event Search</span></a>
+                <a class="side-link" href="inventory.html" data-ready="true" data-route="inventory" data-menu-text="inventory inventario"><svg><use href="#i-inventory"></use></svg><span>Inventory</span></a>
+                <a class="side-link" href="graph-explorer.html" data-ready="true" data-route="graph-explorer" data-menu-text="graph explorer mapa"><svg><use href="#i-graph"></use></svg><span>Graph Explorer</span></a>
+                <a class="side-link" href="activities.html" data-ready="true" data-route="activities" data-menu-text="activities actividades"><svg><use href="#i-clock"></use></svg><span>Activities</span></a>
+                <span class="menu-section">Automate</span>
+                <a class="side-link" href="remoteops.html" data-ready="true" data-route="remoteops" data-menu-text="remoteops automatización"><svg><use href="#i-terminal"></use></svg><span>RemoteOps</span></a>
+                <span class="menu-section">Configure</span>
+                <a class="side-link" href="detections.html" data-ready="true" data-route="detections" data-menu-text="detections detecciones reglas"><svg><use href="#i-radar"></use></svg><span>Detections</span></a>
+                <a class="side-link active" href="agent-management.html" data-ready="true" data-route="agent-management" data-menu-text="agent management agentes"><svg><use href="#i-device"></use></svg><span>Agent management</span></a>
+                <a class="side-link" href="reports.html" data-menu-text="reports reportes"><svg><use href="#i-report"></use></svg><span>Reports</span></a>
+                <a class="side-link" href="policies-settings.html" data-menu-text="policies settings"><svg><use href="#i-settings"></use></svg><span>Policies and settings</span></a>
+            </nav>
+            <div class="sidebar-footer"><span class="protection-dot"></span><div><strong>Protección activa</strong><small>24 agentes conectados</small></div></div>
+        </aside>
+
+        <button class="sidebar-backdrop" id="sidebarBackdrop" type="button" aria-label="Cerrar menú"></button>
+
+        <main class="main-content agent-main">
+            <header class="agent-page-header">
+                <div><h1>Agent management</h1><button class="related-button" id="btnRelatedPages" type="button">Related Pages <span>⌄</span></button></div>
+                <nav class="agent-tabs" aria-label="Secciones de Agent management">
+                    <button class="active" type="button" data-agent-tab="Endpoints">Endpoints</button>
+                    <button type="button" data-agent-tab="Agent tasks">Agent tasks</button>
+                    <button type="button" data-agent-tab="Packages">Packages</button>
+                    <button type="button" data-agent-tab="Upgrade policy">Upgrade policy</button>
+                    <button type="button" data-agent-tab="Policy override">Policy override</button>
+                    <button type="button" data-agent-tab="Maintenance window">Maintenance window</button>
+                    <button type="button" data-agent-tab="Live security updates">Live security updates</button>
+                    <button type="button" data-agent-tab="Local upgrade/downgrade">Local upgrade/downgrade</button>
+                </nav>
+                <div class="related-menu" id="relatedMenu" hidden><a href="inventory.html">Inventory</a><a href="detections.html">Detections</a><a href="remoteops.html">RemoteOps</a></div>
+            </header>
+
+            <section class="agent-filter-shell" id="agentFilters">
+                <header class="agent-filter-bar">
+                    <button class="load-filter" id="btnLoadFilter" type="button">Load filter <span>⌄</span></button>
+                    <button class="save-filter" id="btnSaveFilter" type="button" aria-label="Guardar filtro">▱</button>
+                    <label class="agent-search"><select id="searchField"><option value="name">Endpoint name</option><option value="user">Last logged in user</option><option value="group">Group</option></select><span>contains</span><input id="endpointSearch" type="search" placeholder="Search"></label>
+                    <select id="tagFilter"><option value="all">Search by tag</option><option value="critical">Criticality: high</option><option value="finance">Finance</option><option value="pending">Pending actions</option></select>
+                    <select id="osFilter"><option value="all">OS</option><option value="Windows">Windows</option><option value="macOS">macOS</option><option value="Linux">Linux</option></select>
+                    <select id="versionFilter"><option value="all">Version</option><option value="26.1.1.163">26.1.1.163</option><option value="25.2.3.407">25.2.3.407</option><option value="25.2.5.437">25.2.5.437</option><option value="24.1.6.313">24.1.6.313</option></select>
+                    <select id="typeFilter"><option value="all">Type</option><option value="Laptop">Laptop</option><option value="Desktop">Desktop</option><option value="Server">Server</option></select>
+                    <select id="storageFilter"><option value="all">Storage Type</option><option value="SSD">SSD</option><option value="HDD">HDD</option></select>
+                    <button id="btnExtraFilters" type="button"><svg><use href="#i-plus"></use></svg> Add/remove filters</button>
+                    <button class="collapse-agent-filters" id="btnCollapseAgentFilters" type="button" aria-label="Contraer filtros">⌃</button>
+                </header>
+
+                <div class="agent-filter-columns" id="agentFilterColumns">
+                    <section class="tag-builder"><strong>Search by tag</strong><select id="tagOperator"><option>Has tag</option><option>Does not have tag</option></select><select id="tagKey"><option value="all">Select a key</option><option value="critical">S1_Asset_criticality</option><option value="department">Department</option><option value="location">Location</option></select><select id="tagValue" disabled><option>Select a value</option></select><button id="btnAddTag" type="button" disabled>Add</button></section>
+                    <section class="filter-column"><header><strong>OS</strong><span>≡　⌕</span></header><label><input type="checkbox" data-filter-os="Windows"> Windows <b>13</b></label><label><input type="checkbox" data-filter-os="macOS"> macOS <b>2</b></label><label><input type="checkbox" data-filter-os="Linux"> Linux <b>0</b></label><label><input type="checkbox" data-filter-os="Windows Legacy"> Windows Legacy <b>0</b></label></section>
+                    <section class="filter-column scroll-column"><header><strong>Version</strong><span>≡　⌕</span></header><label><input type="checkbox" data-filter-version="26.1.1.163"> 26.1.1.163 <b>5</b></label><label><input type="checkbox" data-filter-version="25.2.3.407"> 25.2.3.407 <b>3</b></label><label><input type="checkbox" data-filter-version="25.2.5.437"> 25.2.5.437 <b>2</b></label><label><input type="checkbox" data-filter-version="24.1.6.313"> 24.1.6.313 <b>1</b></label><label><input type="checkbox" data-filter-version="22.3.3.6466"> 22.3.3.6466 <b>1</b></label><label><input type="checkbox" data-filter-version="25.4.2.8594"> 25.4.2.8594 <b>1</b></label></section>
+                    <section class="filter-column scroll-column"><header><strong>Type</strong><span>≡　⌕</span></header><label><input type="checkbox" data-filter-type="Laptop"> Laptop <b>11</b></label><label><input type="checkbox" data-filter-type="Desktop"> Desktop <b>3</b></label><label><input type="checkbox" data-filter-type="Server"> Server <b>1</b></label><label><input type="checkbox" data-filter-type="Other"> Other <b>0</b></label><label><input type="checkbox" data-filter-type="Storage"> Storage <b>0</b></label><label><input type="checkbox" data-filter-type="Kubernetes Node"> Kubernetes Node <b>0</b></label></section>
+                    <section class="filter-column empty-filter"><header><strong>Storage Type</strong><span>≡　⌕</span></header><div><strong>No values available</strong><small>Try adjusting or clearing other filters to see available options.</small></div></section>
+                    <section class="filter-column"><header><strong>Group</strong><span>≡　⌕</span></header><label><input type="checkbox" data-filter-group="Default Group"> Default Group <b>11</b></label><label><input type="checkbox" data-filter-group="Test"> Test <b>1</b></label><label><input type="checkbox" data-filter-group="nerium"> nerium <b>2</b></label><label><input type="checkbox" data-filter-group="Servers"> Servers <b>1</b></label></section>
+                </div>
+            </section>
+
+            <section class="agent-table-panel">
+                <header class="agent-toolbar">
+                    <div><button class="agent-actions" id="btnAgentActions" type="button" disabled>Actions <span>⌄</span></button><button class="scope-actions" id="btnScopeActions" type="button">Scope actions <span>⌄</span></button><span id="endpointCount">15 Items</span></div>
+                    <button class="download-csv" id="btnDownloadCsv" type="button"><svg><use href="#i-download"></use></svg> Download CSV <span>⌄</span></button>
+                    <div class="agent-actions-menu" id="agentActionsMenu" hidden><button type="button" data-agent-action="isolate">Isolate endpoint</button><button type="button" data-agent-action="connect">Reconnect endpoint</button><button type="button" data-agent-action="scan">Run full disk scan</button><button type="button" data-agent-action="restart">Restart agent</button></div>
+                    <div class="scope-actions-menu" id="scopeActionsMenu" hidden><button type="button" data-scope-action="scan">Scan all visible endpoints</button><button type="button" data-scope-action="update">Update agent policy</button><button type="button" data-scope-action="refresh">Refresh connectivity</button></div>
+                </header>
+
+                <div class="agent-table-wrap">
+                    <table class="agent-table">
+                        <thead><tr><th><input id="selectAllEndpoints" type="checkbox" aria-label="Seleccionar todos"></th><th><button type="button" data-sort="name">Endpoint Name <span>↕</span></button></th><th>Endpoint Tags</th><th>Account</th><th>Site</th><th>Last Logged In User</th><th>Group</th><th>Product</th><th>Domain</th><th>Status</th><th>IP Address</th></tr></thead>
+                        <tbody id="endpointRows"></tbody>
+                    </table>
+                    <div class="agent-empty" id="agentEmpty" hidden><svg><use href="#i-search"></use></svg><strong>No endpoints found</strong><span>Change the filters to see other agents.</span></div>
+                </div>
+
+                <footer class="agent-pagination"><button id="previousEndpointPage" type="button">‹</button><div id="endpointPageButtons"></div><button id="nextEndpointPage" type="button">›</button><select id="endpointsPerPage"><option value="8" selected>8 rows</option><option value="10">10 rows</option><option value="15">15 rows</option></select></footer>
+            </section>
+        </main>
+    </div>
+
+    <div class="endpoint-drawer-layer" id="endpointDrawer" aria-hidden="true">
+        <button class="endpoint-drawer-backdrop" id="closeEndpointBackdrop" type="button" aria-label="Cerrar detalle"></button>
+        <aside class="endpoint-drawer" role="dialog" aria-modal="true" aria-labelledby="endpointDetailName">
+            <header><div><span>MANAGED ENDPOINT</span><h2 id="endpointDetailName">Endpoint</h2></div><button id="closeEndpointDrawer" type="button" aria-label="Cerrar"><svg><use href="#i-x"></use></svg></button></header>
+            <div class="endpoint-health"><span><svg><use href="#i-shield"></use></svg></span><div><strong id="endpointDetailStatus">Online</strong><small id="endpointDetailProtection">Agent protected</small></div></div>
+            <dl><div><dt>Operating system</dt><dd id="endpointDetailOs">Windows</dd></div><div><dt>Agent version</dt><dd id="endpointDetailVersion">26.1.1.163</dd></div><div><dt>Last logged in user</dt><dd id="endpointDetailUser">user</dd></div><div><dt>Group</dt><dd id="endpointDetailGroup">Default Group</dd></div><div><dt>IP address</dt><dd id="endpointDetailIp">192.168.1.10</dd></div><div><dt>Pending actions</dt><dd id="endpointDetailPending">None</dd></div></dl>
+            <div class="endpoint-detail-actions"><button id="btnScanEndpoint" type="button"><svg><use href="#i-refresh"></use></svg> Run scan</button><button class="primary" id="btnIsolateEndpoint" type="button"><svg><use href="#i-shield"></use></svg> Isolate endpoint</button></div>
+        </aside>
+    </div>
+
+    <div class="overlay" id="overlayPausa"><div class="modal pause-modal"><div class="modal-icon"><svg><use href="#i-pause"></use></svg></div><span class="modal-label">SIMULADOR</span><h2>Simulación en pausa</h2><p>La administración de agentes está detenida temporalmente.</p><button class="modal-button primary" id="btnContinuar" type="button">Continuar</button><button class="modal-button" id="btnConfigPausa" type="button">Configuración</button><button class="modal-button ghost" id="btnInicioPausa" type="button">Regresar al inicio</button></div></div>
+    <div class="overlay" id="overlayConfig"><div class="modal config-modal"><header class="modal-header"><div><span class="modal-label">SYSTEM</span><h2>Configuración</h2></div><button id="cerrarConfig" type="button">×</button></header><div class="config-row"><div><strong>Música</strong><small>Volumen de música</small></div><div class="range-wrap"><input id="volumenMusica" type="range" min="0" max="100" value="25"><output id="valorMusica">25%</output></div></div><div class="config-row"><div><strong>Efectos</strong><small>Sonidos de botones</small></div><div class="range-wrap"><input id="volumenEfectos" type="range" min="0" max="100" value="50"><output id="valorEfectos">50%</output></div></div><label class="config-row toggle-row"><div><strong>Silenciar todo</strong></div><input id="silenciar" type="checkbox"><span class="toggle"></span></label><button class="modal-button primary" id="guardarConfig" type="button">Guardar y volver</button></div></div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"><span>✓</span><p id="toastTexto">Acción completada</p></div>
+
+    <script src="JS/Navegacion.js"></script>
+    <script src="JS/AgentManagement.js"></script>
+</body>
+
+</html>

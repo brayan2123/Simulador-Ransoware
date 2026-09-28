@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1b102b">
+    <title>Event Search | Simulador de Ransomware NeriumTech</title>
+    <link rel="stylesheet" href="CSS/Simulador.css">
+    <link rel="stylesheet" href="CSS/EventMission.css">
+    <link rel="stylesheet" href="CSS/event-search.css">
+
+    <style>
+        /* =========================================
+           BOTÓN + MODAL DE INSTRUCCIONES
+        ========================================= */
+        .instructions-launcher {
+            display: flex;
+            justify-content: flex-end;
+            margin: 12px 0 10px;
+        }
+
+        .instructions-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-width: 170px;
+            min-height: 44px;
+            padding: 0 18px;
+            border: 1px solid #7b2ff7;
+            border-radius: 9px;
+            background: #7b2ff7;
+            color: #ffffff;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 7px 18px rgba(53, 16, 94, 0.16);
+            transition:
+                transform 140ms ease,
+                background 140ms ease,
+                border-color 140ms ease,
+                box-shadow 140ms ease;
+        }
+
+        .instructions-button:hover {
+            background: #6524d9;
+            border-color: #6524d9;
+            color: #ffffff;
+            transform: translateY(-1px);
+            box-shadow: 0 9px 22px rgba(53, 16, 94, 0.20);
+        }
+
+        .instructions-button:focus,
+        .instructions-button:focus-visible,
+        .instructions-button:active {
+            background: #35105e;
+            border-color: #35105e;
+            color: #ffffff;
+            outline: 3px solid rgba(123, 47, 247, 0.20);
+            outline-offset: 2px;
+        }
+
+        .instructions-button.instructions-seen {
+            background: #35105e;
+            border-color: #35105e;
+            color: #ffffff;
+        }
+
+        .instructions-button.instructions-seen::after {
+            content: " ✓";
+            font-weight: 900;
+        }
+
+        .instructions-button.attention {
+            animation: instructionPulse 1.15s ease-in-out 4;
+        }
+
+        @keyframes instructionPulse {
+            0%, 100% {
+                box-shadow: 0 7px 18px rgba(53, 16, 94, 0.16);
+            }
+            50% {
+                box-shadow:
+                    0 0 0 5px rgba(123, 47, 247, 0.14),
+                    0 7px 22px rgba(53, 16, 94, 0.18);
+            }
+        }
+
+        .instructions-layer {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 22px;
+            background: rgba(17, 9, 28, 0.62);
+            backdrop-filter: blur(3px);
+        }
+
+        .instructions-layer.active {
+            display: flex;
+        }
+
+        .instructions-modal {
+            width: min(620px, 96vw);
+            max-height: 88vh;
+            overflow-y: auto;
+            border: 1px solid rgba(123, 47, 247, 0.30);
+            border-radius: 16px;
+            background: #ffffff;
+            box-shadow: 0 24px 70px rgba(18, 8, 30, 0.28);
+            animation: instructionsEnter 170ms ease-out;
+        }
+
+        @keyframes instructionsEnter {
+            from {
+                opacity: 0;
+                transform: translateY(10px) scale(0.985);
+            }
+        }
+
+        .instructions-modal-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 20px 22px 15px;
+            border-bottom: 1px solid #ece7f2;
+        }
+
+        .instructions-modal-header span {
+            display: block;
+            margin-bottom: 4px;
+            color: #7b2ff7;
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: 1.2px;
+        }
+
+        .instructions-modal-header h2 {
+            margin: 0;
+            color: #261535;
+            font-size: 21px;
+        }
+
+        .instructions-close {
+            width: 34px;
+            height: 34px;
+            flex: 0 0 34px;
+            border: 0;
+            border-radius: 8px;
+            background: #f4effa;
+            color: #35105e;
+            font-size: 21px;
+            cursor: pointer;
+        }
+
+        .instructions-close:hover {
+            background: #ece2f8;
+        }
+
+        .instructions-modal-body {
+            padding: 18px 22px 10px;
+        }
+
+        .instruction-step {
+            display: grid;
+            grid-template-columns: 34px 1fr;
+            gap: 12px;
+            align-items: start;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0ecf4;
+        }
+
+        .instruction-step:last-of-type {
+            border-bottom: 0;
+        }
+
+        .instruction-step b.step-number {
+            display: grid;
+            width: 32px;
+            height: 32px;
+            place-items: center;
+            border-radius: 50%;
+            background: #35105e;
+            color: #ffffff;
+            font-size: 13px;
+        }
+
+        .instruction-step strong {
+            display: block;
+            margin-bottom: 4px;
+            color: #2b183d;
+            font-size: 13px;
+        }
+
+        .instruction-step p {
+            margin: 0;
+            color: #665d6d;
+            font-size: 12px;
+            line-height: 1.55;
+        }
+
+        .instructions-tip {
+            margin: 12px 0 0;
+            padding: 12px 14px;
+            border-left: 4px solid #7b2ff7;
+            border-radius: 8px;
+            background: #f7f2ff;
+            color: #51465a;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .instructions-modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            padding: 14px 22px 20px;
+        }
+
+        .instructions-understood {
+            min-height: 38px;
+            padding: 0 18px;
+            border: 0;
+            border-radius: 8px;
+            background: #35105e;
+            color: #ffffff;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .instructions-understood:hover {
+            background: #4b187f;
+        }
+
+        @media (max-width: 650px) {
+            .instructions-launcher {
+                justify-content: stretch;
+            }
+
+            .instructions-button {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .instructions-modal {
+                width: 100%;
+            }
+        }
+    
+        .event-mission-instructions {
+            display: flex;
+            justify-content: flex-end;
+            margin: 20px 0 6px;
+        }
+
+        @media (max-width: 780px) {
+            .event-mission-instructions {
+                justify-content: stretch;
+            }
+
+            .event-mission-instructions .instructions-button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+    <svg class="icon-sprite" aria-hidden="true">
+        <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+        <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 4.8 3.2 7.7 8 9 4.8-1.3 8-4.2 8-9V6l-8-3Z"/><path d="M12 8v5m0 3v.2"/></symbol>
+        <symbol id="i-bug" viewBox="0 0 24 24"><path d="M8 8.5h8v7a4 4 0 0 1-8 0v-7Z"/><path d="M9.5 8.5V7a2.5 2.5 0 0 1 5 0v1.5M4 11h4m8 0h4M5 6l3 2m11-2-3 2M4 16h4m8 0h4M6 21l3-3m9 3-3-3"/></symbol>
+        <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3m-4 4v3"/></symbol>
+        <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+        <symbol id="i-inventory" viewBox="0 0 24 24"><path d="M4 7h16v13H4zM7 3h10v4H7z"/><path d="M9 12h6"/></symbol>
+        <symbol id="i-graph" viewBox="0 0 24 24"><circle cx="5" cy="12" r="2"/><circle cx="18" cy="5" r="2"/><circle cx="19" cy="18" r="2"/><path d="m7 11 9-5m-9 7 10 4"/></symbol>
+        <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+        <symbol id="i-terminal" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m7 9 3 3-3 3m6 0h4"/></symbol>
+        <symbol id="i-radar" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/><path d="m12 12 6-6"/></symbol>
+        <symbol id="i-device" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8m-4-4v4"/></symbol>
+        <symbol id="i-report" viewBox="0 0 24 24"><path d="M5 3h10l4 4v14H5z"/><path d="M14 3v5h5M8 13h8m-8 4h6"/></symbol>
+        <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1.2l2-1.6-2-3.4-2.5 1A7 7 0 0 0 14.2 5.5L13.8 3h-4l-.4 2.5a7 7 0 0 0-1.9 1.1l-2.4-1-2 3.4 2 1.6A7 7 0 0 0 5 12c0 .4 0 .8.1 1.2l-2 1.6 2 3.4 2.4-1a7 7 0 0 0 1.9 1.1l.4 2.5h4l.4-2.5a7 7 0 0 0 2.2-1.1l2.5 1 2-3.4-2-1.6c.1-.4.1-.8.1-1.2Z"/></symbol>
+        <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14m8-14v14"/></symbol>
+        <symbol id="i-back" viewBox="0 0 24 24"><path d="m9 7-5 5 5 5M4 12h11a5 5 0 0 1 5 5"/></symbol>
+        <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+        <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9Z"/><path d="M10 21h4"/></symbol>
+        <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m8 10 4 4 4-4"/></symbol>
+        <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-4-4 4 4 4-4"/><path d="M4 15v5h16v-5"/></symbol>
+        <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></symbol>
+        <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5a3 3 0 0 1 3-2h5v17H7a3 3 0 0 0-3 2V5Zm16 0a3 3 0 0 0-3-2h-5v17h5a3 3 0 0 1 3 2V5Z"/></symbol>
+        <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></symbol>
+        <symbol id="i-file" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v5h5M9 12h6m-6 4h6"/></symbol>
+        <symbol id="i-code" viewBox="0 0 24 24"><path d="m8 8-4 4 4 4m8-8 4 4-4 4m-3-10-2 12"/></symbol>
+        <symbol id="i-x" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    </svg>
+
+    <audio id="musicaFondo" src="Audio/Musica.mp3" loop></audio>
+
+    <header class="topbar">
+        <div class="topbar-left">
+            <button class="top-icon mobile-menu" id="btnAbrirMenu" type="button" aria-label="Abrir menú"><svg><use href="#i-menu"></use></svg></button>
+            <a class="brand-mini" href="Simulador.html" aria-label="NeriumTech"><span>N</span></a>
+            <span class="top-divider"></span><span class="scope-circle">›</span>
+            <nav class="scope-path" aria-label="Ubicación actual">
+                <strong>Global</strong><b>/</b><strong>NeriumTech</strong><b>/</b><strong>Simulación Ransomware</strong><b>/</b>
+                <button type="button">Event Search <svg><use href="#i-chevron"></use></svg></button>
+            </nav>
+        </div>
+        <div class="topbar-right">
+            <span class="simulation-state"><i></i> Simulación activa</span>
+            <time class="live-clock" id="relojSimulacion">00:00:00</time>
+            <button class="instructions-button topbar-instructions-button" id="btnStageInstructions" type="button">📘 Ver instrucciones</button>
+            <strong id="scenarioTimer" class="event-mission-timer">Sin iniciar</strong>
+            <button class="top-text-button" id="btnAyuda" type="button">Ayuda</button>
+            <button class="top-icon" id="btnPausa" type="button" aria-label="Pausar"><svg><use href="#i-pause"></use></svg></button>
+            <button class="top-icon" id="btnConfiguracion" type="button" aria-label="Configuración"><svg><use href="#i-settings"></use></svg></button>
+            <button class="top-icon" id="btnNotificaciones" type="button" aria-label="Notificaciones"><svg><use href="#i-bell"></use></svg><i class="notification-dot"></i></button>
+            <button class="top-icon" id="btnRegresar" type="button" aria-label="Regresar"><svg><use href="#i-back"></use></svg></button>
+            <span class="user-avatar">BC</span>
+        </div>
+    </header>
+
+    <div class="application-shell">
+        <aside class="sidebar" id="sidebar">
+            <label class="page-search"><svg><use href="#i-search"></use></svg><input id="menuSearch" type="search" placeholder="Buscar una página"><kbd>Ctrl K</kbd></label>
+            <nav class="sidebar-nav" aria-label="Módulos del simulador">
+                <a class="side-link" href="Simulador.html" data-ready="true" data-route="dashboard" data-menu-text="dashboard resumen inicio"><svg><use href="#i-grid"></use></svg><span>Dashboards</span></a>
+                <span class="menu-section">Triage</span>
+                <a class="side-link" href="Alerts.html" data-ready="true" data-route="alerts" data-menu-text="alerts alertas incidentes"><svg><use href="#i-alert"></use></svg><span>Alerts</span><b class="menu-count">1</b></a>
+                <a class="side-link" href="vulnerabilities.html" data-ready="true" data-route="vulnerabilities" data-menu-text="vulnerabilities vulnerabilidades"><svg><use href="#i-bug"></use></svg><span>Vulnerabilities</span></a>
+                <a class="side-link" href="misconfigurations.html" data-menu-text="misconfigurations configuraciones"><svg><use href="#i-lock"></use></svg><span>Misconfigurations</span></a>
+                <span class="menu-section">Discover</span>
+                <a class="side-link active" href="event-search.html" data-ready="true" data-route="event-search" data-menu-text="event search eventos"><svg><use href="#i-search"></use></svg><span>Event Search</span></a>
+                <a class="side-link" href="Inventory.html" data-menu-text="inventory inventario"><svg><use href="#i-inventory"></use></svg><span>Inventory</span></a>
+                <a class="side-link" href="graph-explorer.html" data-menu-text="graph explorer mapa"><svg><use href="#i-graph"></use></svg><span>Graph Explorer</span></a>
+                <a class="side-link" href="activities.html" data-menu-text="activities actividades"><svg><use href="#i-clock"></use></svg><span>Activities</span></a>
+                <span class="menu-section">Automate</span>
+                <a class="side-link" href="remoteops.html" data-menu-text="remoteops"><svg><use href="#i-terminal"></use></svg><span>RemoteOps</span></a>
+                <span class="menu-section">Configure</span>
+                <a class="side-link" href="detections.html" data-menu-text="detections"><svg><use href="#i-radar"></use></svg><span>Detections</span></a>
+                <a class="side-link" href="agent-management.html" data-menu-text="agent management"><svg><use href="#i-device"></use></svg><span>Agent management</span></a>
+                <a class="side-link" href="reports.html" data-menu-text="reports"><svg><use href="#i-report"></use></svg><span>Reports</span></a>
+                <a class="side-link" href="policies-settings.html" data-menu-text="policies settings"><svg><use href="#i-settings"></use></svg><span>Policies and settings</span></a>
+            </nav>
+            <div class="sidebar-footer"><span class="protection-dot"></span><div><strong>Protección activa</strong><small>24 agentes conectados</small></div></div>
+        </aside>
+
+        <button class="sidebar-backdrop" id="sidebarBackdrop" type="button" aria-label="Cerrar menú"></button>
+
+        <main class="main-content event-search-main">
+            <header class="event-page-header">
+                <div class="event-page-title">
+                    <h1>Event Search</h1>
+                    <p>Busca, analiza y verifica los eventos de la plataforma.</p>
+                </div>
+                <div class="event-page-actions">
+                    <button id="btnNewQuery" type="button">＋ New query</button>
+                    <button id="btnQueryLibrary" type="button"><svg><use href="#i-book"></use></svg> Query library</button>
+                    <button id="btnCopyLink" type="button"><svg><use href="#i-copy"></use></svg> Copy link</button>
+                    <button class="outlined" id="btnPageActions" type="button">Actions⌄</button>
+                    <button id="btnDocumentation" type="button">Documentation⌄</button>
+                    <button id="btnPreferences" type="button"><svg><use href="#i-settings"></use></svg> Preferences</button>
+                </div>
+            </header>
+<section class="event-mission" id="eventMission" aria-labelledby="eventMissionTitle">
+                <div class="event-mission-main">
+                    <small class="event-mission-kicker">INCIDENTE FIN-014 · INVESTIGACIÓN</small>
+
+                    <div id="eventInstructionsView" class="event-mission-view">
+                        <h2 id="eventMissionTitle">Reconstruye la cadena del ataque</h2>
+                        <p class="event-mission-summary">Antes de comenzar, sigue estos pasos para completar la investigación.</p>
+                        <ol class="event-inline-steps">
+                            <li><b>1</b><span><strong>Revisa la tabla</strong> Busca eventos relacionados con el equipo FIN-014.</span></li>
+                            <li><b>2</b><span><strong>Selecciona 3 registros</strong> Encuentra el documento abierto, el comando ejecutado y el archivo cifrado.</span></li>
+                            <li><b>3</b><span><strong>Presiona Investigate</strong> Verifica tu selección desde la barra superior de la tabla.</span></li>
+                            <li><b>4</b><span><strong>Completa 3/3</strong> Después aparecerá la pregunta para identificar el proceso responsable.</span></li>
+                        </ol>
+                        <button id="btnStartEventInvestigation" class="event-primary-button" type="button">Comenzar investigación</button>
+                    </div>
+
+                    <div id="eventInvestigationView" class="event-mission-view" hidden>
+                        <h2>Encuentra los 3 registros correctos</h2>
+                        <p class="event-mission-summary">Selecciona en la tabla el documento inicial, el comando ejecutado y el archivo cifrado. Después pulsa <strong>Investigate</strong>. Los registros incorrectos descuentan 5 segundos.</p>
+                    </div>
+
+                    <p id="scenarioBanner" hidden></p>
+                    <p id="eventMissionFeedback" role="status" aria-live="polite" hidden></p>
+
+                    <div id="eventProcessDecision" class="event-mission-view event-process-question" hidden>
+                        <span class="event-question-ready">✓ 3 de 3 eventos verificados</span>
+                        <h2>Identifica el proceso responsable</h2>
+                        <label for="suspectProcess">¿Qué proceso ejecutó el comando codificado que inició el cifrado?</label>
+                        <div class="event-process-controls">
+                            <select id="suspectProcess"><option value="">Selecciona un proceso</option><option value="backup">backupsvc.exe · respaldo programado</option><option value="word">WINWORD.EXE · abrió el documento</option><option value="powershell">powershell.exe · comando codificado</option><option value="browser">msedge.exe · navegación</option></select>
+                            <button id="btnIdentifyProcess" type="button">Confirmar proceso</button>
+                        </div>
+                    </div>
+
+                    <a href="Inventory.html" id="eventMissionNext" hidden>Verificar alcance en Inventory →</a>
+                </div>
+                <div class="event-mission-progress" aria-label="Progreso de la investigación">
+                    <strong id="evidenceCount">0/3 pistas verificadas</strong>
+                    <div>
+                        <strong id="eventProgressText">0 de 3 eventos verificados</strong>
+                        <span id="eventMistakeText">Sin errores de selección</span>
+                    </div>
+                    <div class="event-progress-track"><i id="eventProgressBar"></i></div>
+                    <div class="mission-step-labels" aria-hidden="true">
+                        <span><b>1</b>Identifica<br>el inicio</span>
+                        <span><b>2</b>Relaciona<br>la actividad</span>
+                        <span><b>3</b>Confirma<br>el impacto</span>
+                    </div>
+                    <ul id="eventMissionLog" aria-live="polite"></ul>
+                </div>
+            </section>
+            <div class="event-search-workspace">
+                <aside class="fields-panel">
+                    <header><strong>PRODUCTS</strong><span>‹</span></header>
+                    <div class="product-list">
+                        <button class="product-row active" type="button"><span><i></i>All</span><b>3</b></button>
+                        <button class="product-row" type="button"><span><i></i>XDR</span><b>3</b></button>
+                        <button class="product-row" type="button"><span><i></i>SentinelOne</span><b>3</b></button>
+                        <button class="product-row muted" type="button"><span><i></i>Active Directory</span><b>0</b></button>
+                        <button class="product-row muted" type="button"><span><i></i>Windows</span><b>0</b></button>
+                    </div>
+                    <div class="fields-title"><strong>FIELDS</strong><span id="fieldCount">20</span></div>
+                    <label class="field-search"><svg><use href="#i-search"></use></svg><input id="fieldSearch" type="search" placeholder="Filter fields"></label>
+                    <div class="field-list" id="fieldList">
+                        <button type="button" data-field="dataSource.vendor"><i></i><span>dataSource.vendor</span><b>1</b></button>
+                        <button type="button" data-field="dst.ip.address"><i></i><span>dst.ip.address</span><b>593</b></button>
+                        <button type="button" data-field="dst.port.number"><i></i><span>dst.port.number</span><b>617</b></button>
+                        <button type="button" data-field="endpoint.name"><i></i><span>endpoint.name</span><b>11</b></button>
+                        <button type="button" data-field="endpoint.os"><i></i><span>endpoint.os</span><b>2</b></button>
+                        <button type="button" data-field="event.category"><i></i><span>event.category</span><b>13</b></button>
+                        <button type="button" data-field="event.dns.request"><i></i><span>event.dns.request</span><b>516</b></button>
+                        <button type="button" data-field="event.login.loginIsSuccessful"><i></i><span>event.login.loginIsSuccessful</span><b>2</b></button>
+                        <button type="button" data-field="event.login.type"><i></i><span>event.login.type</span><b>3</b></button>
+                        <button type="button" data-field="event.login.userName"><i></i><span>event.login.userName</span><b>7</b></button>
+                        <button type="button" data-field="event.network.connectionStatus"><i></i><span>event.network.connectionStatus</span><b>3</b></button>
+                        <button type="button" data-field="event.network.direction"><i></i><span>event.network.direction</span><b>2</b></button>
+                        <button type="button" data-field="event.url.action"><i></i><span>event.url.action</span><b>5</b></button>
+                        <button type="button" data-field="indicator.category"><i></i><span>indicator.category</span><b>15</b></button>
+                        <button type="button" data-field="indicator.name"><i></i><span>indicator.name</span><b>113</b></button>
+                        <button type="button" data-field="metadata.product.name"><i></i><span>metadata.product.name</span><b>2</b></button>
+                        <button type="button" data-field="osSrc.process.name"><i></i><span>osSrc.process.name</span><b>59</b></button>
+                        <button type="button" data-field="severity"><i></i><span>severity</span><b>1</b></button>
+                        <button type="button" data-field="src.ip.address"><i></i><span>src.ip.address</span><b>29</b></button>
+                        <button type="button" data-field="src.process.cmdline"><i></i><span>src.process.cmdline</span><b>82</b></button>
+                    </div>
+                </aside>
+
+                <section class="results-area">
+                    <section class="query-builder">
+                        <select id="productSelect" aria-label="Producto"><option>XDR</option><option>Endpoint</option><option>Cloud</option></select>
+                        <label class="query-input"><svg><use href="#i-search"></use></svg><input id="queryInput" type="search" placeholder="Type your query here. Use | to add PowerQuery commands."></label>
+                        <select id="timeRange" aria-label="Rango de tiempo"><option value="4">Last 4 hours</option><option value="12">Last 12 hours</option><option value="24">Last 24 hours</option><option value="168">Last 7 days</option></select>
+                        <button class="search-query-button" id="btnSearchEvents" type="button">▶ Search</button>
+                    </section>
+
+                    <section class="results-summary">
+                        <div><strong id="matchingRecords">382,941 matching records</strong><span id="rangeLabel">12:10 PM – 4:10 PM</span><span>[UTC-7] - 5 minutes / bar</span></div>
+                        <div class="summary-controls">
+                            <label class="mini-switch"><input id="toggleTimeline" type="checkbox"><span></span> Show timeline</label>
+                            <button id="btnShowGraph" type="button"><svg><use href="#i-graph"></use></svg> Show graph</button>
+                        </div>
+                    </section>
+
+                    <section class="event-timeline" id="eventTimeline" hidden aria-label="Línea de tiempo de eventos">
+                        <div class="timeline-bars" id="timelineBars">
+                            <span style="--bar: 34%"></span><span style="--bar: 56%"></span><span style="--bar: 40%"></span><span style="--bar: 73%"></span><span style="--bar: 48%"></span><span style="--bar: 66%"></span><span style="--bar: 88%"></span><span style="--bar: 58%"></span><span style="--bar: 92%"></span><span style="--bar: 74%"></span><span style="--bar: 62%"></span><span style="--bar: 46%"></span><span style="--bar: 70%"></span><span style="--bar: 54%"></span><span style="--bar: 38%"></span><span style="--bar: 64%"></span>
+                        </div>
+                        <div class="timeline-labels"><span>12:10 PM</span><span>2:10 PM</span><span>4:10 PM</span></div>
+                    </section>
+
+                    <section class="events-table-panel">
+                        <header class="events-toolbar">
+                            <button id="btnEventActions" type="button" disabled>Actions⌄</button>
+                            <span id="selectionLabel">No items selected</span>
+                            <div class="jump-controls"><span>Jump to</span><button id="btnOldest" type="button">≪ Oldest</button><button id="btnRecent" type="button">Most recent ≫</button></div>
+                            <select id="sortEvents" aria-label="Orden"><option value="oldest">Oldest first</option><option value="recent">Most recent first</option></select>
+                            <button id="btnTableView" type="button"><span>▦</span> Table⌄</button>
+                            <button id="btnTableSettings" type="button"><svg><use href="#i-settings"></use></svg> Settings</button>
+                            <button id="btnExportEvents" type="button"><svg><use href="#i-download"></use></svg> Export⌄</button>
+                        </header>
+
+                        <div class="events-table-wrap">
+                            <table class="events-table">
+                                <thead>
+                                    <tr><th><input id="selectAllEvents" type="checkbox" aria-label="Seleccionar todos"></th><th>Event Time</th><th>Name</th><th>Event type</th><th>Event Source</th><th>Related</th><th>Event Target</th></tr>
+                                </thead>
+                                <tbody id="eventRows">
+                                    <tr data-event="command" data-time="0" data-endpoint="FIN-014" data-mission-event="document"><td><input class="event-check" type="checkbox"></td><td>Aug 24, 2026 09:41:58 AM</td><td><span class="sentinel-mark">◆</span> SentinelOne</td><td>Process Creation</td><td><small>Parent process</small><span>explorer.exe</span></td><td><button class="related-link" type="button">+1 more</button></td><td><small>Process</small><strong>WINWORD.EXE abrió Factura_Q3.docm</strong></td></tr>
+                                    <tr data-event="command" data-time="0.5" data-endpoint="FIN-014" data-mission-event="backup"><td><input class="event-check" type="checkbox"></td><td>Aug 24, 2026 09:42:01 AM</td><td><span class="sentinel-mark">◆</span> SentinelOne</td><td>Process Creation</td><td><small>Signed service</small><span>Backup Service</span></td><td><button class="related-link" type="button">+1 more</button></td><td><small>Process</small><strong>backupsvc.exe · respaldo programado</strong></td></tr>
+
+                                    <tr data-event="dns" data-time="1" data-endpoint="FIN-014"><td><input class="event-check" type="checkbox"></td><td>Aug 24, 2026 09:42:03 AM</td><td><span class="sentinel-mark">◆</span> SentinelOne</td><td><span class="event-icon globe"><svg><use href="#i-globe"></use></svg></span> DNS Resolved</td><td><small>Agent UUID</small><span>134A4E4F-53E9-5BE9-A479-6E372E7EA9C6</span></td><td><button class="related-link" type="button">+2 more</button></td><td><small>DNS Request</small><strong>chatgpt.com.</strong></td></tr>
+                                    <tr data-event="dns" data-time="2" data-endpoint="FIN-014"><td><input class="event-check" type="checkbox"></td><td>Aug 24, 2026 09:42:03 AM</td><td><span class="sentinel-mark">◆</span> SentinelOne</td><td><span class="event-icon globe"><svg><use href="#i-globe"></use></svg></span> DNS Resolved</td><td><small>Agent UUID</small><span>134A4E4F-53E9-5BE9-A479-6E372E7EA9C6</span></td><td><button class="related-link" type="button">+2 more</button></td><td><small>DNS Request</small><strong>backup.nerium.local.</strong></td></tr>
+                                    <tr data-event="file" data-time="3" data-endpoint="FIN-014"><td><input class="event-check" type="checkbox"></td><td>Aug 24, 2026 09:42:17 AM</td><td><span class="sentinel-mark">◆</span> SentinelOne</td><td><span class="event-icon"><svg><use href="#i-file"></use></svg></span> File Creation</td><td><small>Agent UUID</small><span>ba3176a3b8954776b9cd92648088a1eb</span></td><td><button class="related-link" type="button">+2 more</button></td><td><small>Target File Path</small><strong>C:\Windows\SystemTemp\invoice.locked</strong></td></tr>
+                                    <tr data-event="file" data-time="4" data-endpoint="FIN-014" data-mission-event="cipher"><td><input class="event-check" type="checkbox"></td><td>Aug 24, 2026 09:42:17 AM</td><td><span class="sentinel-mark">◆</span> SentinelOne</td><td><span class="event-icon"><svg><use href="#i-file"></use></svg></span> File Modification</td><td><small>Agent UUID</small><span>ba3176a3b8954776b9cd92648088a1eb</span></td><td><button class="related-link" type="button">+2 more</button></td><td><small>Target File Path</small><strong>C:\Finance\Reports\Q3.xlsx.locked</strong></td></tr>
+                                    <tr data-event="file" data-time="5" data-endpoint="FIN-014"><td><input class="event-check" type="checkbox"></td><td>Aug 24, 2026 09:42:17 AM</td><td><span class="sentinel-mark">◆</span> SentinelOne</td><td><span class="event-icon"><svg><use href="#i-file"></use></svg></span> File Creation</td><td><small>Agent UUID</small><span>ba3176a3b8954776b9cd92648088a1eb</span></td><td><button class="related-link" type="button">+2 more</button></td><td><small>Target File Path</small><strong>C:\Users\Carlos\README_RESTORE.txt</strong></td></tr>
+                                    <tr data-event="file" data-time="6" data-endpoint="FIN-014"><td><input class="event-check" type="checkbox"></td><td>Aug 24, 2026 09:42:17 AM</td><td><span class="sentinel-mark">◆</span> SentinelOne</td><td><span class="event-icon"><svg><use href="#i-file"></use></svg></span> File Modification</td><td><small>Agent UUID</small><span>ba3176a3b8954776b9cd92648088a1eb</span></td><td><button class="related-link" type="button">+2 more</button></td><td><small>Target File Path</small><strong>C:\Finance\Payroll\employees.csv.locked</strong></td></tr>
+                                    <tr data-event="file" data-time="7" data-endpoint="FIN-014"><td><input class="event-check" type="checkbox"></td><td>Aug 24, 2026 09:42:17 AM</td><td><span class="sentinel-mark">◆</span> SentinelOne</td><td><span class="event-icon"><svg><use href="#i-file"></use></svg></span> File Deletion</td><td><small>Agent UUID</small><span>ba3176a3b8954776b9cd92648088a1eb</span></td><td><button class="related-link" type="button">+2 more</button></td><td><small>Target File Path</small><strong>C:\Windows\System32\winevt\Logs\Security.evtx</strong></td></tr>
+                                    <tr data-event="command" data-time="8" data-endpoint="FIN-014" data-mission-event="powershell"><td><input class="event-check" type="checkbox"></td><td>Aug 24, 2026 09:42:17 AM</td><td><span class="sentinel-mark">◆</span> SentinelOne</td><td><span class="event-icon code"><svg><use href="#i-code"></use></svg></span> Command Script</td><td><small>Agent UUID</small><span>ba3176a3b8954776b9cd92648088a1eb</span></td><td><button class="related-link" type="button">+2 more</button></td><td><small>Source Process Command Script</small><strong>powershell.exe -enc SQBFAFgA...</strong></td></tr>
+                                    <tr data-event="command" data-time="9" data-endpoint="FIN-014"><td><input class="event-check" type="checkbox"></td><td>Aug 24, 2026 09:42:17 AM</td><td><span class="sentinel-mark">◆</span> SentinelOne</td><td><span class="event-icon code"><svg><use href="#i-code"></use></svg></span> Command Script</td><td><small>Agent UUID</small><span>ba3176a3b8954776b9cd92648088a1eb</span></td><td><button class="related-link" type="button">+2 more</button></td><td><small>Source Process Command Script</small><strong>vssadmin delete shadows /all /quiet</strong></td></tr>
+                                    <tr data-event="network" data-time="10" data-endpoint="FIN-014"><td><input class="event-check" type="checkbox"></td><td>Aug 24, 2026 09:42:17 AM</td><td><span class="sentinel-mark">◆</span> SentinelOne</td><td><span class="event-icon globe"><svg><use href="#i-globe"></use></svg></span> IP Connect</td><td><small>Agent UUID</small><span>ba3176a3b8954776b9cd92648088a1eb</span></td><td><button class="related-link" type="button">+4 more</button></td><td><small>Destination IP</small><strong>165.227.248.56</strong></td></tr>
+                                    <tr data-event="file" data-time="11" data-endpoint="FIN-014"><td><input class="event-check" type="checkbox"></td><td>Aug 24, 2026 09:42:17 AM</td><td><span class="sentinel-mark">◆</span> SentinelOne</td><td><span class="event-icon"><svg><use href="#i-file"></use></svg></span> File Deletion</td><td><small>Agent UUID</small><span>ba3176a3b8954776b9cd92648088a1eb</span></td><td><button class="related-link" type="button">+2 more</button></td><td><small>Target File Path</small><strong>C:\ProgramData\CentraStage\Logs\agent.log</strong></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <div class="event-drawer-layer" id="eventDrawer" aria-hidden="true">
+        <button class="event-drawer-backdrop" id="closeEventBackdrop" type="button" aria-label="Cerrar detalle"></button>
+        <aside class="event-drawer" role="dialog" aria-modal="true" aria-labelledby="eventDrawerTitle">
+            <header><div><span>EVENT DETAILS</span><h2 id="eventDrawerTitle">File Modification</h2></div><button id="closeEventDrawer" type="button" aria-label="Cerrar"><svg><use href="#i-x"></use></svg></button></header>
+            <div class="event-risk"><span id="drawerEventRisk">SUSPICIOUS</span><strong>FIN-014</strong></div>
+            <dl><div><dt>Event time</dt><dd id="drawerEventTime"></dd></div><div><dt>Product</dt><dd>SentinelOne XDR</dd></div><div><dt>Agent UUID</dt><dd id="drawerEventSource"></dd></div><div><dt>Target</dt><dd id="drawerEventTarget"></dd></div></dl>
+            <section class="event-analysis"><svg><use href="#i-alert"></use></svg><div><strong>Relación con el ransomware</strong><p id="drawerEventAnalysis">Esta actividad forma parte de la secuencia detectada en FIN-014.</p></div></section>
+            <button class="investigate-event" id="btnInvestigateEvent" type="button">Agregar a investigación</button>
+        </aside>
+    </div>
+
+    <div class="graph-layer" id="graphLayer" aria-hidden="true">
+        <button class="graph-backdrop" id="closeGraphBackdrop" type="button" aria-label="Cerrar gráfica"></button>
+        <section class="event-graph-modal" role="dialog" aria-modal="true" aria-labelledby="graphTitle">
+            <header><div><span>EVENT RELATIONSHIP</span><h2 id="graphTitle">Graph Explorer</h2></div><button id="closeGraph" type="button"><svg><use href="#i-x"></use></svg></button></header>
+            <div class="event-graph">
+                <svg viewBox="0 0 720 360" role="img" aria-label="Relación entre FIN-014, PowerShell, archivos cifrados y dirección IP externa">
+                    <path d="M360 180 160 90M360 180 160 270M360 180 560 85M360 180 560 275"/>
+                    <g class="node endpoint"><circle cx="360" cy="180" r="58"/><text x="360" y="176">FIN-014</text><text x="360" y="198">Endpoint</text></g>
+                    <g class="node"><circle cx="160" cy="90" r="46"/><text x="160" y="86">PowerShell</text><text x="160" y="106">Process</text></g>
+                    <g class="node danger"><circle cx="160" cy="270" r="46"/><text x="160" y="266">.locked</text><text x="160" y="286">Files</text></g>
+                    <g class="node"><circle cx="560" cy="85" r="46"/><text x="560" y="81">165.227</text><text x="560" y="101">External IP</text></g>
+                    <g class="node danger"><circle cx="560" cy="275" r="46"/><text x="560" y="271">Shadow</text><text x="560" y="291">Deletion</text></g>
+                </svg>
+            </div>
+        </section>
+    </div>
+
+    <div class="query-library-layer" id="queryLibrary" aria-hidden="true">
+        <button class="query-library-backdrop" id="closeLibraryBackdrop" type="button" aria-label="Cerrar biblioteca"></button>
+        <section class="query-library-modal" role="dialog" aria-modal="true" aria-labelledby="queryLibraryTitle">
+            <header><div><span>SAVED QUERIES</span><h2 id="queryLibraryTitle">Query library</h2></div><button id="closeQueryLibrary" type="button"><svg><use href="#i-x"></use></svg></button></header>
+            <button type="button" data-query="endpoint.name = 'FIN-014'"><strong>Eventos de FIN-014</strong><span>Todos los eventos relacionados con el endpoint comprometido.</span></button>
+            <button type="button" data-query="event.category = 'file' AND endpoint.name = 'FIN-014'"><strong>Actividad de archivos</strong><span>Creación, modificación y eliminación de archivos.</span></button>
+            <button type="button" data-query="src.process.name = 'powershell.exe'"><strong>PowerShell sospechoso</strong><span>Comandos ejecutados mediante PowerShell.</span></button>
+            <button type="button" data-query="dst.ip.address = '165.227.248.56'"><strong>Conexión externa</strong><span>Comunicación con la IP vinculada al ataque.</span></button>
+        </section>
+    </div>
+
+
+    <div class="overlay" id="overlayPausa"><div class="modal pause-modal"><div class="modal-icon"><svg><use href="#i-pause"></use></svg></div><span class="modal-label">SIMULADOR</span><h2>Simulación en pausa</h2><p>La búsqueda de eventos está detenida temporalmente.</p><button class="modal-button primary" id="btnContinuar" type="button">Continuar</button><button class="modal-button" id="btnConfigPausa" type="button">Configuración</button><button class="modal-button ghost" id="btnInicioPausa" type="button">Regresar al inicio</button></div></div>
+    <div class="overlay" id="overlayConfig"><div class="modal config-modal"><header class="modal-header"><div><span class="modal-label">SYSTEM</span><h2>Configuración</h2></div><button id="cerrarConfig" type="button">×</button></header><div class="config-row"><div><strong>Música</strong><small>Volumen de música</small></div><div class="range-wrap"><input id="volumenMusica" type="range" min="0" max="100" value="25"><output id="valorMusica">25%</output></div></div><div class="config-row"><div><strong>Efectos</strong><small>Sonidos de botones</small></div><div class="range-wrap"><input id="volumenEfectos" type="range" min="0" max="100" value="50"><output id="valorEfectos">50%</output></div></div><label class="config-row toggle-row"><div><strong>Silenciar todo</strong></div><input id="silenciar" type="checkbox"><span class="toggle"></span></label><button class="modal-button primary" id="guardarConfig" type="button">Guardar y volver</button></div></div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"><span>✓</span><p id="toastTexto">Acción completada</p></div>
+
+    <script src="JS/Navegacion.js"></script>
+    <script src="JS/eventSearch.js"></script>
+    <script src="JS/EventMission.js"></script>
+    <script src="JS/escenario.js"></script>
+</body>
+
+</html>

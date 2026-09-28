@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1b102b">
+
+    <title>Reports | Simulador NeriumTech</title>
+
+    <link rel="stylesheet" href="CSS/Simulador.css">
+    <link rel="stylesheet" href="CSS/Reports.css">
+</head>
+
+<body>
+
+    <!-- =========================================
+         ICONOS
+    ========================================== -->
+
+    <svg class="icon-sprite" aria-hidden="true">
+
+        <symbol id="i-grid" viewBox="0 0 24 24">
+            <rect x="3" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/>
+            <rect x="14" y="14" width="7" height="7" rx="1"/>
+        </symbol>
+
+        <symbol id="i-alert" viewBox="0 0 24 24">
+            <path d="M12 3 4 6v6c0 4.8 3.2 7.7 8 9 4.8-1.3 8-4.2 8-9V6l-8-3Z"/>
+            <path d="M12 8v5m0 3v.2"/>
+        </symbol>
+
+        <symbol id="i-bug" viewBox="0 0 24 24">
+            <path d="M8 8.5h8v7a4 4 0 0 1-8 0v-7Z"/>
+            <path d="M9.5 8.5V7a2.5 2.5 0 0 1 5 0v1.5M4 11h4m8 0h4"/>
+        </symbol>
+
+        <symbol id="i-lock" viewBox="0 0 24 24">
+            <rect x="5" y="10" width="14" height="11" rx="2"/>
+            <path d="M8 10V7a4 4 0 0 1 8 0v3"/>
+        </symbol>
+
+        <symbol id="i-search" viewBox="0 0 24 24">
+            <circle cx="10.5" cy="10.5" r="6.5"/>
+            <path d="m16 16 5 5"/>
+        </symbol>
+
+        <symbol id="i-inventory" viewBox="0 0 24 24">
+            <path d="M4 7h16v13H4zM7 3h10v4H7z"/>
+            <path d="M9 12h6"/>
+        </symbol>
+
+        <symbol id="i-graph" viewBox="0 0 24 24">
+            <circle cx="5" cy="12" r="2"/>
+            <circle cx="18" cy="5" r="2"/>
+            <circle cx="19" cy="18" r="2"/>
+            <path d="m7 11 9-5m-9 7 10 4"/>
+        </symbol>
+
+        <symbol id="i-clock" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M12 7v5l3 2"/>
+        </symbol>
+
+        <symbol id="i-terminal" viewBox="0 0 24 24">
+            <rect x="3" y="4" width="18" height="16" rx="2"/>
+            <path d="m7 9 3 3-3 3m6 0h4"/>
+        </symbol>
+
+        <symbol id="i-radar" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="9"/>
+            <circle cx="12" cy="12" r="5"/>
+            <circle cx="12" cy="12" r="1.5"/>
+            <path d="m12 12 6-6"/>
+        </symbol>
+
+        <symbol id="i-device" viewBox="0 0 24 24">
+            <rect x="3" y="4" width="18" height="13" rx="2"/>
+            <path d="M8 21h8m-4-4v4"/>
+        </symbol>
+
+        <symbol id="i-report" viewBox="0 0 24 24">
+            <path d="M5 3h10l4 4v14H5z"/>
+            <path d="M14 3v5h5M8 13h8m-8 4h6"/>
+        </symbol>
+
+        <symbol id="i-settings" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19 12a7 7 0 0 0-.1-1.2l2-1.6-2-3.4-2.5 1A7 7 0 0 0 14.2 5.5L13.8 3h-4l-.4 2.5a7 7 0 0 0-1.9 1.1l-2.4-1-2 3.4 2 1.6A7 7 0 0 0 5 12c0 .4 0 .8.1 1.2l-2 1.6 2 3.4 2.4-1a7 7 0 0 0 1.9 1.1l.4 2.5h4l.4-2.5a7 7 0 0 0 2.2-1.1l2.5 1 2-3.4-2-1.6c.1-.4.1-.8.1-1.2Z"/>
+        </symbol>
+
+        <symbol id="i-menu" viewBox="0 0 24 24">
+            <path d="M4 7h16M4 12h16M4 17h16"/>
+        </symbol>
+
+        <symbol id="i-bell" viewBox="0 0 24 24">
+            <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9Z"/>
+            <path d="M10 21h4"/>
+        </symbol>
+
+        <symbol id="i-pause" viewBox="0 0 24 24">
+            <path d="M8 5v14m8-14v14"/>
+        </symbol>
+
+        <symbol id="i-back" viewBox="0 0 24 24">
+            <path d="m9 7-5 5 5 5M4 12h11a5 5 0 0 1 5 5"/>
+        </symbol>
+
+        <symbol id="i-plus" viewBox="0 0 24 24">
+            <path d="M12 5v14M5 12h14"/>
+        </symbol>
+
+        <symbol id="i-download" viewBox="0 0 24 24">
+            <path d="M12 3v12m-5-5 5 5 5-5"/>
+            <path d="M5 19h14"/>
+        </symbol>
+
+    </svg>
+
+
+    <!-- =========================================
+         AUDIO
+    ========================================== -->
+
+    <audio id="musicaFondo" src="Audio/Musica.mp3" loop></audio>
+
+
+    <!-- =========================================
+         TOPBAR
+    ========================================== -->
+
+    <header class="topbar">
+
+        <div class="topbar-left">
+
+            <button class="top-icon mobile-menu" id="btnAbrirMenu">
+                <svg><use href="#i-menu"></use></svg>
+            </button>
+
+            <a class="brand-mini" href="Simulador.Html">
+                <span>N</span>
+            </a>
+
+            <span class="top-divider"></span>
+
+            <span class="scope-circle">›</span>
+
+            <nav class="scope-path">
+
+                <strong>Global</strong>
+                <b>/</b>
+
+                <strong>NeriumTech</strong>
+                <b>/</b>
+
+                <strong>Simulación Ransomware</strong>
+                <b>/</b>
+
+                <strong>Reports</strong>
+
+            </nav>
+
+        </div>
+
+
+        <div class="topbar-right">
+
+            <span class="simulation-state">
+                <i></i>
+                Simulación activa
+            </span>
+
+            <time class="live-clock" id="relojSimulacion">
+                00:00:00
+            </time>
+
+            <button class="top-text-button" id="btnAyuda">
+                Ayuda
+            </button>
+
+            <button class="top-icon" id="btnPausa">
+                <svg><use href="#i-pause"></use></svg>
+            </button>
+
+            <button class="top-icon" id="btnConfiguracion">
+                <svg><use href="#i-settings"></use></svg>
+            </button>
+
+            <button class="top-icon" id="btnNotificaciones">
+                <svg><use href="#i-bell"></use></svg>
+                <i class="notification-dot"></i>
+            </button>
+
+            <button class="top-icon" id="btnRegresar">
+                <svg><use href="#i-back"></use></svg>
+            </button>
+
+            <span class="user-avatar">
+                BC
+            </span>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================================
+         CONTENEDOR GENERAL
+    ========================================== -->
+
+    <div class="application-shell">
+
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar" id="sidebar">
+
+            <label class="page-search">
+
+                <svg><use href="#i-search"></use></svg>
+
+                <input
+                    id="menuSearch"
+                    type="search"
+                    placeholder="Buscar una página"
+                >
+
+                <kbd>Ctrl K</kbd>
+
+            </label>
+
+
+            <nav class="sidebar-nav">
+
+                <a class="side-link"
+                   href="Simulador.Html"
+                   data-ready="true"
+                   data-menu-text="dashboard resumen inicio">
+
+                    <svg><use href="#i-grid"></use></svg>
+                    <span>Dashboards</span>
+
+                </a>
+
+
+                <span class="menu-section">Triage</span>
+
+
+                <a class="side-link"
+                   href="Alerts.html"
+                   data-ready="true"
+                   data-menu-text="alerts alertas incidentes">
+
+                    <svg><use href="#i-alert"></use></svg>
+                    <span>Alerts</span>
+                    <b class="menu-count">1</b>
+
+                </a>
+
+
+                <a class="side-link"
+                   href="vulnerabilities.html"
+                   data-ready="true"
+                   data-menu-text="vulnerabilities vulnerabilidades">
+
+                    <svg><use href="#i-bug"></use></svg>
+                    <span>Vulnerabilities</span>
+
+                </a>
+
+
+                <a class="side-link"
+                   href="misconfigurations.html"
+                   data-ready="true"
+                   data-menu-text="misconfigurations">
+
+                    <svg><use href="#i-lock"></use></svg>
+                    <span>Misconfigurations</span>
+
+                </a>
+
+
+                <span class="menu-section">Discover</span>
+
+
+                <a class="side-link"
+                   href="event-search.html"
+                   data-ready="true"
+                   data-menu-text="event search eventos">
+
+                    <svg><use href="#i-search"></use></svg>
+                    <span>Event Search</span>
+
+                </a>
+
+
+                <a class="side-link"
+                   href="inventory.html"
+                   data-ready="true"
+                   data-menu-text="inventory inventario">
+
+                    <svg><use href="#i-inventory"></use></svg>
+                    <span>Inventory</span>
+
+                </a>
+
+
+                <a class="side-link"
+                   href="graph-explorer.html"
+                   data-ready="true"
+                   data-menu-text="graph explorer mapa">
+
+                    <svg><use href="#i-graph"></use></svg>
+                    <span>Graph Explorer</span>
+
+                </a>
+
+
+                <a class="side-link"
+                   href="activities.html"
+                   data-ready="true"
+                   data-menu-text="activities actividades">
+
+                    <svg><use href="#i-clock"></use></svg>
+                    <span>Activities</span>
+
+                </a>
+
+
+                <span class="menu-section">Automate</span>
+
+
+                <a class="side-link"
+                   href="remoteops.html"
+                   data-ready="true"
+                   data-menu-text="remoteops automatizacion">
+
+                    <svg><use href="#i-terminal"></use></svg>
+                    <span>RemoteOps</span>
+
+                </a>
+
+
+                <span class="menu-section">Configure</span>
+
+
+                <a class="side-link"
+                   href="detections.html"
+                   data-ready="true"
+                   data-menu-text="detections detecciones">
+
+                    <svg><use href="#i-radar"></use></svg>
+                    <span>Detections</span>
+
+                </a>
+
+
+                <a class="side-link"
+                   href="agent-management.html"
+                   data-ready="true"
+                   data-menu-text="agent management agentes">
+
+                    <svg><use href="#i-device"></use></svg>
+                    <span>Agent management</span>
+
+                </a>
+
+
+                <a class="side-link active"
+                   href="reports.html"
+                   data-ready="true"
+                   data-menu-text="reports reportes">
+
+                    <svg><use href="#i-report"></use></svg>
+                    <span>Reports</span>
+
+                </a>
+
+
+                <a class="side-link"
+                   href="policies-settings.html"
+                   data-ready="true"
+                   data-menu-text="policies settings configuracion">
+
+                    <svg><use href="#i-settings"></use></svg>
+                    <span>Policies and settings</span>
+
+                </a>
+
+            </nav>
+
+
+            <div class="sidebar-footer">
+
+                <span class="protection-dot"></span>
+
+                <div>
+                    <strong>Protección activa</strong>
+                    <small>24 agentes conectados</small>
+                </div>
+
+            </div>
+
+        </aside>
+
+
+        <button
+            class="sidebar-backdrop"
+            id="sidebarBackdrop">
+        </button>
+
+
+        <!-- =========================================
+             REPORTS
+        ========================================== -->
+
+        <main class="main-content reports-main">
+
+
+            <header class="reports-header">
+
+                <h1>Reports</h1>
+
+                <nav class="reports-tabs">
+
+                    <button
+                        class="active"
+                        data-report-tab="default">
+                        Default
+                    </button>
+
+                    <button
+                        data-report-tab="custom">
+                        Custom
+                    </button>
+
+                </nav>
+
+            </header>
+
+
+            <section class="reports-panel">
+
+
+                <!-- TOOLBAR -->
+
+                <div class="reports-toolbar">
+
+                    <div class="reports-toolbar-left">
+
+                        <button
+                            id="btnReportActions"
+                            class="report-action-button"
+                            disabled>
+
+                            Actions
+                            <span>⌄</span>
+
+                        </button>
+
+
+                        <button
+                            id="btnNewReport"
+                            class="new-report-button">
+
+                            <svg><use href="#i-plus"></use></svg>
+
+                            New Report Task
+
+                        </button>
+
+
+                        <label class="report-search">
+
+                            <svg><use href="#i-search"></use></svg>
+
+                            <input
+                                id="reportSearch"
+                                type="search"
+                                placeholder="Search">
+
+                        </label>
+
+
+                        <span id="reportCount">
+                            3 Items
+                        </span>
+
+                    </div>
+
+
+                    <div class="reports-toolbar-right">
+
+                        <span>Report Task:</span>
+
+                        <button id="btnLoadReports">
+                            Load Report Tasks
+                            <span>⌄</span>
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        class="report-actions-menu"
+                        id="reportActionsMenu"
+                        hidden>
+
+                        <button data-action="download">
+                            Download
+                        </button>
+
+                        <button data-action="duplicate">
+                            Duplicate
+                        </button>
+
+                        <button data-action="delete">
+                            Delete
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- TABLA -->
+
+                <div class="reports-table-wrap">
+
+                    <table class="reports-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    <input
+                                        id="selectAllReports"
+                                        type="checkbox">
+                                </th>
+
+                                <th>Date</th>
+                                <th>Name</th>
+                                <th>Report Content</th>
+                                <th>Creator Name</th>
+                                <th>Scope</th>
+                                <th>Site Name</th>
+                                <th>Frequency</th>
+                                <th>Interval</th>
+                                <th>Status</th>
+                                <th>Download</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="reportRows">
+                        </tbody>
+
+                    </table>
+
+
+                    <div
+                        class="reports-empty"
+                        id="reportsEmpty"
+                        hidden>
+
+                        <svg><use href="#i-report"></use></svg>
+
+                        <strong>
+                            No reports found
+                        </strong>
+
+                        <span>
+                            Try changing your search.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PAGINACION -->
+
+                <footer class="reports-footer">
+
+                    <div>
+
+                        Items per page:
+
+                        <select id="reportsPerPage">
+
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="reports-pagination">
+
+                        <button id="previousReportPage">
+                            ‹
+                        </button>
+
+                        <div id="reportPageButtons">
+                        </div>
+
+                        <button id="nextReportPage">
+                            ›
+                        </button>
+
+                    </div>
+
+
+                    <span id="reportRange">
+                    </span>
+
+                </footer>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <!-- =========================================
+         NUEVO REPORTE
+    ========================================== -->
+
+    <div
+        class="report-modal"
+        id="newReportModal">
+
+        <section class="report-modal-card">
+
+            <header>
+
+                <div>
+
+                    <small>REPORT TASK</small>
+                    <h2>New Report Task</h2>
+
+                </div>
+
+                <button id="closeReportModal">
+                    ×
+                </button>
+
+            </header>
+
+
+            <form id="newReportForm">
+
+                <label>
+
+                    Report name
+
+                    <input
+                        id="newReportName"
+                        type="text"
+                        required>
+
+                </label>
+
+
+                <label>
+
+                    Report content
+
+                    <select id="newReportContent">
+
+                        <option>
+                            Executive Insights
+                        </option>
+
+                        <option>
+                            Threats Insights
+                        </option>
+
+                        <option>
+                            Incident Response
+                        </option>
+
+                        <option>
+                            Ransomware Simulation
+                        </option>
+
+                    </select>
+
+                </label>
+
+
+                <label>
+
+                    Scope
+
+                    <select id="newReportScope">
+
+                        <option>site</option>
+                        <option>account</option>
+                        <option>global</option>
+
+                    </select>
+
+                </label>
+
+
+                <label>
+
+                    Frequency
+
+                    <select id="newReportFrequency">
+
+                        <option>One time</option>
+                        <option>Daily</option>
+                        <option>Weekly</option>
+                        <option>Monthly</option>
+
+                    </select>
+
+                </label>
+
+
+                <footer>
+
+                    <button
+                        type="button"
+                        id="cancelNewReport"
+                        class="modal-cancel">
+
+                        Cancel
+
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        class="modal-create">
+
+                        Create Report
+
+                    </button>
+
+                </footer>
+
+            </form>
+
+        </section>
+
+    </div>
+
+
+    <!-- TOAST -->
+
+    <div
+        class="sim-toast"
+        id="toast">
+
+        <span id="toastTexto"></span>
+
+    </div>
+
+
+    <script src="JS/Reports.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1b102b">
+    <title>Detections | Simulador de Ransomware NeriumTech</title>
+    <link rel="stylesheet" href="CSS/Simulador.css">
+    <link rel="stylesheet" href="CSS/Detections.css">
+</head>
+
+<body>
+    <svg class="icon-sprite" aria-hidden="true">
+        <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+        <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 4.8 3.2 7.7 8 9 4.8-1.3 8-4.2 8-9V6l-8-3Z"/><path d="M12 8v5m0 3v.2"/></symbol>
+        <symbol id="i-bug" viewBox="0 0 24 24"><path d="M8 8.5h8v7a4 4 0 0 1-8 0v-7Z"/><path d="M9.5 8.5V7a2.5 2.5 0 0 1 5 0v1.5M4 11h4m8 0h4M5 6l3 2m11-2-3 2M4 16h4m8 0h4M6 21l3-3m9 3-3-3"/></symbol>
+        <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3m-4 4v3"/></symbol>
+        <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+        <symbol id="i-inventory" viewBox="0 0 24 24"><path d="M4 7h16v13H4zM7 3h10v4H7z"/><path d="M9 12h6"/></symbol>
+        <symbol id="i-graph" viewBox="0 0 24 24"><circle cx="5" cy="12" r="2"/><circle cx="18" cy="5" r="2"/><circle cx="19" cy="18" r="2"/><path d="m7 11 9-5m-9 7 10 4"/></symbol>
+        <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+        <symbol id="i-terminal" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m7 9 3 3-3 3m6 0h4"/></symbol>
+        <symbol id="i-radar" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/><path d="m12 12 6-6"/></symbol>
+        <symbol id="i-device" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8m-4-4v4"/></symbol>
+        <symbol id="i-report" viewBox="0 0 24 24"><path d="M5 3h10l4 4v14H5z"/><path d="M14 3v5h5M8 13h8m-8 4h6"/></symbol>
+        <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1.2l2-1.6-2-3.4-2.5 1A7 7 0 0 0 14.2 5.5L13.8 3h-4l-.4 2.5a7 7 0 0 0-1.9 1.1l-2.4-1-2 3.4 2 1.6A7 7 0 0 0 5 12c0 .4 0 .8.1 1.2l-2 1.6 2 3.4 2.4-1a7 7 0 0 0 1.9 1.1l.4 2.5h4l.4-2.5a7 7 0 0 0 2.2-1.1l2.5 1 2-3.4-2-1.6c.1-.4.1-.8.1-1.2Z"/></symbol>
+        <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14m8-14v14"/></symbol>
+        <symbol id="i-back" viewBox="0 0 24 24"><path d="m9 7-5 5 5 5M4 12h11a5 5 0 0 1 5 5"/></symbol>
+        <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+        <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9Z"/><path d="M10 21h4"/></symbol>
+        <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m8 10 4 4 4-4"/></symbol>
+        <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v.2"/></symbol>
+        <symbol id="i-edit" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16v4Z"/><path d="m13 7 4 4"/></symbol>
+        <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></symbol>
+        <symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/></symbol>
+        <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+        <symbol id="i-x" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+        <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+        <symbol id="i-filter" viewBox="0 0 24 24"><path d="M4 5h16l-6 7v6l-4 2v-8Z"/></symbol>
+        <symbol id="i-power" viewBox="0 0 24 24"><path d="M12 3v9"/><path d="M6.7 6.7a8 8 0 1 0 10.6 0"/></symbol>
+        <symbol id="i-sentinel" viewBox="0 0 24 24"><path d="m12 3 7 4-7 4-7-4 7-4Z"/><path d="m5 11 7 4 7-4M5 15l7 4 7-4"/></symbol>
+    </svg>
+
+    <audio id="musicaFondo" src="Audio/Musica.mp3" loop></audio>
+
+    <header class="topbar">
+        <div class="topbar-left">
+            <button class="top-icon mobile-menu" id="btnAbrirMenu" type="button" aria-label="Abrir menú"><svg><use href="#i-menu"></use></svg></button>
+            <a class="brand-mini" href="Simulado.html" aria-label="NeriumTech"><span>N</span></a>
+            <span class="top-divider"></span><span class="scope-circle">›</span>
+            <nav class="scope-path" aria-label="Ubicación actual"><strong>Global</strong><b>/</b><strong>NeriumTech</strong><b>/</b><strong>Simulación Ransomware</strong><b>/</b><button type="button">Detections <svg><use href="#i-chevron"></use></svg></button></nav>
+        </div>
+        <div class="topbar-right">
+            <span class="simulation-state"><i></i> Simulación activa</span>
+            <time class="live-clock" id="relojSimulacion">00:00:00</time>
+            <button class="top-text-button" id="btnAyuda" type="button">Ayuda</button>
+            <button class="top-icon" id="btnPausa" type="button" aria-label="Pausar"><svg><use href="#i-pause"></use></svg></button>
+            <button class="top-icon" id="btnConfiguracion" type="button" aria-label="Configuración"><svg><use href="#i-settings"></use></svg></button>
+            <button class="top-icon" id="btnNotificaciones" type="button" aria-label="Notificaciones"><svg><use href="#i-bell"></use></svg><i class="notification-dot"></i></button>
+            <button class="top-icon" id="btnRegresar" type="button" aria-label="Regresar"><svg><use href="#i-back"></use></svg></button>
+            <span class="user-avatar">BC</span>
+        </div>
+    </header>
+
+    <div class="application-shell">
+        <aside class="sidebar" id="sidebar">
+            <label class="page-search"><svg><use href="#i-search"></use></svg><input id="menuSearch" type="search" placeholder="Buscar una página"><kbd>Ctrl K</kbd></label>
+            <nav class="sidebar-nav" aria-label="Módulos del simulador">
+                <a class="side-link" href="Simulado.html" data-ready="true" data-route="dashboard" data-menu-text="dashboard resumen inicio"><svg><use href="#i-grid"></use></svg><span>Dashboards</span></a>
+                <span class="menu-section">Triage</span>
+                <a class="side-link" href="Alerts.html" data-ready="true" data-route="alerts" data-menu-text="alerts alertas incidentes"><svg><use href="#i-alert"></use></svg><span>Alerts</span><b class="menu-count">1</b></a>
+                <a class="side-link" href="vulnerabilities.html" data-ready="true" data-route="vulnerabilities" data-menu-text="vulnerabilities vulnerabilidades"><svg><use href="#i-bug"></use></svg><span>Vulnerabilities</span></a>
+                <a class="side-link" href="misconfigurations.html" data-menu-text="misconfigurations configuraciones"><svg><use href="#i-lock"></use></svg><span>Misconfigurations</span></a>
+                <span class="menu-section">Discover</span>
+                <a class="side-link" href="event-search.html" data-ready="true" data-route="event-search" data-menu-text="event search eventos"><svg><use href="#i-search"></use></svg><span>Event Search</span></a>
+                <a class="side-link" href="inventory.html" data-ready="true" data-route="inventory" data-menu-text="inventory inventario"><svg><use href="#i-inventory"></use></svg><span>Inventory</span></a>
+                <a class="side-link" href="graph-explorer.html" data-ready="true" data-route="graph-explorer" data-menu-text="graph explorer mapa"><svg><use href="#i-graph"></use></svg><span>Graph Explorer</span></a>
+                <a class="side-link" href="activities.html" data-ready="true" data-route="activities" data-menu-text="activities actividades"><svg><use href="#i-clock"></use></svg><span>Activities</span></a>
+                <span class="menu-section">Automate</span>
+                <a class="side-link" href="remoteops.html" data-ready="true" data-route="remoteops" data-menu-text="remoteops automatización"><svg><use href="#i-terminal"></use></svg><span>RemoteOps</span></a>
+                <span class="menu-section">Configure</span>
+                <a class="side-link active" href="detections.html" data-ready="true" data-route="detections" data-menu-text="detections detecciones reglas"><svg><use href="#i-radar"></use></svg><span>Detections</span></a>
+                <a class="side-link" href="agent-management.html" data-menu-text="agent management"><svg><use href="#i-device"></use></svg><span>Agent management</span></a>
+                <a class="side-link" href="reports.html" data-menu-text="reports"><svg><use href="#i-report"></use></svg><span>Reports</span></a>
+                <a class="side-link" href="policies-settings.html" data-menu-text="policies settings"><svg><use href="#i-settings"></use></svg><span>Policies and settings</span></a>
+            </nav>
+            <div class="sidebar-footer"><span class="protection-dot"></span><div><strong>Protección activa</strong><small>24 agentes conectados</small></div></div>
+        </aside>
+
+        <button class="sidebar-backdrop" id="sidebarBackdrop" type="button" aria-label="Cerrar menú"></button>
+
+        <main class="main-content detections-main">
+            <header class="detections-page-header"><h1>Detections</h1><nav><button class="active" type="button">Alerts</button></nav></header>
+
+            <section class="detections-view-bar">
+                <div class="detection-source-tabs"><button class="active" type="button" data-detection-source="custom">Custom</button><button type="button" data-detection-source="library">Library</button></div>
+                <button class="automatic-button" id="btnAutomaticTypes" type="button"><svg><use href="#i-settings"></use></svg> Automatic Detections by type (<span id="automaticCount">2</span>)</button>
+            </section>
+
+            <section class="inheritance-notice" id="inheritanceNotice"><span><svg><use href="#i-info"></use></svg></span><p id="inheritanceText">Inheriting settings from: Pax8, Partners scope</p><button id="btnInheritance" type="button">Disable inheritance</button></section>
+
+            <section class="detections-filters">
+                <div class="detection-search"><select id="searchField" aria-label="Campo de búsqueda"><option value="all">All</option><option value="name">Rule name</option><option value="description">Description</option></select><span>contains</span><input id="ruleSearch" type="search" placeholder="Type your search..."></div>
+                <select id="statusFilter"><option value="all">Status</option><option value="Enabled">Enabled</option><option value="Disabled">Disabled</option></select>
+                <select id="severityFilter"><option value="all">Severity</option><option value="Critical">Critical</option><option value="High">High</option><option value="Medium">Medium</option></select>
+                <select id="ruleTypeFilter"><option value="all">Rule Type</option><option value="Behavioral AI">Behavioral AI</option><option value="STAR">STAR</option><option value="Cloud Funnel">Cloud Funnel</option></select>
+                <select id="dataSourceFilter"><option value="all">Data Source</option><option value="SentinelOne">SentinelOne</option><option value="Nerium XDR">Nerium XDR</option></select>
+                <button id="btnMoreFilters" type="button"><svg><use href="#i-plus"></use></svg> Add/remove filters</button>
+                <button class="collapse-filters" id="btnCollapseFilters" type="button" aria-label="Contraer filtros">⌃</button>
+                <div class="extra-filters" id="extraFilters" hidden><select id="labelFilter"><option value="all">Label</option><option value="Core">Core</option><option value="Emerging threat">Emerging threat</option><option value="Ransomware">Ransomware</option></select><select id="mitreFilter"><option value="all">MITRE tactic</option><option value="Execution">Execution</option><option value="Command and Control">Command and Control</option><option value="Stealth">Stealth</option><option value="Impact">Impact</option></select></div>
+            </section>
+
+            <section class="detections-panel">
+                <header class="detections-toolbar">
+                    <div><button class="enable-button" id="btnEnableSelected" type="button" disabled>Enable rule</button><button class="actions-button" id="btnDetectionActions" type="button">Actions <span>⌄</span></button><span id="ruleCount">2,243 Items</span></div>
+                    <select id="rulesPerPage" aria-label="Filas por página"><option value="8">8 rows</option><option value="10" selected>10 rows</option><option value="20">20 rows</option></select>
+                    <div class="actions-menu" id="actionsMenu" hidden><button type="button" data-bulk-action="enable">Enable selected</button><button type="button" data-bulk-action="disable">Disable selected</button><button type="button" data-bulk-action="duplicate">Duplicate selected</button><button class="danger" type="button" data-bulk-action="delete">Delete selected</button></div>
+                </header>
+
+                <div class="detections-table-wrap">
+                    <table class="detections-table">
+                        <thead><tr><th><input id="selectAllRules" type="checkbox" aria-label="Seleccionar todas"></th><th>Actions</th><th><button type="button" data-sort="state">State <span>↕</span></button></th><th><button type="button" data-sort="name">Rule name <span>↕</span></button></th><th><button type="button" data-sort="severity">Severity <span>↕</span></button></th><th>Description</th><th>Label</th><th>Raised alerts</th><th>Active response</th><th>MITRE tactic</th><th>Data source</th></tr></thead>
+                        <tbody id="detectionRows"></tbody>
+                    </table>
+                    <div class="detections-empty" id="detectionsEmpty" hidden><svg><use href="#i-search"></use></svg><strong>No detection rules found</strong><span>Change the search or filters to see other rules.</span></div>
+                </div>
+
+                <footer class="detections-pagination"><button id="previousRulePage" type="button" aria-label="Página anterior">‹</button><div id="rulePageButtons"></div><button id="nextRulePage" type="button" aria-label="Página siguiente">›</button></footer>
+            </section>
+        </main>
+    </div>
+
+    <div class="rule-drawer-layer" id="ruleDrawer" aria-hidden="true">
+        <button class="rule-drawer-backdrop" id="closeRuleBackdrop" type="button" aria-label="Cerrar detalle"></button>
+        <aside class="rule-drawer" role="dialog" aria-modal="true" aria-labelledby="ruleDetailName">
+            <header><div><span>DETECTION RULE</span><h2 id="ruleDetailName">Detection rule</h2></div><button id="closeRuleDrawer" type="button" aria-label="Cerrar"><svg><use href="#i-x"></use></svg></button></header>
+            <div class="rule-status-card"><span><svg><use href="#i-radar"></use></svg></span><div><strong id="ruleDetailState">Enabled</strong><small id="ruleDetailSeverity">High severity</small></div></div>
+            <p id="ruleDetailDescription">Detection rule description.</p>
+            <dl><div><dt>Rule type</dt><dd id="ruleDetailType">Behavioral AI</dd></div><div><dt>MITRE tactic</dt><dd id="ruleDetailMitre">Execution</dd></div><div><dt>Data source</dt><dd id="ruleDetailSource">SentinelOne</dd></div><div><dt>Raised alerts</dt><dd id="ruleDetailAlerts">0</dd></div><div><dt>Active response</dt><dd id="ruleDetailResponse">Off</dd></div></dl>
+            <div class="rule-detail-buttons"><button id="btnDuplicateDrawer" type="button"><svg><use href="#i-copy"></use></svg> Duplicate</button><button class="primary" id="btnToggleDrawer" type="button"><svg><use href="#i-power"></use></svg> Disable rule</button></div>
+        </aside>
+    </div>
+
+    <div class="overlay" id="automaticModal"><div class="modal automatic-modal"><header class="modal-header"><div><span class="modal-label">DETECTIONS</span><h2>Automatic detections</h2></div><button id="closeAutomaticModal" type="button">×</button></header><p>Choose which automatic response types are active during the ransomware simulation.</p><label class="automatic-row"><div><strong>Ransomware behavior</strong><small>Isolate endpoints when mass encryption is detected.</small></div><input class="automatic-toggle" type="checkbox" checked><span></span></label><label class="automatic-row"><div><strong>Suspicious PowerShell</strong><small>Terminate encoded or malicious PowerShell commands.</small></div><input class="automatic-toggle" type="checkbox" checked><span></span></label><label class="automatic-row"><div><strong>Credential theft</strong><small>Block credential-dumping behavior automatically.</small></div><input class="automatic-toggle" type="checkbox"><span></span></label><button class="modal-button primary" id="saveAutomaticTypes" type="button">Save automatic detections</button></div></div>
+
+    <div class="overlay" id="overlayPausa"><div class="modal pause-modal"><div class="modal-icon"><svg><use href="#i-pause"></use></svg></div><span class="modal-label">SIMULADOR</span><h2>Simulación en pausa</h2><p>Las reglas de detección están detenidas temporalmente.</p><button class="modal-button primary" id="btnContinuar" type="button">Continuar</button><button class="modal-button" id="btnConfigPausa" type="button">Configuración</button><button class="modal-button ghost" id="btnInicioPausa" type="button">Regresar al inicio</button></div></div>
+    <div class="overlay" id="overlayConfig"><div class="modal config-modal"><header class="modal-header"><div><span class="modal-label">SYSTEM</span><h2>Configuración</h2></div><button id="cerrarConfig" type="button">×</button></header><div class="config-row"><div><strong>Música</strong><small>Volumen de música</small></div><div class="range-wrap"><input id="volumenMusica" type="range" min="0" max="100" value="25"><output id="valorMusica">25%</output></div></div><div class="config-row"><div><strong>Efectos</strong><small>Sonidos de botones</small></div><div class="range-wrap"><input id="volumenEfectos" type="range" min="0" max="100" value="50"><output id="valorEfectos">50%</output></div></div><label class="config-row toggle-row"><div><strong>Silenciar todo</strong></div><input id="silenciar" type="checkbox"><span class="toggle"></span></label><button class="modal-button primary" id="guardarConfig" type="button">Guardar y volver</button></div></div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"><span>✓</span><p id="toastTexto">Acción completada</p></div>
+
+    <script src="JS/Navegacion.js"></script>
+    <script src="JS/Detections.js"></script>
+</body>
+
+</html>

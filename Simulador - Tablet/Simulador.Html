@@ -1,0 +1,2010 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1b102b">
+    <title>Dashboard | Simulador de Ransomware NeriumTech</title>
+
+    <link rel="stylesheet" href="CSS/Simulador.css">
+</head>
+
+<body>
+
+    <!-- ICONOS INTERNOS -->
+    <svg class="icon-sprite" aria-hidden="true">
+
+        <symbol id="i-grid" viewBox="0 0 24 24">
+            <rect x="3" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/>
+            <rect x="14" y="14" width="7" height="7" rx="1"/>
+        </symbol>
+
+        <symbol id="i-alert" viewBox="0 0 24 24">
+            <path d="M12 3 4 6v6c0 4.8 3.2 7.7 8 9 4.8-1.3 8-4.2 8-9V6l-8-3Z"/>
+            <path d="M12 8v5m0 3v.2"/>
+        </symbol>
+
+        <symbol id="i-bug" viewBox="0 0 24 24">
+            <path d="M8 8.5h8v7a4 4 0 0 1-8 0v-7Z"/>
+            <path d="M9.5 8.5V7a2.5 2.5 0 0 1 5 0v1.5M4 11h4m8 0h4M5 6l3 2m11-2-3 2M4 16h4m8 0h4M6 21l3-3m9 3-3-3"/>
+        </symbol>
+
+        <symbol id="i-lock" viewBox="0 0 24 24">
+            <rect x="5" y="10" width="14" height="11" rx="2"/>
+            <path d="M8 10V7a4 4 0 0 1 8 0v3m-4 4v3"/>
+        </symbol>
+
+        <symbol id="i-search" viewBox="0 0 24 24">
+            <circle cx="10.5" cy="10.5" r="6.5"/>
+            <path d="m16 16 5 5"/>
+        </symbol>
+
+        <symbol id="i-inventory" viewBox="0 0 24 24">
+            <path d="M4 7h16v13H4zM7 3h10v4H7z"/>
+            <path d="M9 12h6"/>
+        </symbol>
+
+        <symbol id="i-graph" viewBox="0 0 24 24">
+            <circle cx="5" cy="12" r="2"/>
+            <circle cx="18" cy="5" r="2"/>
+            <circle cx="19" cy="18" r="2"/>
+            <path d="m7 11 9-5m-9 7 10 4"/>
+        </symbol>
+
+        <symbol id="i-clock" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M12 7v5l3 2"/>
+        </symbol>
+
+        <symbol id="i-terminal" viewBox="0 0 24 24">
+            <rect x="3" y="4" width="18" height="16" rx="2"/>
+            <path d="m7 9 3 3-3 3m6 0h4"/>
+        </symbol>
+
+        <symbol id="i-radar" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="9"/>
+            <circle cx="12" cy="12" r="5"/>
+            <circle cx="12" cy="12" r="1.5"/>
+            <path d="m12 12 6-6"/>
+        </symbol>
+
+        <symbol id="i-device" viewBox="0 0 24 24">
+            <rect x="3" y="4" width="18" height="13" rx="2"/>
+            <path d="M8 21h8m-4-4v4"/>
+        </symbol>
+
+        <symbol id="i-report" viewBox="0 0 24 24">
+            <path d="M5 3h10l4 4v14H5z"/>
+            <path d="M14 3v5h5M8 13h8m-8 4h6"/>
+        </symbol>
+
+        <symbol id="i-settings" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19 12a7 7 0 0 0-.1-1.2l2-1.6-2-3.4-2.5 1A7 7 0 0 0 14.2 5.5L13.8 3h-4l-.4 2.5a7 7 0 0 0-1.9 1.1l-2.4-1-2 3.4 2 1.6A7 7 0 0 0 5 12c0 .4 0 .8.1 1.2l-2 1.6 2 3.4 2.4-1a7 7 0 0 0 1.9 1.1l.4 2.5h4l.4-2.5a7 7 0 0 0 2.2-1.1l2.5 1 2-3.4-2-1.6c.1-.4.1-.8.1-1.2Z"/>
+        </symbol>
+
+        <symbol id="i-download" viewBox="0 0 24 24">
+            <path d="M12 3v12m-4-4 4 4 4-4"/>
+            <path d="M4 15v5h16v-5"/>
+        </symbol>
+
+        <symbol id="i-refresh" viewBox="0 0 24 24">
+            <path d="M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7"/>
+        </symbol>
+
+        <symbol id="i-pause" viewBox="0 0 24 24">
+            <path d="M8 5v14m8-14v14"/>
+        </symbol>
+
+        <symbol id="i-back" viewBox="0 0 24 24">
+            <path d="m9 7-5 5 5 5M4 12h11a5 5 0 0 1 5 5"/>
+        </symbol>
+
+        <symbol id="i-menu" viewBox="0 0 24 24">
+            <path d="M4 7h16M4 12h16M4 17h16"/>
+        </symbol>
+
+        <symbol id="i-bell" viewBox="0 0 24 24">
+            <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9Z"/>
+            <path d="M10 21h4"/>
+        </symbol>
+
+        <symbol id="i-chevron" viewBox="0 0 24 24">
+            <path d="m8 10 4 4 4-4"/>
+        </symbol>
+
+        <symbol id="i-info" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M12 11v5m0-8v.1"/>
+        </symbol>
+
+    </svg>
+
+    <audio
+        id="musicaFondo"
+        src="Audio/Musica.mp3"
+        loop>
+    </audio>
+
+    <!-- BARRA SUPERIOR -->
+    <header class="topbar">
+
+        <div class="topbar-left">
+
+            <button
+                class="top-icon mobile-menu"
+                id="btnAbrirMenu"
+                type="button"
+                aria-label="Abrir menú">
+
+                <svg>
+                    <use href="#i-menu"></use>
+                </svg>
+
+            </button>
+
+            <a
+                class="brand-mini"
+                href="Simulador.html"
+                aria-label="NeriumTech">
+
+                <span>N</span>
+
+            </a>
+
+            <span class="top-divider"></span>
+            <span class="scope-circle">›</span>
+
+            <nav
+                class="scope-path"
+                aria-label="Ubicación actual">
+
+                <strong>Global</strong>
+                <b>/</b>
+
+                <strong>NeriumTech</strong>
+                <b>/</b>
+
+                <strong>Simulación Ransomware</strong>
+                <b>/</b>
+
+                <button type="button">
+                    Dashboard
+
+                    <svg>
+                        <use href="#i-chevron"></use>
+                    </svg>
+                </button>
+
+            </nav>
+
+        </div>
+
+        <div class="topbar-right">
+
+            <span class="simulation-state">
+                <i></i>
+                Simulación activa
+            </span>
+
+            <time
+                class="live-clock"
+                id="relojSimulacion">
+
+                00:00:00
+
+            </time>
+
+            <button
+                class="top-text-button"
+                type="button">
+
+                Ayuda
+
+            </button>
+
+            <button
+                class="top-icon"
+                id="btnPausa"
+                type="button"
+                title="Pausar"
+                aria-label="Pausar simulación">
+
+                <svg>
+                    <use href="#i-pause"></use>
+                </svg>
+
+            </button>
+
+            <button
+                class="top-icon"
+                id="btnConfiguracion"
+                type="button"
+                title="Configuración"
+                aria-label="Configuración">
+
+                <svg>
+                    <use href="#i-settings"></use>
+                </svg>
+
+            </button>
+
+            <button
+                class="top-icon"
+                id="btnNotificaciones"
+                type="button"
+                title="Notificaciones"
+                aria-label="Notificaciones"
+                aria-expanded="false">
+
+                <svg>
+                    <use href="#i-bell"></use>
+                </svg>
+
+                <i class="notification-dot"></i>
+
+            </button>
+
+            <button
+                class="top-icon"
+                id="btnRegresar"
+                type="button"
+                title="Regresar al inicio"
+                aria-label="Regresar al inicio">
+
+                <svg>
+                    <use href="#i-back"></use>
+                </svg>
+
+            </button>
+
+            <span class="user-avatar">BC</span>
+
+        </div>
+
+    </header>
+
+    <!-- NOTIFICACIONES -->
+    <aside
+        class="notifications-panel"
+        id="panelNotificaciones"
+        aria-label="Notificaciones"
+        hidden>
+
+        <header>
+
+            <strong>Notificaciones</strong>
+
+            <button
+                id="cerrarNotificaciones"
+                type="button">
+
+                ×
+
+            </button>
+
+        </header>
+
+        <button
+            class="notification-item unread"
+            type="button"
+            data-open-incident>
+
+            <span class="notification-symbol critical">
+                !
+            </span>
+
+            <span>
+                <strong>Ransomware detectado</strong>
+                <small>
+                    FIN-014 · hace unos segundos
+                </small>
+            </span>
+
+        </button>
+
+        <div class="notification-item">
+
+            <span class="notification-symbol safe">
+                ✓
+            </span>
+
+            <span>
+                <strong>Agentes conectados</strong>
+                <small>
+                    24 endpoints protegidos
+                </small>
+            </span>
+
+        </div>
+
+    </aside>
+
+    <div class="application-shell">
+
+        <!-- MENÚ LATERAL -->
+        <aside
+            class="sidebar"
+            id="sidebar">
+
+            <label class="page-search">
+
+                <svg>
+                    <use href="#i-search"></use>
+                </svg>
+
+                <input
+                    id="menuSearch"
+                    type="search"
+                    placeholder="Buscar una página"
+                    autocomplete="off">
+
+                <kbd>Ctrl K</kbd>
+
+            </label>
+
+            <nav
+                class="sidebar-nav"
+                aria-label="Módulos del simulador">
+
+                <!-- DASHBOARD -->
+                <a
+                    class="side-link active"
+                    href="Simulador.html"
+                    data-menu-text="dashboard resumen inicio">
+
+                    <svg>
+                        <use href="#i-grid"></use>
+                    </svg>
+
+                    <span>Dashboards</span>
+
+                </a>
+
+                <span class="menu-section">
+                    Triage
+                </span>
+
+                <!-- CONEXIÓN CON ALERTS.HTML -->
+                <a
+                    class="side-link"
+                    href="Alerts.html"
+                    data-ready="true"
+                    data-menu-text="alerts alertas incidentes">
+
+                    <svg>
+                        <use href="#i-alert"></use>
+                    </svg>
+
+                    <span>Alerts</span>
+
+                    <b class="menu-count">1</b>
+
+                </a>
+
+                <a
+                    class="side-link"
+                    href="Vulnerabilities.html"
+                    data-menu-text="vulnerabilities vulnerabilidades">
+
+                    <svg>
+                        <use href="#i-bug"></use>
+                    </svg>
+
+                    <span>Vulnerabilities</span>
+
+                </a>
+
+                <a
+                    class="side-link"
+                    href="misconfigurations.html"
+                    data-menu-text="misconfigurations configuraciones incorrectas">
+
+                    <svg>
+                        <use href="#i-lock"></use>
+                    </svg>
+
+                    <span>Misconfigurations</span>
+
+                </a>
+
+                <span class="menu-section">
+                    Discover
+                </span>
+
+                <a
+                    class="side-link"
+                    href="event-search.html"
+                    data-menu-text="event search búsqueda eventos">
+
+                    <svg>
+                        <use href="#i-search"></use>
+                    </svg>
+
+                    <span>Event Search</span>
+
+                </a>
+
+                <a
+                    class="side-link"
+                    href="Inventory.html"
+                    data-menu-text="inventory inventario endpoints equipos">
+
+                    <svg>
+                        <use href="#i-inventory"></use>
+                    </svg>
+
+                    <span>Inventory</span>
+
+                </a>
+
+                <a
+                    class="side-link"
+                    href="graph-explorer.html"
+                    data-menu-text="graph explorer mapa propagación">
+
+                    <svg>
+                        <use href="#i-graph"></use>
+                    </svg>
+
+                    <span>Graph Explorer</span>
+
+                </a>
+
+                <a
+                    class="side-link"
+                    href="activities.html"
+                    data-menu-text="activities actividades historial">
+
+                    <svg>
+                        <use href="#i-clock"></use>
+                    </svg>
+
+                    <span>Activities</span>
+
+                </a>
+
+                <span class="menu-section">
+                    Automate
+                </span>
+
+                <a
+                    class="side-link"
+                    href="remoteops.html"
+                    data-menu-text="remoteops automatización remota">
+
+                    <svg>
+                        <use href="#i-terminal"></use>
+                    </svg>
+
+                    <span>RemoteOps</span>
+
+                </a>
+
+                <span class="menu-section">
+                    Configure
+                </span>
+
+                <a
+                    class="side-link"
+                    href="detections.html"
+                    data-menu-text="detections detecciones reglas">
+
+                    <svg>
+                        <use href="#i-radar"></use>
+                    </svg>
+
+                    <span>Detections</span>
+
+                </a>
+
+                <a
+                    class="side-link"
+                    href="agent-management.html"
+                    data-menu-text="agent management agentes">
+
+                    <svg>
+                        <use href="#i-device"></use>
+                    </svg>
+
+                    <span>Agent management</span>
+
+                </a>
+
+                <a
+                    class="side-link"
+                    href="reports.html"
+                    data-menu-text="reports reportes">
+
+                    <svg>
+                        <use href="#i-report"></use>
+                    </svg>
+
+                    <span>Reports</span>
+
+                </a>
+
+                <a
+                    class="side-link"
+                    href="policies-settings.html"
+                    data-menu-text="policies settings políticas configuración">
+
+                    <svg>
+                        <use href="#i-settings"></use>
+                    </svg>
+
+                    <span>Policies and settings</span>
+
+                </a>
+
+            </nav>
+
+            <div class="sidebar-footer">
+
+                <span class="protection-dot"></span>
+
+                <div>
+                    <strong>Protección activa</strong>
+                    <small>24 agentes conectados</small>
+                </div>
+
+            </div>
+
+        </aside>
+
+        <button
+            class="sidebar-backdrop"
+            id="sidebarBackdrop"
+            type="button"
+            aria-label="Cerrar menú">
+        </button>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <main class="main-content">
+
+            <header class="page-header">
+
+                <div>
+
+                    <h1>Dashboards</h1>
+
+                    <nav
+                        class="dashboard-tabs"
+                        aria-label="Secciones del dashboard">
+
+                        <button
+                            class="dashboard-tab active"
+                            type="button"
+                            data-tab="overview">
+
+                            Overview
+
+                        </button>
+
+                        <button
+                            class="dashboard-tab"
+                            type="button"
+                            data-tab="endpoints">
+
+                            Endpoints
+
+                        </button>
+
+                        <button
+                            class="dashboard-tab"
+                            type="button"
+                            data-tab="health">
+
+                            Health
+
+                        </button>
+
+                        <button
+                            class="dashboard-tab"
+                            type="button"
+                            data-tab="vulnerabilities">
+
+                            Vulnerabilities
+
+                        </button>
+
+                        <button
+                            class="dashboard-tab"
+                            type="button"
+                            data-tab="usage">
+
+                            Usage
+
+                        </button>
+
+                        <button
+                            class="dashboard-tab"
+                            type="button"
+                            data-tab="custom">
+
+                            Custom dashboards
+
+                        </button>
+
+                    </nav>
+
+                </div>
+
+                <div class="page-actions">
+
+                    <button
+                        class="action-link"
+                        id="btnDownload"
+                        type="button">
+
+                        <svg>
+                            <use href="#i-download"></use>
+                        </svg>
+
+                        Descargar PDF
+
+                    </button>
+
+                    <button
+                        class="action-link"
+                        id="btnReporting"
+                        type="button">
+
+                        <svg>
+                            <use href="#i-report"></use>
+                        </svg>
+
+                        Reporting
+
+                        <svg class="chevron">
+                            <use href="#i-chevron"></use>
+                        </svg>
+
+                    </button>
+
+                    <button
+                        class="icon-outline"
+                        id="btnActualizar"
+                        type="button"
+                        title="Actualizar">
+
+                        <svg>
+                            <use href="#i-refresh"></use>
+                        </svg>
+
+                    </button>
+
+                </div>
+
+            </header>
+
+            <!-- FILTROS -->
+            <section
+                class="filters-bar"
+                aria-label="Filtros del dashboard">
+
+                <label class="filter-control accent">
+
+                    <span>Periodo</span>
+
+                    <select id="filtroPeriodo">
+                        <option value="7">
+                            Últimos 7 días
+                        </option>
+
+                        <option value="1">
+                            Últimas 24 horas
+                        </option>
+
+                        <option value="30">
+                            Últimos 30 días
+                        </option>
+                    </select>
+
+                </label>
+
+                <label class="filter-control">
+
+                    <span>Severity</span>
+
+                    <select id="filtroSeveridad">
+                        <option value="all">
+                            Todas
+                        </option>
+
+                        <option value="critical">
+                            Critical
+                        </option>
+
+                        <option value="high">
+                            High
+                        </option>
+
+                        <option value="medium">
+                            Medium
+                        </option>
+                    </select>
+
+                </label>
+
+                <label class="filter-control">
+
+                    <span>Mitigation status</span>
+
+                    <select id="filtroMitigacion">
+                        <option value="all">
+                            Todos
+                        </option>
+
+                        <option value="unmitigated">
+                            Unmitigated
+                        </option>
+
+                        <option value="mitigated">
+                            Mitigated
+                        </option>
+                    </select>
+
+                </label>
+
+                <label class="filter-control">
+
+                    <span>Assigned to</span>
+
+                    <select id="filtroAsignado">
+                        <option value="all">
+                            Todos
+                        </option>
+
+                        <option value="unassigned">
+                            Unassigned
+                        </option>
+
+                        <option value="soc">
+                            SOC Nerium
+                        </option>
+                    </select>
+
+                </label>
+
+                <span class="filter-update">
+                    <i></i>
+
+                    <span id="textoActualizacion">
+                        Actualizado ahora
+                    </span>
+                </span>
+
+            </section>
+
+<style>#scenarioModal[hidden],#scenarioWidget [hidden]{display:none!important}</style>
+<section id="scenarioWidget" class="scenario-widget" aria-labelledby="scenarioWidgetTitle">
+    <div class="scenario-summary">
+        <span class="scenario-shield" aria-hidden="true">
+            <svg><use href="#i-alert"></use></svg>
+        </span>
+
+        <div class="scenario-copy">
+            <strong id="scenarioWidgetTitle">Incidente FIN-014 · Misión interactiva</strong>
+            <p id="scenarioBanner" hidden></p>
+        </div>
+    </div>
+
+    <div class="scenario-status">
+        <p id="scenarioTimer">Sin iniciar</p>
+        <div class="scenario-status-track" aria-hidden="true"><span></span></div>
+        <small>Estado de la misión: <strong id="scenarioStatusLabel">Preparada</strong></small>
+    </div>
+
+    <div class="scenario-actions">
+        <button id="scenarioStart" class="scenario-button primary" type="button">Iniciar juego</button>
+        <button id="scenarioRestart" class="scenario-button primary" type="button" hidden>Reiniciar juego</button>
+        <a
+            id="scenarioEndGame"
+            class="scenario-button secondary"
+            href="Inicio.html"
+            aria-label="Terminar juego y volver al inicio"
+        >
+            Terminar juego
+        </a>
+    </div>
+</section>
+<div id="scenarioModal" hidden role="alertdialog" aria-modal="true" aria-labelledby="scenarioTitle" style="position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:#080910df;padding:20px"><div style="max-width:500px;background:#241927;color:#fff;border:2px solid #d14f75;padding:28px;border-radius:16px;box-shadow:0 0 80px #e1427055;font:15px system-ui"><strong style="color:#ff8aa6">ALERTA CRÍTICA · SENTINELONE</strong><h2 id="scenarioTitle">Posible ataque de ransomware</h2><p>Se detectó actividad de cifrado en FIN-014. Tienes menos de cinco minutos para identificar la causa y contenerla. El reloj continuará en todas las páginas.</p><button id="scenarioDismiss" type="button" style="padding:13px 18px;border:0;border-radius:8px;color:#fff;background:#963f6d;cursor:pointer">Abrir alerta</button></div></div>
+
+
+            <!-- SIMULADOR -->
+            <style>.simulation-console,.incident-strip {display:none !important}</style>
+            <section
+                class="simulation-console"
+                aria-labelledby="tituloSimulacion">
+
+                <div class="simulation-copy">
+
+                    <span class="eyebrow">
+                        RANSOMWARE RESPONSE SIMULATOR
+                    </span>
+
+                    <h2 id="tituloSimulacion">
+                        Incidente activo: FIN-014
+                    </h2>
+
+                    <p id="textoFase">
+                        SentinelOne detectó comportamiento
+                        de cifrado. Revisa la alerta para
+                        comenzar la investigación.
+                    </p>
+
+                </div>
+
+                <div class="simulation-actions">
+
+                    <span class="score-pill">
+                        Puntuación
+
+                        <strong id="puntuacion">
+                            0
+                        </strong>
+
+                        /100
+                    </span>
+
+                    <button
+                        class="simulation-button primary"
+                        id="btnIniciarSimulacion"
+                        type="button">
+
+                        Iniciar investigación
+
+                    </button>
+
+                    <button
+                        class="simulation-button"
+                        id="btnReiniciarSimulacion"
+                        type="button">
+
+                        Reiniciar
+
+                    </button>
+
+                </div>
+
+                <ol
+                    class="response-steps"
+                    id="etapasRespuesta">
+
+                    <li
+                        class="active"
+                        data-step="0">
+
+                        <span>1</span>
+                        <strong>Detectar</strong>
+                        <small>Alerta recibida</small>
+
+                    </li>
+
+                    <li data-step="1">
+
+                        <span>2</span>
+                        <strong>Investigar</strong>
+                        <small>Analizar señales</small>
+
+                    </li>
+
+                    <li data-step="2">
+
+                        <span>3</span>
+                        <strong>Contener</strong>
+                        <small>Aislar endpoint</small>
+
+                    </li>
+
+                    <li data-step="3">
+
+                        <span>4</span>
+                        <strong>Recuperar</strong>
+                        <small>Restaurar operación</small>
+
+                    </li>
+
+                </ol>
+
+                <div class="phase-progress">
+                    <i id="progresoFase"></i>
+                </div>
+
+            </section>
+
+            <!-- DASHBOARD DE ALERTAS -->
+            <section
+                class="dashboard-panel"
+                id="panelOverview">
+
+                <header class="panel-titlebar">
+
+                    <div class="panel-title">
+
+                        <svg>
+                            <use href="#i-alert"></use>
+                        </svg>
+
+                        <h2>Alerts</h2>
+
+                    </div>
+
+                    <div class="panel-tools">
+
+                        <button
+                            type="button"
+                            title="Organizar panel">
+
+                            ⠿
+
+                        </button>
+
+                        <button
+                            type="button"
+                            id="btnContraerPanel"
+                            title="Contraer panel">
+
+                            ⌃
+
+                        </button>
+
+                    </div>
+
+                </header>
+
+                <div
+                    class="alerts-dashboard"
+                    id="contenidoPanelAlertas">
+
+                    <!-- TOTAL DE ALERTAS -->
+                    <article
+                        class="metric-card interactive-card"
+                        tabindex="0"
+                        data-card-filter="all">
+
+                        <header>
+
+                            <h3>Total alerts</h3>
+
+                            <svg>
+                                <use href="#i-info"></use>
+                            </svg>
+
+                        </header>
+
+                        <div class="metric-center">
+
+                            <strong id="totalAlertas">
+                                37
+                            </strong>
+
+                            <span class="trend down">
+                                ↓ 22.9%
+                            </span>
+
+                        </div>
+
+                        <p>
+                            Comparado con los 7 días anteriores
+                        </p>
+
+                        <div
+                            class="card-hover-panel"
+                            role="tooltip">
+
+                            <span class="hover-kicker">
+                                DETALLE DE ALERTAS
+                            </span>
+
+                            <strong class="hover-title">
+                                37 alertas detectadas
+                            </strong>
+
+                            <dl class="hover-data">
+
+                                <div>
+                                    <dt>Critical</dt>
+                                    <dd>1 · 2.7%</dd>
+                                </div>
+
+                                <div>
+                                    <dt>High</dt>
+                                    <dd>6 · 16.2%</dd>
+                                </div>
+
+                                <div>
+                                    <dt>Medium</dt>
+                                    <dd>14 · 37.8%</dd>
+                                </div>
+
+                                <div>
+                                    <dt>Low</dt>
+                                    <dd>16 · 43.3%</dd>
+                                </div>
+
+                            </dl>
+
+                            <p class="hover-insight">
+                                La actividad disminuyó 22.9%
+                                respecto al periodo anterior.
+                            </p>
+
+                        </div>
+
+                    </article>
+
+                    <!-- ALERTAS SIN ASIGNAR -->
+                    <article
+                        class="metric-card interactive-card"
+                        tabindex="0"
+                        data-card-filter="unassigned">
+
+                        <header>
+
+                            <h3>Unassigned alerts</h3>
+
+                            <svg>
+                                <use href="#i-info"></use>
+                            </svg>
+
+                        </header>
+
+                        <div class="metric-center">
+
+                            <strong id="alertasSinAsignar">
+                                18
+                            </strong>
+
+                            <span class="trend down">
+                                ↓ 47.1%
+                            </span>
+
+                        </div>
+
+                        <p>
+                            Requieren revisión del analista
+                        </p>
+
+                        <div
+                            class="card-hover-panel"
+                            role="tooltip">
+
+                            <span class="hover-kicker">
+                                CARGA DEL EQUIPO SOC
+                            </span>
+
+                            <strong class="hover-title">
+                                18 alertas pendientes
+                            </strong>
+
+                            <dl class="hover-data">
+
+                                <div>
+                                    <dt>FIN-014</dt>
+                                    <dd>5 alertas</dd>
+                                </div>
+
+                                <div>
+                                    <dt>HR-022</dt>
+                                    <dd>4 alertas</dd>
+                                </div>
+
+                                <div>
+                                    <dt>OPS-009</dt>
+                                    <dd>3 alertas</dd>
+                                </div>
+
+                                <div>
+                                    <dt>Otros equipos</dt>
+                                    <dd>6 alertas</dd>
+                                </div>
+
+                            </dl>
+
+                            <p class="hover-insight warning">
+                                Prioridad: asignar la alerta
+                                crítica de FIN-014.
+                            </p>
+
+                        </div>
+
+                    </article>
+
+                    <!-- ALERTAS CRÍTICAS -->
+                    <article
+                        class="metric-card critical-metric-card"
+                        aria-label="Alertas críticas">
+
+                        <header>
+                            <h3>Critical alerts</h3>
+                            <svg><use href="#i-info"></use></svg>
+                        </header>
+
+                        <div class="metric-center">
+                            <strong>1</strong>
+                            <span class="critical-indicator">CRITICAL</span>
+                        </div>
+
+                        <p>De un total de 37 alertas</p>
+
+                    </article>
+
+                    <!-- PROGRESO DE LA MISIÓN -->
+                    <article
+                        class="metric-card mission-progress-card"
+                        aria-label="Progreso de la misión">
+
+                        <header>
+                            <h3>Progreso de la misión</h3>
+                            <svg><use href="#i-info"></use></svg>
+                        </header>
+
+                        <div class="mission-progress-content">
+                            <div class="mission-progress-value">
+                                <strong>25%</strong>
+                                <span>1 de 4 objetivos completados</span>
+                            </div>
+
+                            <div class="mission-progress-track" aria-hidden="true">
+                                <span></span>
+                            </div>
+                        </div>
+
+                    </article>
+
+                    <!-- SEVERIDAD -->
+                    <article
+                        class="chart-card severity-card interactive-card"
+                        tabindex="0"
+                        data-card-filter="critical">
+
+                        <header>
+
+                            <h3>Alerts by severity</h3>
+
+                            <svg>
+                                <use href="#i-info"></use>
+                            </svg>
+
+                        </header>
+
+                        <div class="chart-content">
+
+                            <div class="donut severity-donut">
+
+                                <span>
+                                    <strong>37</strong>
+                                    <small>ALERTAS</small>
+                                </span>
+
+                            </div>
+
+                            <ul class="chart-legend">
+
+                                <li data-percent="2.7%">
+                                    <span>
+                                        <i class="critical"></i>
+                                        Critical
+                                    </span>
+                                    <strong>1</strong>
+                                </li>
+
+                                <li data-percent="16.2%">
+                                    <span>
+                                        <i class="high"></i>
+                                        High
+                                    </span>
+                                    <strong>6</strong>
+                                </li>
+
+                                <li data-percent="37.8%">
+                                    <span>
+                                        <i class="medium"></i>
+                                        Medium
+                                    </span>
+                                    <strong>14</strong>
+                                </li>
+
+                                <li data-percent="43.3%">
+                                    <span>
+                                        <i class="low"></i>
+                                        Low
+                                    </span>
+                                    <strong>16</strong>
+                                </li>
+
+                            </ul>
+
+                        </div>
+
+                        <div
+                            class="card-hover-panel"
+                            role="tooltip">
+
+                            <span class="hover-kicker">
+                                RIESGO PRIORITARIO
+                            </span>
+
+                            <strong class="hover-title">
+                                1 alerta crítica activa
+                            </strong>
+
+                            <dl class="hover-data">
+
+                                <div>
+                                    <dt>Endpoint</dt>
+                                    <dd>FIN-014</dd>
+                                </div>
+
+                                <div>
+                                    <dt>Amenaza</dt>
+                                    <dd>Ransomware</dd>
+                                </div>
+
+                                <div>
+                                    <dt>Confianza</dt>
+                                    <dd>98.7%</dd>
+                                </div>
+
+                                <div>
+                                    <dt>Estado</dt>
+                                    <dd>Sin mitigar</dd>
+                                </div>
+
+                            </dl>
+
+                            <p class="hover-insight danger">
+                                Acción sugerida: investigar
+                                y aislar el endpoint.
+                            </p>
+
+                        </div>
+
+                    </article>
+
+                    <!-- CLASIFICACIÓN -->
+                    <article
+                        class="chart-card classification-card interactive-card"
+                        tabindex="0"
+                        data-card-filter="classification">
+
+                        <header>
+
+                            <h3>Alerts by classification</h3>
+
+                            <svg>
+                                <use href="#i-info"></use>
+                            </svg>
+
+                        </header>
+
+                        <div class="bar-chart">
+
+                            <div class="bar-row">
+
+                                <span>Ransomware</span>
+
+                                <div>
+                                    <i style="--value: 8%; --bar: #d1213b;"></i>
+                                </div>
+
+                                <strong>1</strong>
+
+                            </div>
+
+                            <div class="bar-row">
+
+                                <span>Malware</span>
+
+                                <div>
+                                    <i style="--value: 34%; --bar: #f06c21;"></i>
+                                </div>
+
+                                <strong>6</strong>
+
+                            </div>
+
+                            <div class="bar-row">
+
+                                <span>Suspicious</span>
+
+                                <div>
+                                    <i style="--value: 74%; --bar: #8a48f5;"></i>
+                                </div>
+
+                                <strong>20</strong>
+
+                            </div>
+
+                            <div class="bar-row">
+
+                                <span>Not reported</span>
+
+                                <div>
+                                    <i style="--value: 46%; --bar: #4c86e8;"></i>
+                                </div>
+
+                                <strong>10</strong>
+
+                            </div>
+
+                        </div>
+
+                        <div
+                            class="card-hover-panel"
+                            role="tooltip">
+
+                            <span class="hover-kicker">
+                                CLASIFICACIÓN PRINCIPAL
+                            </span>
+
+                            <strong class="hover-title">
+                                Suspicious activity · 54.1%
+                            </strong>
+
+                            <dl class="hover-data">
+
+                                <div>
+                                    <dt>PowerShell</dt>
+                                    <dd>8 señales</dd>
+                                </div>
+
+                                <div>
+                                    <dt>Command line</dt>
+                                    <dd>6 señales</dd>
+                                </div>
+
+                                <div>
+                                    <dt>File changes</dt>
+                                    <dd>5 señales</dd>
+                                </div>
+
+                                <div>
+                                    <dt>Network</dt>
+                                    <dd>1 señal</dd>
+                                </div>
+
+                            </dl>
+
+                            <p class="hover-insight">
+                                El patrón coincide con la fase
+                                de ejecución de ransomware.
+                            </p>
+
+                        </div>
+
+                    </article>
+
+                    <!-- ESTADO -->
+                    <article
+                        class="chart-card status-card interactive-card"
+                        tabindex="0"
+                        data-card-filter="status">
+
+                        <header>
+
+                            <h3>Alerts by status</h3>
+
+                            <svg>
+                                <use href="#i-info"></use>
+                            </svg>
+
+                        </header>
+
+                        <div class="chart-content">
+
+                            <div class="donut status-donut">
+
+                                <span>
+                                    <strong>37</strong>
+                                    <small>ALERTAS</small>
+                                </span>
+
+                            </div>
+
+                            <ul class="chart-legend wide">
+
+                                <li data-percent="13.5%">
+                                    <span>
+                                        <i class="new"></i>
+                                        New
+                                    </span>
+                                    <strong>5</strong>
+                                </li>
+
+                                <li data-percent="2.7%">
+                                    <span>
+                                        <i class="progress"></i>
+                                        In progress
+                                    </span>
+                                    <strong>1</strong>
+                                </li>
+
+                                <li data-percent="83.8%">
+                                    <span>
+                                        <i class="resolved"></i>
+                                        Resolved
+                                    </span>
+                                    <strong>31</strong>
+                                </li>
+
+                            </ul>
+
+                        </div>
+
+                        <div
+                            class="card-hover-panel"
+                            role="tooltip">
+
+                            <span class="hover-kicker">
+                                ESTADO OPERATIVO
+                            </span>
+
+                            <strong class="hover-title">
+                                83.8% de alertas resueltas
+                            </strong>
+
+                            <dl class="hover-data">
+
+                                <div>
+                                    <dt>Tiempo promedio</dt>
+                                    <dd>12 min</dd>
+                                </div>
+
+                                <div>
+                                    <dt>Nuevas</dt>
+                                    <dd>5</dd>
+                                </div>
+
+                                <div>
+                                    <dt>Investigando</dt>
+                                    <dd>1</dd>
+                                </div>
+
+                                <div>
+                                    <dt>Resueltas</dt>
+                                    <dd>31</dd>
+                                </div>
+
+                            </dl>
+
+                            <p class="hover-insight warning">
+                                FIN-014 es el único incidente
+                                actualmente investigado.
+                            </p>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+            </section>
+
+            <!-- ALERTA PRIORITARIA -->
+            <section class="incident-strip">
+
+                <div class="incident-icon">
+
+                    <svg>
+                        <use href="#i-alert"></use>
+                    </svg>
+
+                </div>
+
+                <div>
+
+                    <span>ALERTA PRIORITARIA</span>
+
+                    <strong>
+                        Ransomware encryption behavior
+                        detectado en FIN-014
+                    </strong>
+
+                    <small>
+                        Carlos Hernández · Finanzas ·
+                        Detectado a las 09:42:17
+                    </small>
+
+                </div>
+
+                <span class="critical-badge">
+                    CRITICAL
+                </span>
+
+                <button
+                    id="btnInvestigarAlerta"
+                    type="button"
+                    data-open-incident>
+
+                    Investigar alerta →
+
+                </button>
+
+            </section>
+
+            <!-- ACTIVIDAD EN VIVO -->
+            <section
+                class="live-activity"
+                aria-labelledby="tituloActividad">
+
+                <header>
+
+                    <div>
+
+                        <span class="live-indicator"></span>
+
+                        <h2 id="tituloActividad">
+                            Actividad en vivo
+                        </h2>
+
+                    </div>
+
+                    <span id="contadorEventos">
+                        3 eventos
+                    </span>
+
+                </header>
+
+                <div
+                    class="activity-feed"
+                    id="activityFeed">
+
+                    <article>
+
+                        <time>09:42:17</time>
+
+                        <span class="event-dot critical"></span>
+
+                        <div>
+                            <strong>Behavioral AI</strong>
+
+                            <p>
+                                Comportamiento de cifrado
+                                detectado en FIN-014.
+                            </p>
+                        </div>
+
+                    </article>
+
+                    <article>
+
+                        <time>09:42:12</time>
+
+                        <span class="event-dot warning"></span>
+
+                        <div>
+                            <strong>PowerShell</strong>
+
+                            <p>
+                                Ejecución sospechosa iniciada
+                                por winword.exe.
+                            </p>
+                        </div>
+
+                    </article>
+
+                    <article>
+
+                        <time>09:41:58</time>
+
+                        <span class="event-dot neutral"></span>
+
+                        <div>
+                            <strong>Document opened</strong>
+
+                            <p>
+                                Carlos Hernández abrió
+                                Factura_Q3.docm.
+                            </p>
+                        </div>
+
+                    </article>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <!-- PANEL DEL INCIDENTE -->
+    <div
+        class="drawer-layer"
+        id="incidentDrawer"
+        aria-hidden="true">
+
+        <button
+            class="drawer-backdrop"
+            id="drawerBackdrop"
+            type="button"
+            aria-label="Cerrar investigación">
+        </button>
+
+        <aside
+            class="incident-drawer"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="tituloIncidente">
+
+            <header class="drawer-header">
+
+                <div>
+
+                    <span class="eyebrow">
+                        ALERT DETAILS
+                    </span>
+
+                    <h2 id="tituloIncidente">
+                        Ransomware encryption behavior
+                    </h2>
+
+                </div>
+
+                <button
+                    id="cerrarDrawer"
+                    type="button"
+                    aria-label="Cerrar">
+
+                    ×
+
+                </button>
+
+            </header>
+
+            <div class="drawer-status">
+
+                <span class="critical-badge">
+                    CRITICAL
+                </span>
+
+                <span id="estadoInvestigacion">
+                    NEW
+                </span>
+
+            </div>
+
+            <dl class="incident-facts">
+
+                <div>
+                    <dt>Endpoint</dt>
+                    <dd>FIN-014</dd>
+                </div>
+
+                <div>
+                    <dt>Usuario</dt>
+                    <dd>Carlos Hernández</dd>
+                </div>
+
+                <div>
+                    <dt>Departamento</dt>
+                    <dd>Finanzas</dd>
+                </div>
+
+                <div>
+                    <dt>Sistema</dt>
+                    <dd>Windows 11</dd>
+                </div>
+
+            </dl>
+
+            <section class="evidence-box">
+
+                <h3>Evidencia detectada</h3>
+
+                <ul>
+
+                    <li>
+                        <span>09:42:12</span>
+                        PowerShell ejecutó un comando codificado.
+                    </li>
+
+                    <li>
+                        <span>09:42:15</span>
+                        Se modificaron 126 archivos en 8 segundos.
+                    </li>
+
+                    <li>
+                        <span>09:42:17</span>
+                        Behavioral AI clasificó la actividad
+                        como ransomware.
+                    </li>
+
+                </ul>
+
+            </section>
+
+            <section class="decision-box">
+
+                <h3>Selecciona una acción</h3>
+
+                <p id="instruccionDecision">
+                    La contención rápida reduce el impacto
+                    y evita la propagación.
+                </p>
+
+                <div class="decision-grid">
+
+                    <button
+                        class="decision-button recommended"
+                        id="btnAislar"
+                        type="button">
+
+                        <svg>
+                            <use href="#i-lock"></use>
+                        </svg>
+
+                        <span>
+                            Aislar endpoint
+                            <small>Recomendado</small>
+                        </span>
+
+                    </button>
+
+                    <button
+                        class="decision-button"
+                        id="btnTerminarProceso"
+                        type="button">
+
+                        <svg>
+                            <use href="#i-terminal"></use>
+                        </svg>
+
+                        <span>
+                            Terminar proceso
+                            <small>Detener cifrado</small>
+                        </span>
+
+                    </button>
+
+                    <button
+                        class="decision-button"
+                        id="btnCuarentena"
+                        type="button">
+
+                        <svg>
+                            <use href="#i-alert"></use>
+                        </svg>
+
+                        <span>
+                            Cuarentena
+                            <small>Bloquear archivo</small>
+                        </span>
+
+                    </button>
+
+                    <button
+                        class="decision-button recovery-action"
+                        id="btnRecuperar"
+                        type="button"
+                        disabled>
+
+                        <svg>
+                            <use href="#i-refresh"></use>
+                        </svg>
+
+                        <span>
+                            Recuperar respaldo
+                            <small>
+                                Disponible tras contener
+                            </small>
+                        </span>
+
+                    </button>
+
+                </div>
+
+            </section>
+
+            <div
+                class="decision-result"
+                id="resultadoDecision"
+                hidden>
+            </div>
+
+        </aside>
+
+    </div>
+
+    <!-- PAUSA -->
+    <div
+        class="overlay"
+        id="overlayPausa"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="tituloPausa">
+
+        <div class="modal pause-modal">
+
+            <div class="modal-icon">
+
+                <svg>
+                    <use href="#i-pause"></use>
+                </svg>
+
+            </div>
+
+            <span class="modal-label">
+                SIMULADOR
+            </span>
+
+            <h2 id="tituloPausa">
+                Simulación en pausa
+            </h2>
+
+            <p>
+                La investigación está detenida
+                temporalmente.
+            </p>
+
+            <button
+                class="modal-button primary"
+                id="btnContinuar"
+                type="button">
+
+                Continuar
+
+            </button>
+
+            <button
+                class="modal-button"
+                id="btnConfigPausa"
+                type="button">
+
+                Configuración
+
+            </button>
+
+            <button
+                class="modal-button ghost"
+                id="btnInicioPausa"
+                type="button">
+
+                Regresar al inicio
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- CONFIGURACIÓN -->
+    <div
+        class="overlay"
+        id="overlayConfig"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="tituloConfig">
+
+        <div class="modal config-modal">
+
+            <header class="modal-header">
+
+                <div>
+
+                    <span class="modal-label">
+                        SYSTEM
+                    </span>
+
+                    <h2 id="tituloConfig">
+                        Configuración
+                    </h2>
+
+                </div>
+
+                <button
+                    id="cerrarConfig"
+                    type="button"
+                    aria-label="Cerrar">
+
+                    ×
+
+                </button>
+
+            </header>
+
+            <div class="config-row">
+
+                <div>
+                    <strong>Música del juego</strong>
+                    <small>Volumen de la música</small>
+                </div>
+
+                <div class="range-wrap">
+
+                    <input
+                        id="volumenMusica"
+                        type="range"
+                        min="0"
+                        max="100"
+                        value="25">
+
+                    <output id="valorMusica">
+                        25%
+                    </output>
+
+                </div>
+
+            </div>
+
+            <div class="config-row">
+
+                <div>
+                    <strong>Efectos de sonido</strong>
+                    <small>Botones y eventos</small>
+                </div>
+
+                <div class="range-wrap">
+
+                    <input
+                        id="volumenEfectos"
+                        type="range"
+                        min="0"
+                        max="100"
+                        value="50">
+
+                    <output id="valorEfectos">
+                        50%
+                    </output>
+
+                </div>
+
+            </div>
+
+            <label class="config-row toggle-row">
+
+                <div>
+                    <strong>Silenciar todo</strong>
+                    <small>
+                        Desactivar todos los sonidos
+                    </small>
+                </div>
+
+                <input
+                    id="silenciar"
+                    type="checkbox">
+
+                <span class="toggle"></span>
+
+            </label>
+
+            <button
+                class="modal-button primary"
+                id="guardarConfig"
+                type="button">
+
+                Guardar y volver
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- MENSAJES -->
+    <div
+        class="toast"
+        id="toast"
+        role="status"
+        aria-live="polite">
+
+        <span>✓</span>
+
+        <p id="toastTexto">
+            Acción completada
+        </p>
+
+    </div>
+
+    <script src="JS/Simulador.js"></script>
+    <script src="JS/escenario.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,1438 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color" content="#1b102b">
+
+    <title>Graph Explorer | Simulador de Ransomware NeriumTech</title>
+
+    <link rel="stylesheet" href="CSS/Simulador.css">
+
+    <link rel="stylesheet" href="CSS/GraphMission.css">
+
+    <link rel="stylesheet" href="CSS/GraphExplorer.css">
+
+    <style>
+
+        .stage-objective {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 16px;
+
+            margin: 0 0 18px;
+
+            padding: 18px 20px;
+
+            border: 1px solid rgba(123, 47, 247, 0.35);
+
+            border-left: 5px solid #7b2ff7;
+
+            border-radius: 12px;
+
+            background: linear-gradient(135deg, #f7f2ff 0%, #ffffff 100%);
+
+            box-shadow: 0 7px 22px rgba(53, 16, 94, 0.08);
+
+        }
+
+        .stage-objective-icon {
+
+            display: grid;
+
+            flex: 0 0 46px;
+
+            width: 46px;
+
+            height: 46px;
+
+            place-items: center;
+
+            border-radius: 12px;
+
+            background: #35105e;
+
+            color: #ffffff;
+
+            font-size: 22px;
+
+        }
+
+        .stage-objective-content {
+
+            min-width: 0;
+
+        }
+
+        .stage-objective-label {
+
+            display: block;
+
+            margin-bottom: 4px;
+
+            color: #7b2ff7;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            letter-spacing: 1.1px;
+
+        }
+
+        .stage-objective h2 {
+
+            margin: 0;
+
+            color: #261535;
+
+            font-size: 17px;
+
+            line-height: 1.4;
+
+        }
+
+        .stage-objective p {
+
+            margin: 5px 0 0;
+
+            color: #6a6072;
+
+            font-size: 13px;
+
+            line-height: 1.45;
+
+        }
+
+        @media (max-width: 650px) {
+
+            .stage-objective {
+
+                align-items: flex-start;
+
+                padding: 16px;
+
+            }
+
+            .stage-objective-icon {
+
+                flex-basis: 40px;
+
+                width: 40px;
+
+                height: 40px;
+
+            }
+
+        }
+
+        /* =========================================
+
+           BOTÓN DE INSTRUCCIONES · ESTILO UNIFICADO
+
+        ========================================= */
+
+        .instructions-button {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 8px;
+
+            min-width: 170px;
+
+            min-height: 44px;
+
+            padding: 0 18px;
+
+            border: 1px solid #7b2ff7;
+
+            border-radius: 9px;
+
+            background: #7b2ff7;
+
+            color: #ffffff;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            box-shadow: 0 7px 18px rgba(53, 16, 94, 0.16);
+
+            transition:
+
+                transform 140ms ease,
+
+                background 140ms ease,
+
+                border-color 140ms ease,
+
+                box-shadow 140ms ease;
+
+        }
+
+        .instructions-button:hover {
+
+            background: #6524d9;
+
+            border-color: #6524d9;
+
+            color: #ffffff;
+
+            transform: translateY(-1px);
+
+            box-shadow: 0 9px 22px rgba(53, 16, 94, 0.20);
+
+        }
+
+        .instructions-button:focus,
+
+        .instructions-button:focus-visible,
+
+        .instructions-button:active {
+
+            background: #35105e;
+
+            border-color: #35105e;
+
+            color: #ffffff;
+
+            outline: 3px solid rgba(123, 47, 247, 0.20);
+
+            outline-offset: 2px;
+
+        }
+
+        .instructions-button.attention {
+
+            animation: instructionPulse 1.15s ease-in-out 4;
+
+        }
+
+        .instructions-button.instructions-seen {
+
+            background: #35105e;
+
+            border-color: #35105e;
+
+            color: #ffffff;
+
+        }
+
+        .instructions-button.instructions-seen::after {
+
+            content: " ✓";
+
+            font-weight: 900;
+
+        }
+
+        @keyframes instructionPulse {
+
+            0%, 100% {
+
+                box-shadow: 0 7px 18px rgba(53, 16, 94, 0.16);
+
+            }
+
+            50% {
+
+                box-shadow:
+
+                    0 0 0 5px rgba(123, 47, 247, 0.16),
+
+                    0 10px 24px rgba(53, 16, 94, 0.22);
+
+            }
+
+        }
+
+        .graph-decision-actions {
+
+            width: 100%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 18px;
+
+            margin-top: 2px;
+
+        }
+
+        .graph-decision-actions #graphVerify,
+
+        .graph-decision-actions .instructions-button {
+
+            min-width: 170px;
+
+            min-height: 44px;
+
+            margin: 0;
+
+        }
+
+        .graph-decision-actions .instructions-button {
+
+            margin-left: auto;
+
+        }
+
+        /* =========================================
+
+           MODAL DE INSTRUCCIONES
+
+        ========================================= */
+
+        .instructions-layer {
+
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 9999;
+
+            display: none;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 22px;
+
+            background: rgba(17, 9, 28, 0.62);
+
+            backdrop-filter: blur(3px);
+
+        }
+
+        .instructions-layer.active {
+
+            display: flex;
+
+        }
+
+        .instructions-modal {
+
+            width: min(620px, 96vw);
+
+            max-height: 88vh;
+
+            overflow-y: auto;
+
+            border: 1px solid rgba(123, 47, 247, 0.30);
+
+            border-radius: 16px;
+
+            background: #ffffff;
+
+            box-shadow: 0 24px 70px rgba(18, 8, 30, 0.28);
+
+            animation: instructionsEnter 170ms ease-out;
+
+        }
+
+        @keyframes instructionsEnter {
+
+            from {
+
+                opacity: 0;
+
+                transform: translateY(10px) scale(0.985);
+
+            }
+
+        }
+
+        .instructions-modal-header {
+
+            display: flex;
+
+            align-items: flex-start;
+
+            justify-content: space-between;
+
+            gap: 16px;
+
+            padding: 20px 22px 15px;
+
+            border-bottom: 1px solid #ece7f2;
+
+        }
+
+        .instructions-modal-header span {
+
+            display: block;
+
+            margin-bottom: 4px;
+
+            color: #7b2ff7;
+
+            font-size: 10px;
+
+            font-weight: 900;
+
+            letter-spacing: 1.2px;
+
+        }
+
+        .instructions-modal-header h2 {
+
+            margin: 0;
+
+            color: #261535;
+
+            font-size: 21px;
+
+        }
+
+        .instructions-close {
+
+            width: 34px;
+
+            height: 34px;
+
+            flex: 0 0 34px;
+
+            border: 0;
+
+            border-radius: 8px;
+
+            background: #f4effa;
+
+            color: #35105e;
+
+            font-size: 21px;
+
+            cursor: pointer;
+
+        }
+
+        .instructions-close:hover {
+
+            background: #ece2f8;
+
+        }
+
+        .instructions-modal-body {
+
+            padding: 18px 22px 10px;
+
+        }
+
+        .instruction-step {
+
+            display: grid;
+
+            grid-template-columns: 34px 1fr;
+
+            gap: 12px;
+
+            align-items: start;
+
+            padding: 12px 0;
+
+            border-bottom: 1px solid #f0ecf4;
+
+        }
+
+        .instruction-step:last-of-type {
+
+            border-bottom: 0;
+
+        }
+
+        .instruction-step b.step-number {
+
+            display: grid;
+
+            width: 32px;
+
+            height: 32px;
+
+            place-items: center;
+
+            border-radius: 50%;
+
+            background: #35105e;
+
+            color: #ffffff;
+
+            font-size: 13px;
+
+        }
+
+        .instruction-step strong {
+
+            display: block;
+
+            margin-bottom: 4px;
+
+            color: #2b183d;
+
+            font-size: 13px;
+
+        }
+
+        .instruction-step p {
+
+            margin: 0;
+
+            color: #665d6d;
+
+            font-size: 12px;
+
+            line-height: 1.55;
+
+        }
+
+        .instructions-tip {
+
+            margin: 12px 0 0;
+
+            padding: 12px 14px;
+
+            border-left: 4px solid #7b2ff7;
+
+            border-radius: 8px;
+
+            background: #f7f2ff;
+
+            color: #51465a;
+
+            font-size: 12px;
+
+            line-height: 1.5;
+
+        }
+
+        .instructions-modal-footer {
+
+            display: flex;
+
+            justify-content: flex-end;
+
+            padding: 14px 22px 20px;
+
+        }
+
+        .instructions-understood {
+
+            min-height: 38px;
+
+            padding: 0 18px;
+
+            border: 0;
+
+            border-radius: 8px;
+
+            background: #35105e;
+
+            color: #ffffff;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+        }
+
+        .instructions-understood:hover {
+
+            background: #4b187f;
+
+        }
+
+        @media (max-width: 780px) {
+
+            .graph-decision-actions {
+
+                flex-direction: column;
+
+                align-items: stretch;
+
+            }
+
+            .graph-decision-actions #graphVerify,
+
+            .graph-decision-actions .instructions-button {
+
+                width: 100%;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <svg class="icon-sprite" aria-hidden="true">
+
+        <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+
+        <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 4.8 3.2 7.7 8 9 4.8-1.3 8-4.2 8-9V6l-8-3Z"/><path d="M12 8v5m0 3v.2"/></symbol>
+
+        <symbol id="i-bug" viewBox="0 0 24 24"><path d="M8 8.5h8v7a4 4 0 0 1-8 0v-7Z"/><path d="M9.5 8.5V7a2.5 2.5 0 0 1 5 0v1.5M4 11h4m8 0h4M5 6l3 2m11-2-3 2M4 16h4m8 0h4M6 21l3-3m9 3-3-3"/></symbol>
+
+        <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3m-4 4v3"/></symbol>
+
+        <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+
+        <symbol id="i-inventory" viewBox="0 0 24 24"><path d="M4 7h16v13H4zM7 3h10v4H7z"/><path d="M9 12h6"/></symbol>
+
+        <symbol id="i-graph" viewBox="0 0 24 24"><circle cx="5" cy="12" r="2"/><circle cx="18" cy="5" r="2"/><circle cx="19" cy="18" r="2"/><path d="m7 11 9-5m-9 7 10 4"/></symbol>
+
+        <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+
+        <symbol id="i-terminal" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m7 9 3 3-3 3m6 0h4"/></symbol>
+
+        <symbol id="i-radar" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/><path d="m12 12 6-6"/></symbol>
+
+        <symbol id="i-device" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8m-4-4v4"/></symbol>
+
+        <symbol id="i-report" viewBox="0 0 24 24"><path d="M5 3h10l4 4v14H5z"/><path d="M14 3v5h5M8 13h8m-8 4h6"/></symbol>
+
+        <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1.2l2-1.6-2-3.4-2.5 1A7 7 0 0 0 14.2 5.5L13.8 3h-4l-.4 2.5a7 7 0 0 0-1.9 1.1l-2.4-1-2 3.4 2 1.6A7 7 0 0 0 5 12c0 .4 0 .8.1 1.2l-2 1.6 2 3.4 2.4-1a7 7 0 0 0 1.9 1.1l.4 2.5h4l.4-2.5a7 7 0 0 0 2.2-1.1l2.5 1 2-3.4-2-1.6c.1-.4.1-.8.1-1.2Z"/></symbol>
+
+        <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14m8-14v14"/></symbol>
+
+        <symbol id="i-back" viewBox="0 0 24 24"><path d="m9 7-5 5 5 5M4 12h11a5 5 0 0 1 5 5"/></symbol>
+
+        <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+
+        <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9Z"/><path d="M10 21h4"/></symbol>
+
+        <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m8 10 4 4 4-4"/></symbol>
+
+        <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+
+        <symbol id="i-x" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+
+        <symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/></symbol>
+
+        <symbol id="i-filter" viewBox="0 0 24 24"><path d="M4 5h16l-6 7v6l-4 2v-8L4 5Z"/></symbol>
+
+        <symbol id="i-fit" viewBox="0 0 24 24"><path d="M9 4H4v5m11-5h5v5M9 20H4v-5m11 5h5v-5"/></symbol>
+
+        <symbol id="i-save" viewBox="0 0 24 24"><path d="M5 4h12l2 2v14H5Z"/><path d="M8 4v6h8V4M8 20v-6h8v6"/></symbol>
+
+        <symbol id="i-pin" viewBox="0 0 24 24"><path d="m14 4 6 6-3 1-4 4-1 5-2-2-4 4-1-1 4-4-2-2 5-1 4-4 1-3Z"/></symbol>
+
+        <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5a3 3 0 0 1 3-2h5v17H7a3 3 0 0 0-3 2V5Zm16 0a3 3 0 0 0-3-2h-5v17h5a3 3 0 0 1 3 2V5Z"/></symbol>
+
+        <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-4-4 4 4 4-4"/><path d="M4 15v5h16v-5"/></symbol>
+
+        <symbol id="i-shield-alert" viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.6 2.7 7.4 7 9 4.3-1.6 7-4.4 7-9V6l-7-3Z"/><path d="M12 8v5m0 3h.01"/></symbol>
+
+    </svg>
+
+    <audio id="musicaFondo" src="Audio/Musica.mp3" loop></audio>
+
+    <header class="topbar">
+
+        <div class="topbar-left">
+
+            <button class="top-icon mobile-menu" id="btnAbrirMenu" type="button" aria-label="Abrir menú"><svg><use href="#i-menu"></use></svg></button>
+
+            <a class="brand-mini" href="Simulador.html" aria-label="NeriumTech"><span>N</span></a>
+
+            <span class="top-divider"></span><span class="scope-circle">›</span>
+
+            <nav class="scope-path" aria-label="Ubicación actual">
+
+                <strong>Global</strong><b>/</b><strong>NeriumTech</strong><b>/</b><strong>Simulación Ransomware</strong><b>/</b>
+
+                <button type="button">Graph Explorer <svg><use href="#i-chevron"></use></svg></button>
+
+            </nav>
+
+        </div>
+
+        <div class="topbar-right">
+
+            <span class="simulation-state"><i></i> Simulación activa</span>
+
+            <time class="live-clock" id="relojSimulacion">00:00:00</time>
+
+            <button
+                class="instructions-button attention topbar-instructions-button"
+                id="btnStageInstructions"
+                type="button"
+                aria-haspopup="dialog"
+                aria-controls="stageInstructionsModal">
+                📘 Ver instrucciones
+            </button>
+
+            <strong id="scenarioTimer" class="graph-mission-timer">Sin iniciar</strong>
+
+            <button class="top-text-button" id="btnAyuda" type="button">Ayuda</button>
+
+            <button class="top-icon" id="btnPausa" type="button" aria-label="Pausar"><svg><use href="#i-pause"></use></svg></button>
+
+            <button class="top-icon" id="btnConfiguracion" type="button" aria-label="Configuración"><svg><use href="#i-settings"></use></svg></button>
+
+            <button class="top-icon" id="btnNotificaciones" type="button" aria-label="Notificaciones"><svg><use href="#i-bell"></use></svg><i class="notification-dot"></i></button>
+
+            <button class="top-icon" id="btnRegresar" type="button" aria-label="Regresar"><svg><use href="#i-back"></use></svg></button>
+
+            <span class="user-avatar">BC</span>
+
+        </div>
+
+    </header>
+
+    <div class="application-shell">
+
+        <aside class="sidebar" id="sidebar">
+
+            <label class="page-search"><svg><use href="#i-search"></use></svg><input id="menuSearch" type="search" placeholder="Buscar una página"><kbd>Ctrl K</kbd></label>
+
+            <nav class="sidebar-nav" aria-label="Módulos del simulador">
+
+                <a class="side-link" href="Simulador.html" data-ready="true" data-route="dashboard" data-menu-text="dashboard resumen inicio"><svg><use href="#i-grid"></use></svg><span>Dashboards</span></a>
+
+                <span class="menu-section">Triage</span>
+
+                <a class="side-link" href="Alerts.html" data-ready="true" data-route="alerts" data-menu-text="alerts alertas incidentes"><svg><use href="#i-alert"></use></svg><span>Alerts</span><b class="menu-count">1</b></a>
+
+                <a class="side-link" href="vulnerabilities.html" data-ready="true" data-route="vulnerabilities" data-menu-text="vulnerabilities vulnerabilidades"><svg><use href="#i-bug"></use></svg><span>Vulnerabilities</span></a>
+
+                <a class="side-link" href="misconfigurations.html" data-menu-text="misconfigurations configuraciones"><svg><use href="#i-lock"></use></svg><span>Misconfigurations</span></a>
+
+                <span class="menu-section">Discover</span>
+
+                <a class="side-link" href="event-search.html" data-ready="true" data-route="event-search" data-menu-text="event search eventos"><svg><use href="#i-search"></use></svg><span>Event Search</span></a>
+
+                <a class="side-link" href="Inventory.html" data-ready="true" data-route="inventory" data-menu-text="inventory inventario"><svg><use href="#i-inventory"></use></svg><span>Inventory</span></a>
+
+                <a class="side-link active" href="graph-explorer.html" data-ready="true" data-route="graph-explorer" data-menu-text="graph explorer mapa"><svg><use href="#i-graph"></use></svg><span>Graph Explorer</span></a>
+
+                <a class="side-link" href="activities.html" data-menu-text="activities actividades"><svg><use href="#i-clock"></use></svg><span>Activities</span></a>
+
+                <span class="menu-section">Automate</span>
+
+                <a class="side-link" href="remoteops.html" data-ready="true" data-route="remoteops" data-menu-text="remoteops"><svg><use href="#i-terminal"></use></svg><span>RemoteOps</span></a>
+
+                <span class="menu-section">Configure</span>
+
+                <a class="side-link" href="detections.html" data-menu-text="detections"><svg><use href="#i-radar"></use></svg><span>Detections</span></a>
+
+                <a class="side-link" href="agent-management.html" data-menu-text="agent management"><svg><use href="#i-device"></use></svg><span>Agent management</span></a>
+
+                <a class="side-link" href="reports.html" data-menu-text="reports"><svg><use href="#i-report"></use></svg><span>Reports</span></a>
+
+                <a class="side-link" href="policies-settings.html" data-menu-text="policies settings"><svg><use href="#i-settings"></use></svg><span>Policies and settings</span></a>
+
+            </nav>
+
+            <div class="sidebar-footer"><span class="protection-dot"></span><div><strong>Protección activa</strong><small>24 agentes conectados</small></div></div>
+
+        </aside>
+
+        <button class="sidebar-backdrop" id="sidebarBackdrop" type="button" aria-label="Cerrar menú"></button>
+
+        <main class="main-content graph-main">
+
+            <header class="graph-page-header">
+
+                <div class="graph-page-title">
+
+                    <h1>Graph Explorer</h1>
+
+                    <p>Explora las relaciones entre eventos, equipos y procesos del incidente.</p>
+
+                    <nav class="graph-tabs" aria-label="Vistas de Graph Explorer">
+
+                        <button class="active" type="button" data-graph-tab="graph">Graph</button>
+
+                        <button type="button" data-graph-tab="library">Library</button>
+
+                    </nav>
+
+                </div>
+
+                <div class="graph-page-actions" aria-label="Acciones de Graph Explorer">
+
+                    <button id="btnHeaderQueryLibrary" type="button"><svg><use href="#i-book"></use></svg> Query Library</button>
+
+                    <button id="btnHeaderSaveQuery" type="button"><svg><use href="#i-save"></use></svg> Save</button>
+
+                    <button id="btnHeaderExport" type="button"><svg><use href="#i-download"></use></svg> Export</button>
+
+                    <button id="btnHeaderSettings" class="icon-only" type="button" aria-label="Configuración"><svg><use href="#i-settings"></use></svg></button>
+
+                </div>
+
+            </header>
+
+<section class="graph-mission" aria-labelledby="graphMissionTitle">
+
+                <div class="graph-mission-main">
+
+                    <span class="graph-mission-kicker">INCIDENTE FIN-014 · CORRELACIÓN</span>
+
+                    <h2 id="graphMissionTitle">Investiga los nodos del incidente</h2>
+
+                    <p>
+                        Abre un nodo del mapa para mostrar sus detalles y pulsa
+                        <strong>Investigar nodo</strong>. Encuentra los cuatro nodos que
+                        conectan el documento, PowerShell, el cifrado y la conexión hacia FIN-021.
+                    </p>
+
+                    <div class="graph-mission-progress-wrap">
+
+                        <div class="graph-mission-progress-head">
+
+                            <strong id="graphMissionProgress">0 de 4 nodos verificados</strong>
+
+                            <span id="graphMissionPercent">0%</span>
+
+                        </div>
+
+                        <div class="graph-mission-progress-bar"><i id="graphMissionBar"></i></div>
+
+                    </div>
+
+                    <div id="graphMissionLog" class="graph-mission-log" aria-live="polite"></div>
+
+                </div>
+
+                <div class="graph-mission-side" id="graphDecisionPanel" hidden>
+
+                    <span class="graph-question-ready">✓ 4 de 4 nodos verificados</span>
+
+                    <h3>Ahora reconstruye la cadena</h3>
+
+                    <div class="graph-option-card">
+
+                        <span class="graph-option-icon"><svg><use href="#i-graph"></use></svg></span>
+
+                        <label for="graphSequence">Secuencia de eventos</label>
+
+                        <select id="graphSequence"><option value="">Selecciona la secuencia</option><option value="network-first">Conexión a FIN-021 → PowerShell → cifrado en FIN-014</option><option value="correct">PowerShell en FIN-014 → archivos cifrados → conexión SMB hacia FIN-021</option><option value="backup-first">Respaldo programado → cifrado en FIN-021 → alerta en FIN-014</option></select>
+
+                    </div>
+
+                    <div class="graph-option-card">
+
+                        <span class="graph-option-icon"><svg><use href="#i-report"></use></svg></span>
+
+                        <label for="graphConclusion">¿Qué concluyes sobre FIN-021?</label>
+
+                        <select id="graphConclusion"><option value="">Selecciona una conclusión</option><option value="encrypted">La conexión demuestra que FIN-021 fue cifrado</option><option value="exposed">Recibió una conexión; permanece expuesto, sin cifrado confirmado</option><option value="origin">Fue el origen del comando PowerShell</option></select>
+
+                    </div>
+
+                    <div class="graph-decision-actions">
+                        <button type="button" id="graphVerify" disabled>Confirmar relación</button>
+                    </div>
+
+                    <p id="graphMissionFeedback" role="status" aria-live="polite" hidden></p>
+
+                </div>
+
+                <p id="graphMissionDone" class="graph-mission-done" hidden>Relación confirmada. <a href="remoteops.html">Continuar a RemoteOps · respuesta final →</a></p>
+
+            </section>
+
+            <section class="query-builder" id="queryBuilder">
+
+                <header>
+
+                    <button id="toggleQueryBuilder" type="button"><span>⌄</span> Query Builder</button>
+
+                    <nav>
+
+                        <button id="btnQueryLibrary" type="button"><svg><use href="#i-book"></use></svg> Query Library <span>⌄</span></button>
+
+                        <button id="btnSaveQuery" type="button"><svg><use href="#i-save"></use></svg> Save <span>⌄</span></button>
+
+                        <button id="btnPinQuery" type="button" aria-label="Fijar consulta"><svg><use href="#i-pin"></use></svg></button>
+
+                    </nav>
+
+                </header>
+
+                <div class="query-content" id="queryContent">
+
+                    <div class="query-controls-left">
+
+                        <span class="query-find">Find</span>
+
+                        <div class="query-chip" id="queryChip"><span id="queryChipText">Alerts</span><button id="removeQueryChip" type="button" aria-label="Eliminar filtro">×</button></div>
+
+                        <button class="query-add" id="btnAddQueryItem" type="button" aria-label="Agregar condición"><svg><use href="#i-plus"></use></svg></button>
+
+                        <button class="query-clear" id="btnClearQuery" type="button" aria-label="Limpiar consulta"><svg><use href="#i-x"></use></svg></button>
+
+                    </div>
+
+                    <label class="graph-search-box"><svg><use href="#i-search"></use></svg><input id="graphNodeSearch" type="search" placeholder="Buscar nodos, procesos, IPs, archivos..."></label>
+
+                    <div class="query-menu" id="queryMenu" hidden>
+
+                        <button type="button" data-query-type="Alerts">Alerts</button>
+
+                        <button type="button" data-query-type="Endpoints">Endpoints</button>
+
+                        <button type="button" data-query-type="Processes">Processes</button>
+
+                        <button type="button" data-query-type="Users">Users</button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <section class="graph-workspace" id="graphWorkspace">
+
+                <header class="graph-workspace-header">
+
+                    <div>
+
+                        <strong>Mapa de relaciones</strong>
+
+                        <span>Visualiza la cadena del ataque y las conexiones entre nodos.</span>
+
+                    </div>
+
+                    <div class="graph-legend" aria-label="Leyenda del gráfico">
+
+                        <span><i class="legend-dot process"></i> Proceso</span>
+
+                        <span><i class="legend-square file"></i> Archivo</span>
+
+                        <span><i class="legend-diamond connection"></i> Conexión</span>
+
+                        <span><i class="legend-triangle alert"></i> Alerta</span>
+
+                        <span><i class="legend-device"></i> Equipo</span>
+
+                    </div>
+
+                </header>
+
+                <aside class="graph-tools" aria-label="Herramientas del gráfico">
+
+                    <button class="active" type="button" data-graph-tool="connections" aria-label="Conexiones"><svg><use href="#i-graph"></use></svg></button>
+
+                    <button type="button" data-graph-tool="labels" aria-label="Etiquetas"><svg><use href="#i-list"></use></svg></button>
+
+                    <button type="button" data-graph-tool="filter" aria-label="Filtrar severidad"><svg><use href="#i-filter"></use></svg></button>
+
+                    <button type="button" data-graph-tool="fit" aria-label="Ajustar vista"><svg><use href="#i-fit"></use></svg></button>
+
+                </aside>
+
+                <div class="graph-zoom">
+
+                    <output id="zoomValue">100%</output>
+
+                    <input id="graphZoom" type="range" min="70" max="130" value="100" aria-label="Zoom del gráfico">
+
+                </div>
+
+                <div class="graph-viewport" id="graphViewport">
+
+                    <svg class="connection-layer" id="connectionLayer" viewBox="0 0 1200 600" preserveAspectRatio="none" aria-hidden="true">
+
+                        <path d="M175 135 C280 90 350 120 430 145"/>
+
+                        <path d="M430 145 C530 100 620 108 690 145"/>
+
+                        <path d="M690 145 C790 105 875 112 950 150"/>
+
+                        <path d="M260 315 C370 250 520 245 605 315"/>
+
+                        <path d="M605 315 C720 260 860 268 975 320"/>
+
+                        <path d="M430 145 C470 220 500 255 605 315"/>
+
+                    </svg>
+
+                    <div class="graph-node-grid" id="graphNodes">
+
+                        <button class="graph-node grouped high" type="button" data-mission-node="document" data-title="Factura_Q3.docm opened" data-severity="high" data-endpoint="FIN-014" data-process="WINWORD.EXE" data-time="09:41:58" data-description="Documento inicial abierto en FIN-014; origina la cadena que ejecuta PowerShell."><span class="node-expand">↗</span><span class="node-triangle"><svg viewBox="0 0 80 70"><path d="M40 5 75 65H5Z"/><use href="#i-shield-alert" x="28" y="29" width="24" height="24"/></svg></span><span class="node-count">+3</span><strong>Factura_Q3.docm opened</strong><small>Alert</small></button>
+
+                        <button class="graph-node grouped medium" type="button" data-title="eicar_com.zip detected" data-severity="medium" data-endpoint="QA-002" data-process="eicar_com.zip" data-time="09:39:02" data-description="Archivo de prueba EICAR identificado y mitigado automáticamente."><span class="node-expand">↗</span><span class="node-triangle"><svg viewBox="0 0 80 70"><path d="M40 5 75 65H5Z"/><use href="#i-shield-alert" x="28" y="29" width="24" height="24"/></svg></span><span class="node-count teal">+2</span><strong>eicar_com.zip detected</strong><small>Alert</small></button>
+
+                        <button class="graph-node critical" type="button" data-mission-node="cipher" data-title="Finance files encrypted" data-severity="critical" data-endpoint="FIN-014" data-process="powershell.exe" data-time="09:42:17" data-description="PowerShell modificó archivos financieros y produjo extensiones .locked en FIN-014."><span class="node-triangle"><svg viewBox="0 0 80 70"><path d="M40 5 75 65H5Z"/><use href="#i-shield-alert" x="28" y="29" width="24" height="24"/></svg></span><strong>Finance files encrypted</strong><small>Alert</small></button>
+
+                        <button class="graph-node high" type="button" data-mission-node="powershell" data-title="Encoded PowerShell execution" data-severity="high" data-endpoint="FIN-014" data-process="powershell.exe -enc" data-time="09:42:17" data-description="WINWORD.EXE desencadenó un comando PowerShell codificado antes de las escrituras cifradas."><span class="node-triangle"><svg viewBox="0 0 80 70"><path d="M40 5 75 65H5Z"/><use href="#i-shield-alert" x="28" y="29" width="24" height="24"/></svg></span><strong>Encoded PowerShell execution</strong><small>Alert</small></button>
+
+                        <button class="graph-node high" type="button" data-title="3a7d054.rbf - DLL modification" data-severity="high" data-endpoint="FIN-014" data-process="3a7d054.rbf" data-time="09:42:08" data-description="Archivo temporal relacionado con la cadena de ejecución del ransomware."><span class="node-triangle"><svg viewBox="0 0 80 70"><path d="M40 5 75 65H5Z"/><use href="#i-shield-alert" x="28" y="29" width="24" height="24"/></svg></span><strong>3a7d054.rbf - DLL modification</strong><small>Alert</small></button>
+
+                        <button class="graph-node high" type="button" data-title="aaa3261.rbf - Encryption activity" data-severity="high" data-endpoint="FIN-014" data-process="aaa3261.rbf" data-time="09:42:13" data-description="Se observaron escrituras rápidas y cambios de extensión en documentos compartidos."><span class="node-triangle"><svg viewBox="0 0 80 70"><path d="M40 5 75 65H5Z"/><use href="#i-shield-alert" x="28" y="29" width="24" height="24"/></svg></span><strong>aaa3261.rbf - Encryption activity</strong><small>Alert</small></button>
+
+                        <button class="graph-node medium" type="button" data-title="iRacingService unusual access" data-severity="medium" data-endpoint="OPS-006" data-process="iRacingService.exe" data-time="09:18:07" data-description="Servicio con acceso inusual a directorios temporales."><span class="node-triangle"><svg viewBox="0 0 80 70"><path d="M40 5 75 65H5Z"/><use href="#i-shield-alert" x="28" y="29" width="24" height="24"/></svg></span><strong>iRacingService unusual access</strong><small>Alert</small></button>
+
+                        <button class="graph-node critical" type="button" data-title="Syskey Query detected" data-severity="critical" data-endpoint="FIN-014" data-process="powershell.exe" data-time="09:42:16" data-description="PowerShell consultó claves del sistema asociadas con credenciales y persistencia."><span class="node-triangle"><svg viewBox="0 0 80 70"><path d="M40 5 75 65H5Z"/><use href="#i-shield-alert" x="28" y="29" width="24" height="24"/></svg></span><strong>Syskey Query detected</strong><small>Alert</small></button>
+
+                        <button class="graph-node medium" type="button" data-title="Remote Support warning" data-severity="medium" data-endpoint="FIN-014" data-process="RemoteSupport.exe" data-time="09:40:48" data-description="Herramienta remota iniciada fuera del horario habitual."><span class="node-triangle"><svg viewBox="0 0 80 70"><path d="M40 5 75 65H5Z"/><use href="#i-shield-alert" x="28" y="29" width="24" height="24"/></svg></span><strong>Remote Support warning</strong><small>Alert</small></button>
+
+                        <button class="graph-node medium" type="button" data-title="eicar.com detected" data-severity="medium" data-endpoint="QA-002" data-process="eicar.com" data-time="09:39:05" data-description="Segunda detección EICAR contenida por la política del agente."><span class="node-triangle"><svg viewBox="0 0 80 70"><path d="M40 5 75 65H5Z"/><use href="#i-shield-alert" x="28" y="29" width="24" height="24"/></svg></span><strong>eicar.com detected</strong><small>Alert</small></button>
+
+                        <button class="graph-node high" type="button" data-title="1d53a6.rbf - DLL Hijacking" data-severity="high" data-endpoint="FIN-014" data-process="1d53a6.rbf" data-time="09:42:19" data-description="Módulo sospechoso cargado desde una ruta temporal del usuario."><span class="node-triangle"><svg viewBox="0 0 80 70"><path d="M40 5 75 65H5Z"/><use href="#i-shield-alert" x="28" y="29" width="24" height="24"/></svg></span><strong>1d53a6.rbf - DLL Hijacking</strong><small>Alert</small></button>
+
+                        <button class="graph-node critical" type="button" data-title="DLL Hijacking detected" data-severity="critical" data-endpoint="FIN-014" data-process="cmd.exe" data-time="09:42:20" data-description="La cadena de procesos coincide con actividad previa al cifrado de archivos."><span class="node-triangle"><svg viewBox="0 0 80 70"><path d="M40 5 75 65H5Z"/><use href="#i-shield-alert" x="28" y="29" width="24" height="24"/></svg></span><strong>DLL Hijacking detected</strong><small>Alert</small></button>
+
+                        <button class="graph-node high" type="button" data-mission-node="network" data-title="SMB connection to FIN-021" data-severity="high" data-endpoint="FIN-014" data-process="powershell.exe" data-time="09:42:22" data-description="FIN-014 inicia una conexión SMB hacia FIN-021. El destino no presenta cifrado confirmado."><span class="node-triangle"><svg viewBox="0 0 80 70"><path d="M40 5 75 65H5Z"/><use href="#i-shield-alert" x="28" y="29" width="24" height="24"/></svg></span><strong>SMB connection to FIN-021</strong><small>Alert</small></button>
+
+                        <button class="graph-node high" type="button" data-title="93f9549f.rbf suspicious file" data-severity="high" data-endpoint="FIN-014" data-process="93f9549f.rbf" data-time="09:42:25" data-description="Archivo sospechoso creado por la cadena del proceso malicioso."><span class="node-triangle"><svg viewBox="0 0 80 70"><path d="M40 5 75 65H5Z"/><use href="#i-shield-alert" x="28" y="29" width="24" height="24"/></svg></span><strong>93f9549f.rbf suspicious file</strong><small>Alert</small></button>
+
+                        <button class="graph-node medium" type="button" data-title="New Text Document encrypted" data-severity="medium" data-endpoint="FIN-014" data-process="explorer.exe" data-time="09:42:27" data-description="Documento del usuario modificado y renombrado durante la fase de cifrado."><span class="node-triangle"><svg viewBox="0 0 80 70"><path d="M40 5 75 65H5Z"/><use href="#i-shield-alert" x="28" y="29" width="24" height="24"/></svg></span><strong>New Text Document encrypted</strong><small>Alert</small></button>
+
+                        <button class="graph-node medium" type="button" data-title="Unconfirmed encryption behavior" data-severity="medium" data-endpoint="FIN-014" data-process="unknown.exe" data-time="09:42:29" data-description="Comportamiento de cifrado pendiente de clasificación por el analista."><span class="node-triangle"><svg viewBox="0 0 80 70"><path d="M40 5 75 65H5Z"/><use href="#i-shield-alert" x="28" y="29" width="24" height="24"/></svg></span><strong>Unconfirmed encryption behavior</strong><small>Alert</small></button>
+
+                        <button class="graph-node high" type="button" data-title="678c4fa.rbf - Data encryption" data-severity="high" data-endpoint="FIN-014" data-process="678c4fa.rbf" data-time="09:42:31" data-description="Actividad de cifrado confirmada en el directorio financiero compartido."><span class="node-triangle"><svg viewBox="0 0 80 70"><path d="M40 5 75 65H5Z"/><use href="#i-shield-alert" x="28" y="29" width="24" height="24"/></svg></span><strong>678c4fa.rbf - Data encryption</strong><small>Alert</small></button>
+
+                        <button class="graph-node critical extra-node" type="button" data-title="Ransom note created" data-severity="critical" data-endpoint="FIN-014" data-process="README_RECOVER.txt" data-time="09:42:34" data-description="Se creó una nota de rescate en el escritorio del usuario Carlos Hernández." hidden><span class="node-triangle"><svg viewBox="0 0 80 70"><path d="M40 5 75 65H5Z"/><use href="#i-shield-alert" x="28" y="29" width="24" height="24"/></svg></span><strong>Ransom note created</strong><small>Alert</small></button>
+
+                        <button class="graph-node critical extra-node" type="button" data-title="Network share encryption" data-severity="critical" data-endpoint="FIN-014" data-process="powershell.exe" data-time="09:42:38" data-description="El ataque intentó cifrar recursos compartidos antes del aislamiento." hidden><span class="node-triangle"><svg viewBox="0 0 80 70"><path d="M40 5 75 65H5Z"/><use href="#i-shield-alert" x="28" y="29" width="24" height="24"/></svg></span><strong>Network share encryption</strong><small>Alert</small></button>
+
+                    </div>
+
+                    <aside class="node-details" id="nodeDetails" aria-hidden="true">
+
+                        <header><div><span id="detailSeverity">CRITICAL ALERT</span><h2 id="detailTitle">Finance files encrypted</h2></div><button id="closeNodeDetails" type="button" aria-label="Cerrar detalle"><svg><use href="#i-x"></use></svg></button></header>
+
+                        <p id="detailDescription">Actividad masiva de modificación de archivos detectada.</p>
+
+                        <dl><div><dt>Endpoint</dt><dd id="detailEndpoint">FIN-014</dd></div><div><dt>Proceso</dt><dd id="detailProcess">powershell.exe</dd></div><div><dt>Hora</dt><dd id="detailTime">09:42:17</dd></div></dl>
+
+                        <div><button id="btnOpenAlert" type="button">Abrir en Alerts</button><button class="primary" id="btnInvestigateNode" type="button">Investigar nodo</button></div>
+
+                    </aside>
+
+                </div>
+
+                <button class="graph-minimap" id="btnGraphMinimap" type="button" aria-label="Restablecer posición"><span></span></button>
+
+                <button class="load-more" id="btnLoadMoreNodes" type="button">Load more</button>
+
+            </section>
+
+            <section class="query-library-view" id="queryLibraryView" hidden>
+
+                <header><div><span>QUERY LIBRARY</span><h2>Consultas guardadas</h2></div><button id="btnBackToGraph" type="button">Volver al gráfico</button></header>
+
+                <div class="saved-query-list" id="savedQueryList">
+
+                    <button type="button" data-saved-query="Ransomware investigation"><strong>Ransomware investigation</strong><span>Alerts + Endpoints + Processes</span><small>Actualizada ahora</small></button>
+
+                    <button type="button" data-saved-query="Critical alerts"><strong>Critical alerts</strong><span>Alerts · Critical severity</span><small>Plantilla de NeriumTech</small></button>
+
+                    <button type="button" data-saved-query="FIN-014 activity"><strong>FIN-014 activity</strong><span>Endpoint FIN-014 · Last 24 hours</span><small>Incidente #2026-001</small></button>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <!-- MODAL DE INSTRUCCIONES · GRAPH EXPLORER -->
+
+    <div
+
+        class="instructions-layer"
+
+        id="stageInstructionsModal"
+
+        aria-hidden="true">
+
+        <section
+
+            class="instructions-modal"
+
+            role="dialog"
+
+            aria-modal="true"
+
+            aria-labelledby="stageInstructionsTitle">
+
+            <header class="instructions-modal-header">
+
+                <div>
+
+                    <span>INSTRUCCIONES · GRAPH EXPLORER</span>
+
+                    <h2 id="stageInstructionsTitle">Reconstruye la relación del ataque</h2>
+
+                </div>
+
+                <button
+
+                    class="instructions-close"
+
+                    id="btnCloseStageInstructions"
+
+                    type="button"
+
+                    aria-label="Cerrar instrucciones">
+
+                    ×
+
+                </button>
+
+            </header>
+
+            <div class="instructions-modal-body">
+
+                <div class="instruction-step">
+
+                    <b class="step-number">1</b>
+
+                    <div>
+
+                        <strong>Investiga los nodos</strong>
+
+                        <p>
+
+                            Abre los nodos relacionados con FIN-014 y revisa su información.
+
+                            Descarta los eventos que no formen parte del incidente.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="instruction-step">
+
+                    <b class="step-number">2</b>
+
+                    <div>
+
+                        <strong>Verifica 4 nodos</strong>
+
+                        <p>
+
+                            En los nodos relevantes, presiona <strong>Investigar nodo</strong>
+
+                            hasta completar <strong>4 de 4 nodos verificados</strong>.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="instruction-step">
+
+                    <b class="step-number">3</b>
+
+                    <div>
+
+                        <strong>Reconstruye la secuencia</strong>
+
+                        <p>
+
+                            Selecciona el orden que conecta PowerShell, el cifrado de archivos
+
+                            y la conexión SMB hacia FIN-021.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="instruction-step">
+
+                    <b class="step-number">4</b>
+
+                    <div>
+
+                        <strong>Concluye qué ocurrió con FIN-021</strong>
+
+                        <p>
+
+                            Selecciona la conclusión correcta y después presiona
+
+                            <strong>Confirmar relación</strong>.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="instructions-tip">
+
+                    💡 <strong>¿Necesitas ayuda?</strong>
+
+                    Usa el botón <strong>Pista</strong>. Cada pista descuenta
+
+                    <strong>5 segundos</strong>.
+
+                </div>
+
+            </div>
+
+            <footer class="instructions-modal-footer">
+
+                <button
+
+                    class="instructions-understood"
+
+                    id="btnUnderstoodInstructions"
+
+                    type="button">
+
+                    Entendido
+
+                </button>
+
+            </footer>
+
+        </section>
+
+    </div>
+
+    <div class="overlay" id="overlayPausa"><div class="modal pause-modal"><div class="modal-icon"><svg><use href="#i-pause"></use></svg></div><span class="modal-label">SIMULADOR</span><h2>Simulación en pausa</h2><p>La investigación visual está detenida temporalmente.</p><button class="modal-button primary" id="btnContinuar" type="button">Continuar</button><button class="modal-button" id="btnConfigPausa" type="button">Configuración</button><button class="modal-button ghost" id="btnInicioPausa" type="button">Regresar al inicio</button></div></div>
+
+    <div class="overlay" id="overlayConfig"><div class="modal config-modal"><header class="modal-header"><div><span class="modal-label">SYSTEM</span><h2>Configuración</h2></div><button id="cerrarConfig" type="button">×</button></header><div class="config-row"><div><strong>Música</strong><small>Volumen de música</small></div><div class="range-wrap"><input id="volumenMusica" type="range" min="0" max="100" value="25"><output id="valorMusica">25%</output></div></div><div class="config-row"><div><strong>Efectos</strong><small>Sonidos de botones</small></div><div class="range-wrap"><input id="volumenEfectos" type="range" min="0" max="100" value="50"><output id="valorEfectos">50%</output></div></div><label class="config-row toggle-row"><div><strong>Silenciar todo</strong></div><input id="silenciar" type="checkbox"><span class="toggle"></span></label><button class="modal-button primary" id="guardarConfig" type="button">Guardar y volver</button></div></div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"><span>✓</span><p id="toastTexto">Acción completada</p></div>
+
+    <script>
+
+        (function () {
+
+            const progress = document.getElementById('graphMissionProgress');
+
+            const bar = document.getElementById('graphMissionBar');
+
+            const percent = document.getElementById('graphMissionPercent');
+
+            const search = document.getElementById('graphNodeSearch');
+
+            const nodes = Array.from(document.querySelectorAll('.graph-node'));
+
+            function syncProgress() {
+
+                if (!progress || !bar || !percent) return;
+
+                const match = (progress.textContent || '').match(/(\d+)\s*de\s*(\d+)/i);
+
+                const current = match ? Number(match[1]) : 0;
+
+                const total = match ? Math.max(1, Number(match[2])) : 4;
+
+                const value = Math.max(0, Math.min(100, Math.round((current / total) * 100)));
+
+                bar.style.width = value + '%';
+
+                percent.textContent = value + '%';
+
+            }
+
+            if (progress) {
+
+                new MutationObserver(syncProgress).observe(progress, {childList: true, subtree: true, characterData: true});
+
+                syncProgress();
+
+            }
+
+            search?.addEventListener('input', function () {
+
+                const term = this.value.trim().toLowerCase();
+
+                nodes.forEach(node => {
+
+                    const haystack = [node.dataset.title, node.dataset.endpoint, node.dataset.process, node.dataset.description, node.textContent]
+
+                        .filter(Boolean).join(' ').toLowerCase();
+
+                    const isExtraHidden = node.classList.contains('extra-node') && !node.dataset.loaded;
+
+                    node.hidden = isExtraHidden ? true : (term ? !haystack.includes(term) : false);
+
+                });
+
+            });
+
+            document.getElementById('btnHeaderQueryLibrary')?.addEventListener('click', () => document.getElementById('btnQueryLibrary')?.click());
+
+            document.getElementById('btnHeaderSaveQuery')?.addEventListener('click', () => document.getElementById('btnSaveQuery')?.click());
+
+            document.getElementById('btnHeaderSettings')?.addEventListener('click', () => document.getElementById('btnConfiguracion')?.click());
+
+            document.getElementById('btnHeaderExport')?.addEventListener('click', () => {
+
+                const toast = document.getElementById('toast');
+
+                const text = document.getElementById('toastTexto');
+
+                if (text) text.textContent = 'Vista del gráfico preparada para exportar';
+
+                if (toast) {
+
+                    toast.classList.add('show');
+
+                    setTimeout(() => toast.classList.remove('show'), 2200);
+
+                }
+
+            });
+
+        })();
+
+    </script>
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const btnOpenInstructions =
+
+                document.getElementById("btnStageInstructions");
+
+            const instructionsModal =
+
+                document.getElementById("stageInstructionsModal");
+
+            const btnCloseInstructions =
+
+                document.getElementById("btnCloseStageInstructions");
+
+            const btnUnderstoodInstructions =
+
+                document.getElementById("btnUnderstoodInstructions");
+
+            function openStageInstructions() {
+
+                if (!instructionsModal) return;
+
+                instructionsModal.classList.add("active");
+
+                instructionsModal.setAttribute("aria-hidden", "false");
+
+                document.body.style.overflow = "hidden";
+
+                btnOpenInstructions?.classList.remove("attention");
+
+                btnOpenInstructions?.classList.add("instructions-seen");
+
+            }
+
+            function closeStageInstructions() {
+
+                if (!instructionsModal) return;
+
+                instructionsModal.classList.remove("active");
+
+                instructionsModal.setAttribute("aria-hidden", "true");
+
+                document.body.style.overflow = "";
+
+            }
+
+            btnOpenInstructions?.addEventListener(
+
+                "click",
+
+                openStageInstructions
+
+            );
+
+            btnCloseInstructions?.addEventListener(
+
+                "click",
+
+                closeStageInstructions
+
+            );
+
+            btnUnderstoodInstructions?.addEventListener(
+
+                "click",
+
+                closeStageInstructions
+
+            );
+
+            instructionsModal?.addEventListener(
+
+                "click",
+
+                function (event) {
+
+                    if (event.target === instructionsModal) {
+
+                        closeStageInstructions();
+
+                    }
+
+                }
+
+            );
+
+            document.addEventListener(
+
+                "keydown",
+
+                function (event) {
+
+                    if (
+
+                        event.key === "Escape" &&
+
+                        instructionsModal?.classList.contains("active")
+
+                    ) {
+
+                        closeStageInstructions();
+
+                    }
+
+                }
+
+            );
+
+            setTimeout(function () {
+
+                btnOpenInstructions?.classList.remove("attention");
+
+            }, 5000);
+
+        });
+
+    </script>
+
+<script src="JS/Navegacion.js"></script>
+
+    <script src="JS/GraphExplorer.js"></script>
+
+    <script src="JS/GraphMission.js"></script>
+
+    <script src="JS/escenario.js"></script>
+
+</body>
+
+</html>

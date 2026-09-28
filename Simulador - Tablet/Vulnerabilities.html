@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1b102b">
+    <title>Vulnerabilities | Simulador de Ransomware NeriumTech</title>
+    <link rel="stylesheet" href="CSS/Simulador.css">
+    <link rel="stylesheet" href="CSS/Vurnerabilities.css">
+</head>
+
+<body>
+    <svg class="icon-sprite" aria-hidden="true">
+        <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+        <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 4.8 3.2 7.7 8 9 4.8-1.3 8-4.2 8-9V6l-8-3Z"/><path d="M12 8v5m0 3v.2"/></symbol>
+        <symbol id="i-bug" viewBox="0 0 24 24"><path d="M8 8.5h8v7a4 4 0 0 1-8 0v-7Z"/><path d="M9.5 8.5V7a2.5 2.5 0 0 1 5 0v1.5M4 11h4m8 0h4M5 6l3 2m11-2-3 2M4 16h4m8 0h4M6 21l3-3m9 3-3-3"/></symbol>
+        <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3m-4 4v3"/></symbol>
+        <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+        <symbol id="i-inventory" viewBox="0 0 24 24"><path d="M4 7h16v13H4zM7 3h10v4H7z"/><path d="M9 12h6"/></symbol>
+        <symbol id="i-graph" viewBox="0 0 24 24"><circle cx="5" cy="12" r="2"/><circle cx="18" cy="5" r="2"/><circle cx="19" cy="18" r="2"/><path d="m7 11 9-5m-9 7 10 4"/></symbol>
+        <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+        <symbol id="i-terminal" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m7 9 3 3-3 3m6 0h4"/></symbol>
+        <symbol id="i-radar" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/><path d="m12 12 6-6"/></symbol>
+        <symbol id="i-device" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8m-4-4v4"/></symbol>
+        <symbol id="i-report" viewBox="0 0 24 24"><path d="M5 3h10l4 4v14H5z"/><path d="M14 3v5h5M8 13h8m-8 4h6"/></symbol>
+        <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1.2l2-1.6-2-3.4-2.5 1A7 7 0 0 0 14.2 5.5L13.8 3h-4l-.4 2.5a7 7 0 0 0-1.9 1.1l-2.4-1-2 3.4 2 1.6A7 7 0 0 0 5 12c0 .4 0 .8.1 1.2l-2 1.6 2 3.4 2.4-1a7 7 0 0 0 1.9 1.1l.4 2.5h4l.4-2.5a7 7 0 0 0 2.2-1.1l2.5 1 2-3.4-2-1.6c.1-.4.1-.8.1-1.2Z"/></symbol>
+        <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14m8-14v14"/></symbol>
+        <symbol id="i-back" viewBox="0 0 24 24"><path d="m9 7-5 5 5 5M4 12h11a5 5 0 0 1 5 5"/></symbol>
+        <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+        <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9Z"/><path d="M10 21h4"/></symbol>
+        <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m8 10 4 4 4-4"/></symbol>
+        <symbol id="i-filter" viewBox="0 0 24 24"><path d="M4 5h16l-6 7v6l-4 2v-8L4 5Z"/></symbol>
+        <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-4-4 4 4 4-4"/><path d="M4 15v5h16v-5"/></symbol>
+        <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3 8 8 9 5-1 8-4 8-9V6l-8-3Z"/><path d="m8.5 12 2.2 2.2 4.8-5"/></symbol>
+        <symbol id="i-x" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    </svg>
+
+    <audio id="musicaFondo" src="Audio/Musica.mp3" loop></audio>
+
+    <header class="topbar">
+        <div class="topbar-left">
+            <button class="top-icon mobile-menu" id="btnAbrirMenu" type="button" aria-label="Abrir menú"><svg><use href="#i-menu"></use></svg></button>
+            <a class="brand-mini" href="Simulador.Html" aria-label="NeriumTech"><span>N</span></a>
+            <span class="top-divider"></span><span class="scope-circle">›</span>
+            <nav class="scope-path" aria-label="Ubicación actual">
+                <strong>Global</strong><b>/</b><strong>NeriumTech</strong><b>/</b><strong>Simulación Ransomware</strong><b>/</b>
+                <button type="button">Vulnerabilities <svg><use href="#i-chevron"></use></svg></button>
+            </nav>
+        </div>
+        <div class="topbar-right">
+            <span class="simulation-state"><i></i> Simulación activa</span>
+            <time class="live-clock" id="relojSimulacion">00:00:00</time>
+            <button class="top-text-button" id="btnAyuda" type="button">Ayuda</button>
+            <button class="top-icon" id="btnPausa" type="button" aria-label="Pausar"><svg><use href="#i-pause"></use></svg></button>
+            <button class="top-icon" id="btnConfiguracion" type="button" aria-label="Configuración"><svg><use href="#i-settings"></use></svg></button>
+            <button class="top-icon" id="btnNotificaciones" type="button" aria-label="Notificaciones"><svg><use href="#i-bell"></use></svg><i class="notification-dot"></i></button>
+            <button class="top-icon" id="btnRegresar" type="button" aria-label="Regresar"><svg><use href="#i-back"></use></svg></button>
+            <span class="user-avatar">BC</span>
+        </div>
+    </header>
+
+    <div class="application-shell">
+        <aside class="sidebar" id="sidebar">
+            <label class="page-search"><svg><use href="#i-search"></use></svg><input id="menuSearch" type="search" placeholder="Buscar una página"><kbd>Ctrl K</kbd></label>
+            <nav class="sidebar-nav" aria-label="Módulos del simulador">
+                <a class="side-link" href="Simulador.Html" data-ready="true" data-route="dashboard" data-menu-text="dashboard resumen inicio"><svg><use href="#i-grid"></use></svg><span>Dashboards</span></a>
+                <span class="menu-section">Triage</span>
+                <a class="side-link" href="Alerts.html" data-ready="true" data-route="alerts" data-menu-text="alerts alertas incidentes"><svg><use href="#i-alert"></use></svg><span>Alerts</span><b class="menu-count">1</b></a>
+                <a class="side-link active" href="vulnerabilities.html" data-ready="true" data-route="vulnerabilities" data-menu-text="vulnerabilities vulnerabilidades"><svg><use href="#i-bug"></use></svg><span>Vulnerabilities</span></a>
+                <a class="side-link" href="misconfigurations.html" data-menu-text="misconfigurations configuraciones"><svg><use href="#i-lock"></use></svg><span>Misconfigurations</span></a>
+                <span class="menu-section">Discover</span>
+                <a class="side-link" href="event-search.html" data-menu-text="event search eventos"><svg><use href="#i-search"></use></svg><span>Event Search</span></a>
+                <a class="side-link" href="inventory.html" data-menu-text="inventory inventario"><svg><use href="#i-inventory"></use></svg><span>Inventory</span></a>
+                <a class="side-link" href="graph-explorer.html" data-menu-text="graph explorer mapa"><svg><use href="#i-graph"></use></svg><span>Graph Explorer</span></a>
+                <a class="side-link" href="activities.html" data-menu-text="activities actividades"><svg><use href="#i-clock"></use></svg><span>Activities</span></a>
+                <span class="menu-section">Automate</span>
+                <a class="side-link" href="remoteops.html" data-menu-text="remoteops"><svg><use href="#i-terminal"></use></svg><span>RemoteOps</span></a>
+                <span class="menu-section">Configure</span>
+                <a class="side-link" href="detections.html" data-menu-text="detections"><svg><use href="#i-radar"></use></svg><span>Detections</span></a>
+                <a class="side-link" href="agent-management.html" data-menu-text="agent management"><svg><use href="#i-device"></use></svg><span>Agent management</span></a>
+                <a class="side-link" href="reports.html" data-menu-text="reports"><svg><use href="#i-report"></use></svg><span>Reports</span></a>
+                <a class="side-link" href="policies-settings.html" data-menu-text="policies settings"><svg><use href="#i-settings"></use></svg><span>Policies and settings</span></a>
+            </nav>
+            <div class="sidebar-footer"><span class="protection-dot"></span><div><strong>Protección activa</strong><small>24 agentes conectados</small></div></div>
+        </aside>
+
+        <button class="sidebar-backdrop" id="sidebarBackdrop" type="button" aria-label="Cerrar menú"></button>
+
+        <main class="main-content vulnerabilities-main">
+            <header class="vulnerabilities-header">
+                <h1>Vulnerabilities</h1>
+                <div class="vulnerabilities-header-actions">
+                    <label class="summary-switch"><input id="toggleSummary" type="checkbox" checked><span></span> Summary dashboard</label>
+                    <button id="btnHeaderSettings" type="button" aria-label="Opciones"><svg><use href="#i-settings"></use></svg></button>
+                </div>
+                <nav><button type="button">Applications &amp; Vulnerabilities Policy</button><button type="button">Application Inventory</button></nav>
+            </header>
+
+            <section class="vulnerability-filters">
+                <button class="load-filter" id="btnLoadFilter" type="button"><svg><use href="#i-filter"></use></svg> Load filter <span>⌄</span></button>
+                <label class="vulnerability-search"><select id="searchField"><option value="all">CVE ID</option><option value="asset">Asset Name</option><option value="software">Software Name</option></select><b>contains</b><input id="vulnerabilitySearch" type="search" placeholder="Search"></label>
+                <select id="filterTime"><option>All time</option><option>Last 30 days</option><option>Last 7 days</option></select>
+                <select id="filterSeverity"><option value="all">Severity</option><option value="critical">Critical</option><option value="high">High</option><option value="medium">Medium</option></select>
+                <select id="filterAsset"><option value="all">Asset Type</option><option value="macos">macOS desktop</option><option value="windows">Windows laptop</option><option value="server">Windows Server</option></select>
+                <select id="filterStatus"><option value="all">Status</option><option value="new">New</option><option value="resolved">Resolved</option></select>
+                <select id="filterOS"><option value="all">OS Family</option><option value="macos">macOS</option><option value="windows">Windows</option></select>
+                <button class="add-filter" id="btnAddFilter" type="button">＋ Add/remove filters</button>
+                <button class="filter-collapse" id="btnCollapseFilters" type="button">⌄</button>
+            </section>
+
+            <section class="extra-filters" id="extraFilters" hidden>
+                <button type="button" data-quick-filter="critical"><i class="critical"></i> Critical <b>147</b></button>
+                <button type="button" data-quick-filter="high"><i class="high"></i> High <b>405</b></button>
+                <button type="button" data-quick-filter="medium"><i class="medium"></i> Medium <b>278</b></button>
+                <button type="button" data-quick-filter="all">Clear filters</button>
+            </section>
+
+            <section class="vulnerability-summary" id="summaryDashboard">
+                <article class="vulnerability-stat-card interactive-summary" tabindex="0" data-summary-filter="critical">
+                    <header><h2>Severity</h2><button type="button">⋮</button></header>
+                    <div class="stat-card-content severity-content">
+                        <div class="vuln-donut severity-chart"><span><strong id="summaryTotal">856</strong></span></div>
+                        <ul>
+                            <li><span><i class="critical"></i>Critical</span><b>147 <small>(17.17%)</small></b></li>
+                            <li><span><i class="high"></i>High</span><b>405 <small>(47.31%)</small></b></li>
+                            <li><span><i class="medium"></i>Medium</span><b>278 <small>(32.48%)</small></b></li>
+                            <li><span><i class="low"></i>Low</span><b>22 <small>(2.57%)</small></b></li>
+                            <li><span><i class="not-reported"></i>Not reported</span><b>4 <small>(0.47%)</small></b></li>
+                        </ul>
+                    </div>
+                    <div class="summary-hover"><strong>147 vulnerabilidades críticas</strong><span>12 afectan endpoints del área de Finanzas.</span><b>FIN-014 requiere atención inmediata.</b></div>
+                </article>
+
+                <article class="vulnerability-stat-card interactive-summary" tabindex="0" data-summary-filter="macos">
+                    <header><h2>Asset Type</h2><button type="button">⋮</button></header>
+                    <div class="stat-card-content asset-content">
+                        <div class="vuln-pie asset-chart"></div>
+                        <ul>
+                            <li><span><i class="purple"></i>Windows laptop</span><b>526 <small>(61.45%)</small></b></li>
+                            <li><span><i class="blue"></i>macOS desktop</span><b>233 <small>(27.22%)</small></b></li>
+                            <li><span><i class="pink"></i>Windows Server</span><b>50 <small>(5.84%)</small></b></li>
+                            <li><span><i class="orange"></i>macOS laptop</span><b>35 <small>(4.09%)</small></b></li>
+                            <li><span><i class="green"></i>Windows desktop</span><b>12 <small>(1.40%)</small></b></li>
+                        </ul>
+                    </div>
+                    <div class="summary-hover"><strong>Windows laptop es el activo más expuesto</strong><span>526 hallazgos distribuidos en 13 equipos.</span><b>Prioridad: navegadores y clientes de correo.</b></div>
+                </article>
+
+                <article class="vulnerability-stat-card interactive-summary" tabindex="0" data-summary-filter="windows">
+                    <header><h2>OS Family</h2><button type="button">⋮</button></header>
+                    <div class="stat-card-content os-content">
+                        <div class="vuln-pie os-chart"></div>
+                        <ul><li><span><i class="blue"></i>Windows</span><b>588</b></li><li><span><i class="gray"></i>macOS</span><b>268</b></li></ul>
+                    </div>
+                    <div class="summary-hover"><strong>68.7% corresponde a Windows</strong><span>FIN-014 utiliza Windows 11 y tiene 3 hallazgos críticos.</span><b>Existe una actualización disponible.</b></div>
+                </article>
+
+                <article class="vulnerability-stat-card interactive-summary" tabindex="0" data-summary-filter="fix">
+                    <header><h2>Has Fix Version</h2><button type="button">⋮</button></header>
+                    <div class="fix-version-content"><div><span class="false-icon">!</span><small>False</small><strong>856</strong></div><div><span class="true-icon">✓</span><small>True</small><strong>N/A</strong></div></div>
+                    <div class="summary-hover"><strong>Se requiere revisión del fabricante</strong><span>Las versiones simuladas aún no registran corrección automática.</span><b>Usa la acción de mitigación temporal.</b></div>
+                </article>
+            </section>
+
+            <section class="vulnerability-table-panel">
+                <header class="table-toolbar">
+                    <button class="table-action" id="btnActions" type="button" disabled>Actions⌄</button>
+                    <label class="table-toggle"><input id="groupAssets" type="checkbox"><span></span> Group by <b>Asset Name</b></label>
+                    <span><strong id="visibleVulnerabilities">9</strong> of 856 items</span>
+                    <label class="table-toggle resolved-toggle"><input id="showResolved" type="checkbox"><span></span> Show Confirmed Resolved</label>
+                    <button class="export-button" id="btnExport" type="button"><svg><use href="#i-download"></use></svg> Export⌄</button>
+                </header>
+
+                <div class="vulnerability-table-wrap">
+                    <table class="vulnerability-table">
+                        <thead><tr><th><input id="selectAll" type="checkbox" aria-label="Seleccionar todas"></th><th>CVE ID</th><th>Description</th><th>Severity</th><th>Status</th><th>Installation Path</th><th>Asset Name</th><th>Asset Type</th><th>Software Name</th><th>Software Version</th></tr></thead>
+                        <tbody id="vulnerabilityRows">
+                            <tr data-id="CVE-2026-74956" data-severity="critical" data-status="new" data-asset="macos" data-os="macos" data-software="firefox"><td><input class="row-check" type="checkbox"></td><td><button class="cve-link" type="button">CVE-2026-74956</button></td><td>Same-origin policy bypass</td><td><span class="severity critical">● Critical</span></td><td><span class="status new">New⌄</span></td><td><span class="path-count">+1</span></td><td><button class="asset-link" type="button">Carlos's MacBook Pro</button></td><td>macOS desktop</td><td>Firefox</td><td>150.0.3</td></tr>
+                            <tr data-id="CVE-2026-74938" data-severity="critical" data-status="new" data-asset="macos" data-os="macos" data-software="firefox"><td><input class="row-check" type="checkbox"></td><td><button class="cve-link" type="button">CVE-2026-74938</button></td><td>Mitigation bypass in JavaScript engine</td><td><span class="severity critical">● Critical</span></td><td><span class="status new">New⌄</span></td><td><span class="path-count">+1</span></td><td><button class="asset-link" type="button">Carlos's MacBook Pro</button></td><td>macOS desktop</td><td>Firefox</td><td>150.0.3</td></tr>
+                            <tr data-id="CVE-2026-74979" data-severity="critical" data-status="new" data-asset="windows" data-os="windows" data-software="edge"><td><input class="row-check" type="checkbox"></td><td><button class="cve-link" type="button">CVE-2026-74979</button></td><td>Memory corruption in browser renderer</td><td><span class="severity critical">● Critical</span></td><td><span class="status new">New⌄</span></td><td><span class="path-count">+2</span></td><td><button class="asset-link" type="button">FIN-014</button></td><td>Windows laptop</td><td>Microsoft Edge</td><td>149.0.2</td></tr>
+                            <tr data-id="CVE-2026-74990" data-severity="critical" data-status="new" data-asset="windows" data-os="windows" data-software="office"><td><input class="row-check" type="checkbox"></td><td><button class="cve-link" type="button">CVE-2026-74990</button></td><td>Remote code execution in document parser</td><td><span class="severity critical">● Critical</span></td><td><span class="status new">New⌄</span></td><td><span class="path-count">+1</span></td><td><button class="asset-link" type="button">FIN-014</button></td><td>Windows laptop</td><td>Microsoft Office</td><td>2610.4</td></tr>
+                            <tr data-id="CVE-2026-74940" data-severity="high" data-status="new" data-asset="windows" data-os="windows" data-software="chrome"><td><input class="row-check" type="checkbox"></td><td><button class="cve-link" type="button">CVE-2026-74940</button></td><td>Use-after-free in graphics component</td><td><span class="severity high">● High</span></td><td><span class="status new">New⌄</span></td><td><span class="path-count">+1</span></td><td><button class="asset-link" type="button">OPS-009</button></td><td>Windows laptop</td><td>Chrome</td><td>151.0.1</td></tr>
+                            <tr data-id="CVE-2026-74987" data-severity="high" data-status="new" data-asset="server" data-os="windows" data-software="server"><td><input class="row-check" type="checkbox"></td><td><button class="cve-link" type="button">CVE-2026-74987</button></td><td>Privilege escalation in backup service</td><td><span class="severity high">● High</span></td><td><span class="status new">New⌄</span></td><td><span class="path-count">+3</span></td><td><button class="asset-link" type="button">SRV-BACKUP-01</button></td><td>Windows Server</td><td>Backup Agent</td><td>8.6.4</td></tr>
+                            <tr data-id="CVE-2026-75874" data-severity="high" data-status="new" data-asset="macos" data-os="macos" data-software="safari"><td><input class="row-check" type="checkbox"></td><td><button class="cve-link" type="button">CVE-2026-75874</button></td><td>Sandbox escape in rendering engine</td><td><span class="severity high">● High</span></td><td><span class="status new">New⌄</span></td><td><span class="path-count">+1</span></td><td><button class="asset-link" type="button">DESIGN-004</button></td><td>macOS desktop</td><td>Safari</td><td>26.4</td></tr>
+                            <tr data-id="CVE-2026-74961" data-severity="medium" data-status="new" data-asset="windows" data-os="windows" data-software="firefox"><td><input class="row-check" type="checkbox"></td><td><button class="cve-link" type="button">CVE-2026-74961</button></td><td>Side-channel exposure in Web API</td><td><span class="severity medium">● Medium</span></td><td><span class="status new">New⌄</span></td><td><span class="path-count">+1</span></td><td><button class="asset-link" type="button">HR-022</button></td><td>Windows laptop</td><td>Firefox</td><td>150.0.3</td></tr>
+                            <tr data-id="CVE-2026-74936" data-severity="medium" data-status="new" data-asset="windows" data-os="windows" data-software="java"><td><input class="row-check" type="checkbox"></td><td><button class="cve-link" type="button">CVE-2026-74936</button></td><td>Use-after-free in Java runtime</td><td><span class="severity medium">● Medium</span></td><td><span class="status new">New⌄</span></td><td><span class="path-count">+1</span></td><td><button class="asset-link" type="button">IT-006</button></td><td>Windows laptop</td><td>Java Runtime</td><td>21.0.8</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <footer class="table-footer"><button type="button" disabled>‹</button><button class="active" type="button">1</button><button type="button">2</button><button type="button">3</button><button type="button">›</button></footer>
+            </section>
+        </main>
+    </div>
+
+    <div class="vulnerability-drawer-layer" id="vulnerabilityDrawer" aria-hidden="true">
+        <button class="vulnerability-drawer-backdrop" id="closeVulnerabilityBackdrop" type="button" aria-label="Cerrar detalle"></button>
+        <aside class="vulnerability-drawer" role="dialog" aria-modal="true" aria-labelledby="drawerCveId">
+            <header><div><span>VULNERABILITY DETAILS</span><h2 id="drawerCveId">CVE-2026-74979</h2></div><button id="closeVulnerability" type="button"><svg><use href="#i-x"></use></svg></button></header>
+            <div class="drawer-risk"><span class="critical" id="drawerSeverity">CRITICAL</span><strong id="drawerScore">CVSS 9.8</strong></div>
+            <h3 id="drawerDescription">Memory corruption in browser renderer</h3>
+            <p id="drawerSummary">La vulnerabilidad permite ejecutar código mediante contenido especialmente diseñado. Este hallazgo incrementa el riesgo del ataque de ransomware.</p>
+            <dl><div><dt>Endpoint</dt><dd id="drawerAsset">FIN-014</dd></div><div><dt>Software</dt><dd id="drawerSoftware">Microsoft Edge 149.0.2</dd></div><div><dt>Estado</dt><dd id="drawerStatus">New</dd></div><div><dt>Recomendación</dt><dd>Actualizar y reiniciar el endpoint.</dd></div></dl>
+            <section class="ransomware-relation"><svg><use href="#i-alert"></use></svg><div><strong>Relación con el incidente</strong><p>El equipo FIN-014 presenta exposición que puede facilitar ejecución y persistencia del ransomware.</p></div></section>
+            <button class="remediate-button" id="btnRemediate" type="button"><svg><use href="#i-shield"></use></svg> Aplicar mitigación</button>
+        </aside>
+    </div>
+
+    <div class="overlay" id="overlayPausa"><div class="modal pause-modal"><div class="modal-icon"><svg><use href="#i-pause"></use></svg></div><span class="modal-label">SIMULADOR</span><h2>Simulación en pausa</h2><p>El análisis de vulnerabilidades está detenido temporalmente.</p><button class="modal-button primary" id="btnContinuar" type="button">Continuar</button><button class="modal-button" id="btnConfigPausa" type="button">Configuración</button><button class="modal-button ghost" id="btnInicioPausa" type="button">Regresar al inicio</button></div></div>
+    <div class="overlay" id="overlayConfig"><div class="modal config-modal"><header class="modal-header"><div><span class="modal-label">SYSTEM</span><h2>Configuración</h2></div><button id="cerrarConfig" type="button">×</button></header><div class="config-row"><div><strong>Música</strong><small>Volumen de música</small></div><div class="range-wrap"><input id="volumenMusica" type="range" min="0" max="100" value="25"><output id="valorMusica">25%</output></div></div><div class="config-row"><div><strong>Efectos</strong><small>Sonidos de botones</small></div><div class="range-wrap"><input id="volumenEfectos" type="range" min="0" max="100" value="50"><output id="valorEfectos">50%</output></div></div><label class="config-row toggle-row"><div><strong>Silenciar todo</strong></div><input id="silenciar" type="checkbox"><span class="toggle"></span></label><button class="modal-button primary" id="guardarConfig" type="button">Guardar y volver</button></div></div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"><span>✓</span><p id="toastTexto">Acción completada</p></div>
+
+    <script src="JS/Navegacion.js"></script>
+    <script src="JS/Vulnerabilities.js"></script>
+</body>
+
+</html>

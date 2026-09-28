@@ -99,7 +99,7 @@ document.addEventListener("DOMContentLoaded", function () {
             function () {
 
                 window.location.href =
-                    "simulador.html";
+                    "Simulador.Html";
 
             }
         );
